@@ -2,6 +2,9 @@ import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
   title: 'Политика данных бота @otklicker_bot',
+  description: 'Политика обработки данных Telegram-бота @otklicker_bot. Документ готовится.',
+  alternates: { canonical: '/bot-privacy' },
+  robots: { index: false, follow: false },
 };
 
 export default function BotPrivacyPage() {

@@ -8,6 +8,8 @@ export const metadata: Metadata = {
   title: 'Политика использования cookies',
   description:
     'Какие cookies использует сайт otklicker.ru, как ими управлять и как отозвать согласие.',
+  alternates: { canonical: '/cookies' },
+  robots: { index: true, follow: true },
 };
 
 export default function CookiesPage() {

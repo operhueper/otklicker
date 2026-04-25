@@ -8,6 +8,8 @@ export const metadata: Metadata = {
   title: 'Политика конфиденциальности',
   description:
     'Политика конфиденциальности сайта otklicker.ru. Что мы собираем у посетителей и как обрабатываем эти данные.',
+  alternates: { canonical: '/privacy' },
+  robots: { index: true, follow: true },
 };
 
 export default function PrivacyPage() {

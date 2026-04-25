@@ -2,6 +2,9 @@ import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
   title: 'Оферта',
+  description: 'Оферта на использование сервиса откликер. Документ готовится.',
+  alternates: { canonical: '/offer' },
+  robots: { index: false, follow: false },
 };
 
 export default function OfferPage() {
