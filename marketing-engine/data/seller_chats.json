@@ -1,0 +1,194 @@
+[
+  {
+    "name": "Wildberries | Чат селлеров",
+    "link": "https://t.me/wildberries_professional",
+    "chat_id": 2224481084,
+    "participants": 123792,
+    "focus": "Крупнейший чат продавцов Wildberries. Обсуждение стратегий, аналитики, рекламы и продвижения на WB.",
+    "priority": "high"
+  },
+  {
+    "name": "ВБ ЧАТ ~ поставщики ~ селлеры",
+    "link": "https://t.me/WBchat_postavshikov",
+    "chat_id": 2103716859,
+    "participants": 63377,
+    "focus": "Большой чат поставщиков и селлеров WB. Ежедневное обсуждение логистики, возвратов, ценообразования.",
+    "priority": "high"
+  },
+  {
+    "name": "Карточки товара Wildberries",
+    "link": "https://t.me/contentwbchat",
+    "chat_id": 1189268514,
+    "participants": 41400,
+    "focus": "Официальный чат WB по карточкам товаров, контенту и медиа. Вопросы по оформлению и загрузке.",
+    "priority": "medium"
+  },
+  {
+    "name": "Рыжий М. -- Чат",
+    "link": "https://t.me/redmilliard_chat",
+    "chat_id": 1235778918,
+    "participants": 38181,
+    "focus": "Чат блогера Рыжего М. Активное сообщество продавцов, обсуждение бизнеса на маркетплейсах.",
+    "priority": "high"
+  },
+  {
+    "name": "Склад Wildberries.FAQ",
+    "link": "https://t.me/wbofficialSKLAD",
+    "chat_id": 1214520799,
+    "participants": 30117,
+    "focus": "Официальный чат WB по вопросам склада, расхождений по поставкам.",
+    "priority": "medium"
+  },
+  {
+    "name": "Маркетплейсы. ЧАТ",
+    "link": "https://t.me/MarketplaceChati",
+    "chat_id": 1415490119,
+    "participants": 30021,
+    "focus": "Мультиплатформенный чат продавцов. WB, Ozon, Яндекс Маркет. Обмен опытом, вопросы, поиск контактов.",
+    "priority": "high"
+  },
+  {
+    "name": "ЧАТ OZON | Клуб партнёров",
+    "link": null,
+    "chat_id": 1341924014,
+    "participants": 28759,
+    "focus": "Неофициальное сообщество продавцов Ozon, владельцев ПВЗ и технологических партнёров. FBS-модель, логистика.",
+    "priority": "high"
+  },
+  {
+    "name": "Официальный чат Wildberries для продавцов",
+    "link": "https://t.me/wbofficialchat",
+    "chat_id": 1763373642,
+    "participants": 25638,
+    "focus": "Официальный чат WB: регистрация, финансы, логистика, общие вопросы.",
+    "priority": "medium"
+  },
+  {
+    "name": "Поисковая выдача товара на Wildberries",
+    "link": "https://t.me/wbsearch",
+    "chat_id": 1341379151,
+    "participants": 23120,
+    "focus": "Официальный тематический чат WB по вопросам поиска и отображения товаров.",
+    "priority": "medium"
+  },
+  {
+    "name": "Первая поставка Wildberries",
+    "link": "https://t.me/wbofficialfirst",
+    "chat_id": 1211707984,
+    "participants": 22862,
+    "focus": "Официальный чат WB для новых поставщиков. Вопросы о первой поставке.",
+    "priority": "low"
+  },
+  {
+    "name": "OZON, WB, YANDEX -- взаимная поддержка СИЛА",
+    "link": "https://t.me/ozon_wildberries_yandex",
+    "chat_id": 1259734933,
+    "participants": 20973,
+    "focus": "Мультиплатформенный чат взаимопомощи продавцов Ozon, Wildberries и Яндекс Маркета.",
+    "priority": "high"
+  },
+  {
+    "name": "Дизайнеры Wildberries и Ozon | Инфографика",
+    "link": "https://t.me/dizainer_wb",
+    "chat_id": 1465235799,
+    "participants": 12446,
+    "focus": "Поиск дизайнеров инфографики, обсуждение визуального контента для карточек WB/Ozon.",
+    "priority": "medium"
+  },
+  {
+    "name": "ЧАТ поставщиков Wildberries -- Альянс",
+    "link": "https://t.me/wildberries_marketplace_chat",
+    "chat_id": 1366604834,
+    "participants": 10754,
+    "focus": "Чат канала Альянс для поставщиков WB. Обсуждение новостей, обмен информацией.",
+    "priority": "high"
+  },
+  {
+    "name": "WILDSELLER chat: Wildberries, Ozon, Ямаркет, Али, Беру",
+    "link": "https://t.me/wildseller_chat",
+    "chat_id": 1278646951,
+    "participants": 8120,
+    "focus": "Мультиплатформенный чат продавцов. WB, Ozon, Яндекс Маркет, AliExpress.",
+    "priority": "high"
+  },
+  {
+    "name": "Чат продавцов WB / Ozon / Николай Шапкин",
+    "link": "https://t.me/sellers_chat",
+    "chat_id": 1791158128,
+    "participants": 7769,
+    "focus": "Активное сообщество продавцов WB и Ozon с экспертным модератором.",
+    "priority": "high"
+  },
+  {
+    "name": "Мамкин Селлер чат Ozon, Wildberries, Яндекс маркет",
+    "link": "https://t.me/ozon_chat_mp",
+    "chat_id": 1487226547,
+    "participants": 7622,
+    "focus": "Крупный чат продавцов мультимаркетплейсных платформ. Ozon, WB, Яндекс Маркет.",
+    "priority": "high"
+  },
+  {
+    "name": "Каморка Дамблдора",
+    "link": null,
+    "chat_id": 1777935062,
+    "participants": 6291,
+    "focus": "Чат сообщества Хогвартс маркетплейсов. Обмен опытом продавцов.",
+    "priority": "medium"
+  },
+  {
+    "name": "FBS WB",
+    "link": "https://t.me/wildberriesfbs",
+    "chat_id": 1989309808,
+    "participants": 5100,
+    "focus": "Официальный чат поддержки продавцов WB, использующих модель FBS.",
+    "priority": "medium"
+  },
+  {
+    "name": "Wildberries ЧАТ поставщиков | OZON",
+    "link": "https://t.me/wb_partner",
+    "chat_id": 1444967311,
+    "participants": 4802,
+    "focus": "Чат поставщиков Wildberries и Ozon. Поддержка, обсуждение логистики и возвратов.",
+    "priority": "high"
+  },
+  {
+    "name": "Wildbox | Чат поставщиков",
+    "link": null,
+    "chat_id": 1495755852,
+    "participants": 4696,
+    "focus": "Чат сервиса Wildbox для поставщиков. Аналитика, обсуждение инструментов.",
+    "priority": "medium"
+  },
+  {
+    "name": "Владлен Строкань | ЧАТ",
+    "link": null,
+    "chat_id": 1591449050,
+    "participants": 422,
+    "focus": "Чат основателя Wildbox. Небольшое активное сообщество продавцов.",
+    "priority": "medium"
+  },
+  {
+    "name": "@sellersfriends",
+    "link": "https://t.me/sellersfriends",
+    "chat_id": 3729794318,
+    "participants": 303,
+    "focus": "Авторский чат продавцов WB и Ozon. Небольшое закрытое сообщество.",
+    "priority": "low"
+  },
+  {
+    "name": "Бизнес на маркетплейсах Чат",
+    "link": null,
+    "chat_id": 1708345458,
+    "participants": 275,
+    "focus": "Чат бизнес-сообщества продавцов маркетплейсов.",
+    "priority": "low"
+  },
+  {
+    "name": "ЧАТ | МАКСИМ ПОПОВ | Развитие на маркетплейсах",
+    "link": null,
+    "chat_id": 1592550363,
+    "participants": 145,
+    "focus": "Чат блогера Максима Попова по развитию на маркетплейсах.",
+    "priority": "low"
+  }
+]

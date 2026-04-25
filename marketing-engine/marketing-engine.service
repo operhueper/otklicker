@@ -1,0 +1,16 @@
+[Unit]
+Description=Своя база -- Marketing Engine (admin bot + scheduler)
+After=network.target
+
+[Service]
+Type=simple
+User=root
+WorkingDirectory=/opt/tg-automations/marketing-engine
+ExecStart=/usr/bin/python3 -m src.main
+Restart=on-failure
+RestartSec=10
+StandardOutput=journal
+StandardError=journal
+
+[Install]
+WantedBy=multi-user.target
