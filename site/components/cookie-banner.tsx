@@ -60,7 +60,7 @@ export function CookieBanner({ storageKey = STORAGE_KEY, policyHref = '/cookies'
           onClick={() => accept('all')}
           style={{
             padding: '9px 18px', borderRadius: 999, fontSize: 13, fontWeight: 700, cursor: 'pointer',
-            background: 'var(--brand-gradient)', color: '#fff', border: 'none',
+            background: 'var(--brand-gradient-text)', color: '#fff', border: 'none',
           }}
         >
           Принять

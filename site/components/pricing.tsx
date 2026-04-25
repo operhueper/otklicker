@@ -51,7 +51,7 @@ export function PriceCard({ plan }: PriceCardProps) {
     <div style={{
       borderRadius: 24, padding: 32, position: 'relative',
       display: 'flex', flexDirection: 'column',
-      background: isBrand ? 'var(--brand-gradient)' : isDark ? '#1C1917' : '#FFFFFF',
+      background: isBrand ? 'var(--brand-gradient-text)' : isDark ? '#1C1917' : '#FFFFFF',
       border: isBrand || isDark ? '1px solid transparent' : '1px solid var(--line)',
       color: isDark ? '#FEF3C7' : isBrand ? '#fff' : 'var(--text-heading)',
       boxShadow: isBrand ? '0 24px 60px rgba(219,39,119,0.24), 0 8px 22px rgba(249,115,22,0.2)' : '0 1px 2px rgba(120,53,15,0.04)',

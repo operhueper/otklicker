@@ -76,6 +76,8 @@ const config: Config = {
       backgroundImage: {
         // Only normal — subtle/intense presets were in tweaks-panel, not in prod
         'brand-gradient': 'linear-gradient(135deg, #FBBF24 0%, #F97316 33%, #EF4444 66%, #DB2777 100%)',
+        // For surfaces with white text — starts at orange (3.0:1 large text) not yellow (1.67:1 fail)
+        'brand-gradient-text': 'linear-gradient(135deg, #F97316 0%, #EF4444 50%, #DB2777 100%)',
       },
       keyframes: {
         'slide-in-from-right': {

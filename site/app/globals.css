@@ -31,6 +31,7 @@
   --line-dark:   rgba(254, 243, 199, 0.12);
 
   --brand-gradient: linear-gradient(135deg, #FBBF24 0%, #F97316 33%, #EF4444 66%, #DB2777 100%);
+  --brand-gradient-text: linear-gradient(135deg, #F97316 0%, #EF4444 50%, #DB2777 100%);
 
   --shadow-sm:    0 1px 2px rgba(120, 53, 15, 0.06), 0 2px 6px rgba(120, 53, 15, 0.04);
   --shadow-md:    0 4px 14px rgba(120, 53, 15, 0.08), 0 12px 32px rgba(120, 53, 15, 0.06);
@@ -101,7 +102,7 @@
   .btn:active { transform: translateY(0); }
 
   .btn-primary {
-    background: var(--brand-gradient);
+    background: var(--brand-gradient-text);
     color: #fff;
     box-shadow: var(--shadow-brand);
   }
@@ -167,6 +168,23 @@
   /* tabular-nums for counters */
   .tabular {
     font-variant-numeric: tabular-nums;
+  }
+}
+
+/* ============================================================
+ * Reduced motion — WCAG 2.3.3 / 2.2.2
+ * Disables CSS transitions and animations for users who prefer
+ * reduced motion. JS-driven timers (HeroChat, HeroSwipe, Speed)
+ * are also gated in their respective components.
+ * ============================================================ */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
   }
 }
 

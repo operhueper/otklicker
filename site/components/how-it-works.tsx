@@ -45,7 +45,7 @@ export function HowItWorks({ steps = HOW_IT_WORKS_STEPS }: HowItWorksProps) {
                 >
                   <div style={{
                     width: 42, height: 42, borderRadius: 12, flexShrink: 0,
-                    background: isActive ? 'var(--brand-gradient)' : 'rgba(146, 64, 14, 0.08)',
+                    background: isActive ? 'var(--brand-gradient-text)' : 'rgba(146, 64, 14, 0.08)',
                     color: isActive ? '#fff' : 'var(--text-heading)',
                     display: 'flex', alignItems: 'center', justifyContent: 'center',
                     fontWeight: 800, fontSize: 14, transition: 'all 0.2s',

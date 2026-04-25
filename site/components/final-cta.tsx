@@ -6,7 +6,7 @@ export function FinalCTA() {
       <div className="mx-auto max-w-container px-6">
         <div style={{
           borderRadius: 32, padding: '64px 48px',
-          background: 'var(--brand-gradient)',
+          background: 'var(--brand-gradient-text)',
           color: '#fff', position: 'relative', overflow: 'hidden',
           display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center', gap: 20,
           boxShadow: '0 30px 80px rgba(219,39,119,0.25)',

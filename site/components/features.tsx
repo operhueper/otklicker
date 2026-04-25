@@ -51,7 +51,7 @@ export function Features({ features = FEATURES }: FeaturesProps) {
               style={{
                 padding: '12px 18px', borderRadius: 999, fontSize: 14, fontWeight: 600,
                 border: active === i ? '1px solid transparent' : '1px solid var(--line-dark)',
-                background: active === i ? 'var(--brand-gradient)' : 'transparent',
+                background: active === i ? 'var(--brand-gradient-text)' : 'transparent',
                 color: active === i ? '#fff' : 'var(--text-on-dark-sub)',
                 boxShadow: active === i ? '0 10px 24px rgba(219,39,119,0.25)' : 'none',
                 transition: 'all 0.2s',
