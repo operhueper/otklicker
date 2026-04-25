@@ -19,7 +19,7 @@ export function HowItWorks({ steps = HOW_IT_WORKS_STEPS }: HowItWorksProps) {
         <div className="section-head" style={{ textAlign: 'center', maxWidth: 720, margin: '0 auto 56px' }}>
           <div className="eyebrow"><span className="eyebrow-dot" aria-hidden="true"/>Как это работает</div>
           <h2 className="text-h2 text-text-heading" style={{ margin: '16px 0 14px' }}>Четыре шага<br/>до первого <span className="grad-text">отклика</span></h2>
-          <p style={{ fontSize: 17, color: 'var(--text-sub)', lineHeight: 1.55, margin: 0 }}>Всё внутри Telegram. Без браузера, без приложения, без копипастов.</p>
+          <p style={{ fontSize: 17, color: 'var(--text-sub)', lineHeight: 1.55, margin: 0 }}>От первого диалога до отклика на вакансию вы остаётесь в Telegram.</p>
         </div>
 
         <div className="how-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1.1fr', gap: 60, alignItems: 'center' }}>

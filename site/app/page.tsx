@@ -3,6 +3,7 @@ import { Nav } from '@/components/nav';
 import { Hero } from '@/components/hero';
 import { TeaserStrip } from '@/components/teaser-strip';
 import { HowItWorks } from '@/components/how-it-works';
+import { CoverLetter } from '@/components/cover-letter';
 import { Features } from '@/components/features';
 import { SpeedSection } from '@/components/speed';
 import { Pricing } from '@/components/pricing';
@@ -79,6 +80,7 @@ export default function HomePage() {
         <Hero variant="chat" />
         <TeaserStrip />
         <HowItWorks />
+        <CoverLetter />
         <Features />
         <SpeedSection />
         <Pricing />

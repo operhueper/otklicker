@@ -1,8 +1,9 @@
 export const NAV_LINKS = [
-  { href: '#how',      label: 'Как работает' },
-  { href: '#features', label: 'Фичи' },
-  { href: '#pricing',  label: 'Тарифы' },
-  { href: '#faq',      label: 'FAQ' },
+  { href: '#how',          label: 'Как работает' },
+  { href: '#cover-letter', label: 'Письмо' },
+  { href: '#features',     label: 'Фичи' },
+  { href: '#pricing',      label: 'Тарифы' },
+  { href: '#faq',          label: 'FAQ' },
 ] as const;
 
 export const FOOTER_LINKS = {
