@@ -25,10 +25,11 @@ export function SpeedSection() {
   useEffect(() => {
     const el = sectionRef.current;
     if (!el) return;
+    const reducedMotion = typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     const obs = new IntersectionObserver(entries => {
       entries.forEach(e => {
         if (e.isIntersecting && !hasAutoplayed) {
-          setPlaying(true);
+          if (!reducedMotion) setPlaying(true);
           setHasAutoplayed(true);
         }
       });
@@ -38,7 +39,6 @@ export function SpeedSection() {
   }, [hasAutoplayed]);
 
   // Animation loop — progress intentionally omitted from deps (used only to seed startTsRef on first call)
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     if (!playing) return;
     const step = (ts: number) => {
@@ -58,6 +58,7 @@ export function SpeedSection() {
       cancelAnimationFrame(rafRef.current);
       startTsRef.current = null;
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [playing]);
 
   const minute = progressToMinute(progress);

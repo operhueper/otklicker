@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef, useCallback } from 'react';
 import { HERO_CHAT_JOBS } from '@/lib/data/hero-jobs';
 import type { JobCard } from '@/lib/types';
 
@@ -23,12 +23,20 @@ export function HeroChat({
   const [response, setResponse] = useState<{ kind: string; text: string } | null>(null);
   const [anim, setAnim] = useState<string | null>(null);
   const [paused, setPaused] = useState(false);
+  const timersRef = useRef<ReturnType<typeof setTimeout>[]>([]);
 
   const job = jobs[idx % jobs.length];
 
+  const clearAllTimers = useCallback(() => {
+    timersRef.current.forEach(clearTimeout);
+    timersRef.current = [];
+  }, []);
+
   useEffect(() => {
     if (paused || anim) return;
-    const t = setTimeout(() => {
+    if (typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+    const t1 = setTimeout(() => {
       const auto = Math.random() < 0.7 ? 'apply' : 'skip';
       setAnim(auto === 'apply' ? 'out-right' : 'out-left');
       setResponse({
@@ -43,15 +51,18 @@ export function HeroChat({
         setIdx(i => (i + 1) % jobs.length);
         setAnim(null);
         const t3 = setTimeout(() => setResponse(null), 900);
-        return () => clearTimeout(t3);
+        timersRef.current.push(t3);
       }, 450);
-      return () => clearTimeout(t2);
+      timersRef.current.push(t2);
     }, cycleMs);
-    return () => clearTimeout(t);
-  }, [idx, anim, paused, job.company, cycleMs, jobs.length]);
+    timersRef.current.push(t1);
 
-  const act = (kind: string) => {
+    return clearAllTimers;
+  }, [idx, anim, paused, job.company, cycleMs, jobs.length, clearAllTimers]);
+
+  const act = useCallback((kind: string) => {
     if (anim) return;
+    clearAllTimers();
     setPaused(true);
     setAnim(kind === 'apply' ? 'out-right' : 'out-left');
     setResponse({
@@ -69,21 +80,21 @@ export function HeroChat({
         setResponse(null);
         setPaused(false);
       }, 1200);
-      return () => clearTimeout(t2);
+      timersRef.current.push(t2);
     }, 450);
-    return () => clearTimeout(t1);
-  };
+    timersRef.current.push(t1);
+  }, [anim, job.company, jobs.length, clearAllTimers]);
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 14 }}>
-      {/* Live counters */}
-      <div style={{ display: 'flex', gap: 10, position: 'absolute', top: -6, zIndex: 3 }}>
+      {/* Live counters — aria-live so screen readers announce changes */}
+      <div aria-live="polite" aria-atomic="true" style={{ display: 'flex', gap: 10, position: 'absolute', top: -6, zIndex: 3 }}>
         <div style={{
           padding: '7px 13px', borderRadius: 999, background: 'rgba(22,163,74,0.12)',
-          color: '#15803D', fontWeight: 700, fontSize: 12, display: 'flex', alignItems: 'center', gap: 6,
+          color: '#13633C', fontWeight: 700, fontSize: 12, display: 'flex', alignItems: 'center', gap: 6,
           border: '1px solid rgba(22,163,74,0.25)',
         }}>
-          <svg width="12" height="12" viewBox="0 0 24 24" fill="#15803D" aria-hidden="true"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="#13633C" aria-hidden="true"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
           {initialSent + sent} откликов
         </div>
         <div style={{

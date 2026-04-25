@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef, useCallback } from 'react';
 import { SAMPLE_JOBS } from '@/lib/data/sample-jobs';
 import type { JobCard } from '@/lib/types';
 
@@ -56,18 +56,12 @@ export function HeroSwipe({ jobs = SAMPLE_JOBS, cycleMs = 2800 }: HeroSwipeProps
   const [stack, setStack] = useState(jobs);
   const [swipeDir, setSwipeDir] = useState<string | null>(null);
   const [counter, setCounter] = useState({ liked: 127, passed: 94 });
+  const swipeTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  useEffect(() => {
-    const id = setInterval(() => {
-      handleSwipe(Math.random() > 0.35 ? 'right' : 'left');
-    }, cycleMs);
-    return () => clearInterval(id);
-  }, [stack, cycleMs]);
-
-  function handleSwipe(dir: string) {
+  const handleSwipe = useCallback((dir: string) => {
+    if (swipeTimerRef.current) clearTimeout(swipeTimerRef.current);
     setSwipeDir(dir);
-    const t = setTimeout(() => {
+    swipeTimerRef.current = setTimeout(() => {
       setStack(s => {
         const next = s.slice(1);
         return next.length ? [...next, s[0]] : jobs;
@@ -77,9 +71,24 @@ export function HeroSwipe({ jobs = SAMPLE_JOBS, cycleMs = 2800 }: HeroSwipeProps
         liked: c.liked + (dir === 'right' ? 1 : 0),
         passed: c.passed + (dir === 'left' ? 1 : 0),
       }));
+      swipeTimerRef.current = null;
     }, 380);
-    return () => clearTimeout(t);
-  }
+  }, [jobs]);
+
+  // Cleanup swipe timer on unmount
+  useEffect(() => {
+    return () => {
+      if (swipeTimerRef.current) clearTimeout(swipeTimerRef.current);
+    };
+  }, []);
+
+  useEffect(() => {
+    if (typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    const id = setInterval(() => {
+      handleSwipe(Math.random() > 0.35 ? 'right' : 'left');
+    }, cycleMs);
+    return () => clearInterval(id);
+  }, [stack, cycleMs, handleSwipe]);
 
   return (
     <div style={{ position: 'relative', width: '100%', maxWidth: 440, margin: '0 auto' }}>
