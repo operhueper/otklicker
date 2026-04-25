@@ -67,14 +67,14 @@ export interface Beat {
 }
 
 export const BOT_BEATS: Beat[] = [
-  { t: 10,  title: 'Бот заметил и откликнулся',   sub: 'Через 10 минут после публикации', emphasis: 'first' },
-  { t: 60,  title: 'В первой десятке откликов',   sub: 'Утром HR увидит вас сверху',       emphasis: 'mid' },
-  { t: 855, title: 'HR читает топ-20 откликов',   sub: 'Вы в этой стопке',                emphasis: 'win' },
+  { t: 10,  title: 'Бот увидел вакансию',           sub: 'Через 10 минут после публикации',  emphasis: 'first' },
+  { t: 25,  title: 'Письмо под вакансию готово',    sub: 'AI составил под текст вакансии',    emphasis: 'mid' },
+  { t: 855, title: 'HR читает первые 20 откликов',  sub: 'Вы в этой стопке',                  emphasis: 'win' },
 ];
 
 export const MANUAL_BEATS: Beat[] = [
-  { t: 780, title: 'Открыли HH утром',     sub: 'На вакансии уже 87 откликов',         emphasis: 'first' },
-  { t: 855, title: 'Ваш отклик — 88-й',   sub: 'HR уже архивирует хвост стопки',      emphasis: 'lose' },
+  { t: 720, title: 'Откроете HH утром',             sub: 'Лента уже не свежая',               emphasis: 'first' },
+  { t: 855, title: 'Ваш отклик в конце ленты',      sub: 'HR уже выбрал кандидатов',          emphasis: 'lose' },
 ];
 
 export interface HourTick {

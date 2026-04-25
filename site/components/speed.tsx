@@ -63,7 +63,6 @@ export function SpeedSection() {
 
   const minute = progressToMinute(progress);
   const playheadPct = pct(minute);
-  const finished = progress >= 0.999;
 
   const replay = () => {
     setProgress(0);
@@ -83,10 +82,10 @@ export function SpeedSection() {
         <div style={{ maxWidth: 760, marginBottom: 48 }}>
           <div className="eyebrow"><span className="eyebrow-dot" aria-hidden="true"/>Скорость</div>
           <h2 className="text-h2 text-text-heading" style={{ margin: '16px 0 18px' }}>
-            Гонка длится 14 часов.<br/><span className="grad-text">Бот стартует через 10 минут.</span>
+            Проверяет HH каждые 15 минут.<br/>Письмо готово к отправке <span className="grad-text">моментально</span>.
           </h2>
           <p style={{ fontSize: 18, color: 'var(--text-sub)', margin: 0, lineHeight: 1.55, maxWidth: 620 }}>
-            Вакансия живёт одну ночь. К утру в стопке у HR — сотня откликов, прочитают двадцать. Смотрите, что происходит, пока вы спите.
+            Бот мониторит свежие вакансии 24/7. Окно 9:00–21:00 по МСК настраивается, чтобы HR не получал отклик ночью. Готовое письмо приходит в Telegram, без захода на HH.
           </p>
         </div>
 
@@ -97,40 +96,21 @@ export function SpeedSection() {
           boxShadow: '0 1px 2px rgba(120,53,15,0.04), 0 16px 40px rgba(120,53,15,0.06)',
         }}>
           {/* Top bar */}
-          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 16, marginBottom: 24, flexWrap: 'wrap' }}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: 14, flexWrap: 'wrap' }}>
-              <div style={{
-                display: 'inline-flex', alignItems: 'center', gap: 8, padding: '6px 12px',
-                borderRadius: 999, background: 'var(--bg-pastel)', border: '1px solid var(--line)',
-                fontSize: 12, fontWeight: 700, color: 'var(--text-heading)', letterSpacing: '0.02em',
-              }}>
-                <span style={{
-                  width: 6, height: 6, borderRadius: 999,
-                  background: finished ? '#15803D' : '#F97316',
-                  boxShadow: finished ? 'none' : '0 0 0 3px rgba(249,115,22,0.18)',
-                }}/>
-                {finished ? 'ГОНКА ЗАВЕРШЕНА' : 'ГОНКА В ЭФИРЕ'}
-              </div>
-              <div style={{ fontSize: 14, color: 'var(--text-sub)' }}>
-                Понедельник, вакансия «Руководитель отдела продаж» опубликована в&nbsp;19:00
-              </div>
+          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-end', gap: 14, marginBottom: 24, flexWrap: 'wrap' }}>
+            <div style={{ fontFamily: 'ui-monospace, SFMono-Regular, Menlo, monospace', fontSize: 18, fontWeight: 800, color: 'var(--text-heading)', letterSpacing: '0.02em', fontVariantNumeric: 'tabular-nums' }}>
+              {clock(minute)}
             </div>
-            <div style={{ display: 'flex', alignItems: 'center', gap: 14 }}>
-              <div style={{ fontFamily: 'ui-monospace, SFMono-Regular, Menlo, monospace', fontSize: 18, fontWeight: 800, color: 'var(--text-heading)', letterSpacing: '0.02em', fontVariantNumeric: 'tabular-nums' }}>
-                {clock(minute)}
-              </div>
-              <button onClick={replay} style={{
-                padding: '8px 14px', borderRadius: 999, background: 'var(--bg-pastel)',
-                color: 'var(--text-heading)', border: '1px solid var(--line-strong)',
-                fontSize: 13, fontWeight: 700, display: 'inline-flex', alignItems: 'center', gap: 8,
-                cursor: 'pointer',
-              }}>
-                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                  <polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"/>
-                </svg>
-                Заново
-              </button>
-            </div>
+            <button onClick={replay} style={{
+              padding: '8px 14px', borderRadius: 999, background: 'var(--bg-pastel)',
+              color: 'var(--text-heading)', border: '1px solid var(--line-strong)',
+              fontSize: 13, fontWeight: 700, display: 'inline-flex', alignItems: 'center', gap: 8,
+              cursor: 'pointer',
+            }}>
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                <polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"/>
+              </svg>
+              Заново
+            </button>
           </div>
 
           <RaceTrack minute={minute} playheadPct={playheadPct} />
@@ -155,9 +135,9 @@ export function SpeedSection() {
 function RaceTrack({ minute, playheadPct }: { minute: number; playheadPct: number }) {
   return (
     <div style={{ position: 'relative' }}>
-      <Lane kind="bot" title="Откликер" subtitle="ловит публикацию и отправляет отклик" minute={minute} beats={BOT_BEATS}/>
+      <Lane kind="bot" title="Откликер" subtitle="видит вакансию и пишет письмо" minute={minute} beats={BOT_BEATS}/>
       <TimeAxis minute={minute} playheadPct={playheadPct}/>
-      <Lane kind="manual" title="Вручную" subtitle="вы увидите вакансию утром, когда уже 87 откликов" minute={minute} beats={MANUAL_BEATS}/>
+      <Lane kind="manual" title="Вручную" subtitle="откроете HH утром, ваш отклик в конце ленты" minute={minute} beats={MANUAL_BEATS}/>
       <Playhead playheadPct={playheadPct}/>
     </div>
   );
@@ -208,7 +188,7 @@ function Lane({ kind, title, subtitle, minute, beats }: { kind: string; title: s
           }}>
             <div style={{ fontSize: 11, fontWeight: 700, color: 'rgba(120,113,108,0.7)', letterSpacing: '0.18em', textTransform: 'uppercase', display: 'inline-flex', alignItems: 'center', gap: 8 }}>
               <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
-              вы спите · 12 часов
+              ночь
             </div>
           </div>
         )}
@@ -260,7 +240,9 @@ function BeatMarker({ beat, triggered, isBot }: { beat: Beat; triggered: boolean
         top: isBot ? 'auto' : 'calc(50% + 22px)',
         bottom: isBot ? 'calc(50% + 22px)' : 'auto',
         transform: transformX,
-        minWidth: 150, maxWidth: 220, padding: '8px 12px', borderRadius: 12,
+        minWidth: 130,
+        maxWidth: cardAlign === 'right' ? 170 : 220,
+        padding: '8px 12px', borderRadius: 12,
         background: triggered ? '#fff' : 'transparent',
         border: triggered ? `1px solid ${winColor ? winColor + '40' : 'var(--line)'}` : '1px dashed rgba(168,162,158,0.35)',
         boxShadow: triggered ? '0 2px 6px rgba(120,53,15,0.06), 0 8px 18px rgba(120,53,15,0.05)' : 'none',
@@ -347,12 +329,14 @@ function StatTile({ value, label }: { value: string; label: string }) {
 
 function FiltersTile() {
   const chips = [
-    { label: 'от 150 000 ₽', kind: 'money' },
-    { label: 'Удалённо',      kind: 'format' },
-    { label: 'Москва',        kind: 'geo' },
-    { label: 'Опыт 1–3',     kind: 'exp' },
-    { label: 'Без тестовых', kind: 'neg' },
-    { label: '9:00 — 21:00', kind: 'time' },
+    { label: 'от 150 000 ₽',  kind: 'money' },
+    { label: 'Удалённо',       kind: 'format' },
+    { label: 'Москва',         kind: 'geo' },
+    { label: 'Опыт 1–3',      kind: 'exp' },
+    { label: '9:00–21:00',  kind: 'time' },
+    { label: 'Стоп-слова',    kind: 'filter' },
+    { label: 'Стиль письма',  kind: 'filter' },
+    { label: 'Режим откликов', kind: 'filter' },
   ];
 
   type ChipStyle = { bg: string; color: string; border: string };
