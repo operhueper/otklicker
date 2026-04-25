@@ -1,0 +1,62 @@
+name: Deploy to production
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+concurrency:
+  group: deploy-production
+  cancel-in-progress: false  # не отменяем уже запущенный деплой
+
+jobs:
+  build-and-deploy:
+    name: Build static site and rsync to Hetzner
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node 20
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+          cache-dependency-path: site/package-lock.json
+
+      - name: Install dependencies
+        working-directory: site
+        run: npm ci --no-audit --no-fund
+
+      - name: Build static site
+        working-directory: site
+        run: npm run build
+
+      - name: Verify out/ exists
+        working-directory: site
+        run: |
+          test -f out/index.html
+          test -f out/robots.txt
+          test -f out/sitemap.xml
+          ls -la out/ | head
+
+      - name: Setup SSH for rsync
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.DEPLOY_SSH_KEY }}" > ~/.ssh/deploy_key
+          chmod 600 ~/.ssh/deploy_key
+          ssh-keyscan -H ${{ secrets.DEPLOY_HOST }} >> ~/.ssh/known_hosts
+
+      - name: Deploy via rsync
+        run: |
+          rsync -avz --delete \
+            -e "ssh -i ~/.ssh/deploy_key -o StrictHostKeyChecking=accept-new" \
+            site/out/ \
+            ${{ secrets.DEPLOY_USER }}@${{ secrets.DEPLOY_HOST }}:${{ secrets.DEPLOY_PATH }}
+
+      - name: Verify deploy via curl (HTTP)
+        run: |
+          # На этапе до DNS-переключения проверяем по IP с Host-header.
+          curl -fsSL --max-time 10 -H "Host: otklicker.ru" \
+            http://${{ secrets.DEPLOY_HOST }}/ -o /tmp/landing.html || true
+          ls -la /tmp/landing.html 2>/dev/null && echo "OK"
