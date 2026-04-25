@@ -23,12 +23,10 @@ export function Hero({ variant = 'chat' }: HeroProps) {
               Telegram-бот для поиска работы на HH.ru
             </div>
             <h1 className="text-h1 text-text-heading" style={{ margin: '22px 0 20px' }}>
-              Откликается на<br/>
-              <span className="grad-text">свежие вакансии</span><br/>
-              за вас.
+              Читает вакансию.<br/>Пишет письмо. <span className="grad-text">Ловит ловушки HR.</span>
             </h1>
             <p style={{ fontSize: 19, lineHeight: 1.55, color: 'var(--text-sub)', maxWidth: 540, margin: '0 0 36px' }}>
-              Бот следит за лентой HH и отправляет отклик в первые минуты после публикации. Вы — в начале стопки, а не в конце. Резюме, отклики и переписка с HR — в одном Telegram.
+              Бот проверяет свежие вакансии на HH каждые 15 минут, 24/7. Под каждую пишет личное сопроводительное: с вашим опытом, под тон работодателя, со скрытыми требованиями HR. Хотите поправить? Надиктуйте, бот переформулирует. Всё в Telegram, без захода на HH.
             </p>
             <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap', marginBottom: 36 }}>
               <a

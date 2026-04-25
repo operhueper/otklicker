@@ -11,6 +11,35 @@ interface HeroChatProps {
   cycleMs?: number;
 }
 
+function letterPreview(job: JobCard): string {
+  const t = job.title.toLowerCase();
+  const exp = job.experience ? job.experience.toLowerCase() : 'релевантного';
+  switch (job.title) {
+    case 'Руководитель отдела продаж':
+      return `«Здравствуйте! По вакансии руководителя отдела продаж: 4 года управления командой 8 человек, рост выручки на 34%...»`;
+    case 'Senior Product Designer':
+      return `«Здравствуйте! По вакансии Senior Product Designer: 5 лет в B2C, 3 кейса с ростом метрик на 20%+...»`;
+    case 'Шеф-повар горячего цеха':
+      return `«Здравствуйте! По вакансии шеф-повара: 6 лет на горячем цеху, команда 5 поваров, авторское меню из 24 блюд...»`;
+    case 'Менеджер по продажам B2B':
+      return `«Здравствуйте! По вакансии менеджера B2B: 3 года активных продаж, средний чек 480 тыс ₽, желаемая ЗП от 110 тыс...»`;
+    case 'Lead UX Designer':
+      return `«Финтех 2026. По вакансии Lead UX Designer: 6 лет в продукте, тимлид 4 дизайнеров, 2 года в финтехе...»`;
+    case 'Медсестра процедурного кабинета':
+      return `«Здравствуйте! По вакансии медсестры: 4 года в клинике, действующий сертификат до 2028, санкнижка в порядке...»`;
+    case 'Бариста':
+      return `«Здравствуйте! По вакансии бариста: кофе пью 8 лет, прошёл курс латте-арт, готов учиться на месте...»`;
+    case 'Товаровед':
+      return `«Здравствуйте! По вакансии товароведа: 3 года в сети, 1С Торговля 11, приёмка и инвентаризация ежедневно...»`;
+    case 'РОП в онлайн-школе':
+      return `«Здравствуйте! По вакансии РОП в EdTech: 3 года в онлайн-школе, рост конверсии в оплату с 8% до 17%...»`;
+    case 'Водитель категории E':
+      return `«Здравствуйте! По вакансии водителя E: стаж 7 лет, опыт вахт 15/15 по 2 года, тахограф и карта в порядке...»`;
+    default:
+      return `«По вакансии ${t}: ${exp} опыта, готов обсудить детали...»`;
+  }
+}
+
 export function HeroChat({
   jobs = HERO_CHAT_JOBS,
   initialSent = 127,
@@ -37,7 +66,30 @@ export function HeroChat({
     if (typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 
     const t1 = setTimeout(() => {
-      const auto = Math.random() < 0.7 ? 'apply' : 'skip';
+      const r = Math.random();
+      const auto: 'apply' | 'skip' | 'voice-edit' =
+        r < 0.6 ? 'apply' : r < 0.85 ? 'voice-edit' : 'skip';
+
+      if (auto === 'voice-edit') {
+        // Этап 1: показать "Слушаю правки…" на 1500ms (карточка не уезжает)
+        setResponse({ kind: 'voice-listening', text: '' });
+        const tv1 = setTimeout(() => {
+          // Этап 2: показать toast о переформулировке на 450ms
+          setResponse({ kind: 'voice-done', text: '✓ Переформулировал в формальный тон' });
+          setAnim('out-right');
+          const tv2 = setTimeout(() => {
+            setSent(s => s + 1);
+            setIdx(i => (i + 1) % jobs.length);
+            setAnim(null);
+            const tv3 = setTimeout(() => setResponse(null), 900);
+            timersRef.current.push(tv3);
+          }, 450);
+          timersRef.current.push(tv2);
+        }, 1500);
+        timersRef.current.push(tv1);
+        return;
+      }
+
       setAnim(auto === 'apply' ? 'out-right' : 'out-left');
       setResponse({
         kind: auto,
@@ -57,8 +109,14 @@ export function HeroChat({
     }, cycleMs);
     timersRef.current.push(t1);
 
-    return clearAllTimers;
-  }, [idx, anim, paused, job.company, cycleMs, jobs.length, clearAllTimers]);
+    // Cleanup только внешнего t1: при смене anim/paused React дёргает cleanup,
+    // и если бы тут был clearAllTimers — он бы убил t2/t3 от текущего цикла
+    // и таймеры из act() (клик), что приводит к dead-lock'у anim="out-right".
+    return () => clearTimeout(t1);
+  }, [idx, anim, paused, job.company, cycleMs, jobs.length]);
+
+  // Безопасная очистка всех таймеров на размонтирование.
+  useEffect(() => () => clearAllTimers(), [clearAllTimers]);
 
   const act = useCallback((kind: string) => {
     if (anim) return;
@@ -192,6 +250,22 @@ export function HeroChat({
                 <div style={{ fontWeight: 700, marginBottom: 2 }}>✅ Требования:</div>
                 {job.requirements?.map((r, i) => <div key={i} style={{ paddingLeft: 2 }}>• {r}</div>)}
               </div>
+              {job.trap && (
+                <div style={{
+                  marginTop: 8, padding: '8px 10px', borderRadius: 10,
+                  background: 'rgba(251,191,36,0.18)',
+                  border: '1px solid rgba(251,191,36,0.35)',
+                  display: 'flex', flexDirection: 'column', gap: 3,
+                }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: 6, fontSize: 11.5, fontWeight: 700, color: '#FBBF24' }}>
+                    <span aria-hidden="true">🚨</span>
+                    <span>Ловушка для невнимательных</span>
+                  </div>
+                  <div style={{ fontSize: 11, lineHeight: 1.4, color: '#E0DFDC', fontStyle: 'italic' }}>
+                    {job.trap}
+                  </div>
+                </div>
+              )}
               <div style={{
                 marginTop: 7, fontSize: 10.5, color: '#6C7883',
                 display: 'flex', justifyContent: 'space-between', alignItems: 'center',
@@ -215,16 +289,79 @@ export function HeroChat({
               <b style={{ color: '#FBBF24' }}>{job.match}% match</b> с твоим резюме 🔥
             </div>
 
-            {/* Bot response toast */}
-            {response && (
+            {/* Letter ready message — показываем когда нет toast о решении */}
+            {(!response || response.kind === 'voice-listening') && (
               <div style={{
-                background: response.kind === 'apply' ? 'rgba(22,163,74,0.18)' : 'rgba(239,68,68,0.14)',
-                border: `1px solid ${response.kind === 'apply' ? 'rgba(22,163,74,0.4)' : 'rgba(239,68,68,0.35)'}`,
+                background: '#182533', color: '#fff', padding: '10px 12px',
+                borderRadius: 14, borderBottomLeftRadius: 4, fontSize: 11.5,
+                alignSelf: 'flex-start', maxWidth: '94%',
+                opacity: anim ? 0.5 : 1, transition: 'opacity .2s',
+              }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: 6, marginBottom: 5, fontSize: 11, fontWeight: 700, color: '#FBBF24' }}>
+                  <span aria-hidden="true">✍</span>
+                  <span>Письмо готово, учёл ловушку</span>
+                </div>
+                <div style={{ fontSize: 10.5, lineHeight: 1.45, color: '#A8B3BD', marginBottom: 6, fontStyle: 'italic' }}>
+                  {letterPreview(job)}
+                </div>
+                <div style={{ display: 'flex', gap: 4 }}>
+                  <span style={{
+                    flex: 1, padding: '6px 8px', borderRadius: 8, textAlign: 'center',
+                    background: 'rgba(22,160,67,0.18)', color: '#52D47C',
+                    border: '1px solid rgba(22,160,67,0.4)', fontSize: 11, fontWeight: 700,
+                  }}>📨 Отправить</span>
+                  <span style={{
+                    flex: 1, padding: '6px 8px', borderRadius: 8, textAlign: 'center',
+                    background: 'rgba(251,191,36,0.18)', color: '#FBBF24',
+                    border: '1px solid rgba(251,191,36,0.4)', fontSize: 11, fontWeight: 700,
+                  }}>🎤 Поправить</span>
+                  <span style={{
+                    flex: 1, padding: '6px 8px', borderRadius: 8, textAlign: 'center',
+                    background: 'rgba(168,179,189,0.12)', color: '#A8B3BD',
+                    border: '1px solid rgba(168,179,189,0.3)', fontSize: 11, fontWeight: 700,
+                  }}>✕ Отмена</span>
+                </div>
+              </div>
+            )}
+
+            {/* Voice listening pulse */}
+            {response?.kind === 'voice-listening' && (
+              <div style={{
+                background: 'rgba(251,191,36,0.14)',
+                border: '1px solid rgba(251,191,36,0.4)',
+                color: '#FBBF24', padding: '8px 11px', borderRadius: 12, fontSize: 12,
+                alignSelf: 'flex-start', maxWidth: '92%',
+                display: 'flex', alignItems: 'center', gap: 8,
+              }}>
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/></svg>
+                <div style={{ display: 'flex', gap: 3, alignItems: 'center' }}>
+                  {[0,1,2,3,4].map(i => (
+                    <div key={i} style={{
+                      width: 3, height: 6 + (i % 3) * 5, borderRadius: 2,
+                      background: '#FBBF24',
+                      animation: `voice-pulse 0.8s ease-in-out ${i * 0.1}s infinite`,
+                    }}/>
+                  ))}
+                </div>
+                <span style={{ fontWeight: 700 }}>Слушаю правки…</span>
+              </div>
+            )}
+
+            {/* Bot response toast (apply / skip / voice-done) */}
+            {response && response.kind !== 'voice-listening' && (
+              <div style={{
+                background: response.kind === 'apply' || response.kind === 'voice-done'
+                  ? 'rgba(22,163,74,0.18)'
+                  : 'rgba(239,68,68,0.14)',
+                border: `1px solid ${response.kind === 'apply' || response.kind === 'voice-done'
+                  ? 'rgba(22,163,74,0.4)'
+                  : 'rgba(239,68,68,0.35)'}`,
                 color: '#fff', padding: '8px 11px', borderRadius: 12, fontSize: 12.5,
                 alignSelf: 'flex-start', maxWidth: '92%',
               }} dangerouslySetInnerHTML={{ __html: response.text }}/>
             )}
           </div>
+          <style>{`@keyframes voice-pulse { 0%, 100% { transform: scaleY(0.6); } 50% { transform: scaleY(1.4); } }`}</style>
 
           {/* Reply keyboard */}
           <div style={{ padding: '6px 6px 10px', background: '#0E1621', display: 'flex', flexDirection: 'column', gap: 4, flexShrink: 0 }}>

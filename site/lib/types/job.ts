@@ -12,4 +12,5 @@ export interface JobCard {
   tags?: string[];
   color?: string;
   abbr?: string;
+  trap?: string;
 }
