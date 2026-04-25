@@ -126,73 +126,79 @@ ssh root@204.168.178.241 "certbot renew --dry-run && systemctl status certbot.ti
 
 ---
 
-## Track B — Yandex 360 для `info@otklicker.ru` (можно делать параллельно с Track A)
+## Track B — ImprovMX форвард `info@otklicker.ru` → личный Gmail
 
-Цель: получить email `info@otklicker.ru` на Yandex 360 (он уже есть у пользователя).
+Цель: входящие письма на `info@otklicker.ru` приходят в личный Gmail пользователя. Никакого webmail, никакого нового inbox — просто форвард.
 
-### Шаг B.1 — Добавить домен в Yandex 360
+### Шаг B.1 — Регистрация в ImprovMX (~2 мин)
 
-1. Зайти в **https://360.yandex.ru/admin/** под аккаунтом владельца Yandex 360
-2. Раздел "Домены" (или "Организация" → "Домены")
-3. "Добавить домен" → ввести `otklicker.ru` → "Подтвердить владение"
+1. Открыть **https://improvmx.com**
+2. Sign up (или Login через Google — удобно если хочешь связать сразу с тем же Gmail)
+3. После входа: «Add domain» → ввести `otklicker.ru`
 
-Yandex выдаст один из вариантов верификации:
-- **CNAME**: `yamail-<хеш>.otklicker.ru` → `mail.yandex.ru`
-- **TXT**: `yandex-verification: <хеш>`
-- **HTML файл**: положить в корень сайта
+ImprovMX покажет 2 MX-записи и SPF — их нужно прописать в Timeweb DNS (шаг B.2).
 
-Проще всего — TXT.
+### Шаг B.2 — Добавить MX и SPF в Timeweb DNS
 
-### Шаг B.2 — Добавить TXT-запись в Timeweb DNS
+В Timeweb-панели → DNS-записи `otklicker.ru`:
 
-| Запись | Имя | Значение | TTL |
-|---|---|---|---|
-| `TXT` | `@` (или `otklicker.ru`) | `yandex-verification: <ХЕШ>` | 3600 |
+**Удалить старые MX:**
+| Запись | Старое значение | Действие |
+|---|---|---|
+| `MX @` | `mx1.timeweb.ru` priority 10 | удалить |
+| `MX @` | `mx2.timeweb.ru` priority 20 | удалить |
 
-### Шаг B.3 — Дождаться верификации (5-30 мин)
-
-В Yandex-админке нажать "Проверить". Когда домен подтверждён — Yandex откроет настройки MX/DKIM.
-
-### Шаг B.4 — Заменить MX-записи в Timeweb DNS
-
-| Запись | Старое значение | Новое значение | Priority | TTL |
+**Добавить новые MX:**
+| Запись | Имя | Значение | Priority | TTL |
 |---|---|---|---|---|
-| `MX` | `mx1.timeweb.ru` 10 | **`mx.yandex.net`** | 10 | 3600 |
-| `MX` | `mx2.timeweb.ru` 20 | (удалить или оставить только Yandex) | — | — |
+| `MX` | `@` | `mx1.improvmx.com` | 10 | 3600 |
+| `MX` | `@` | `mx2.improvmx.com` | 20 | 3600 |
 
-**ВАЖНО:** удалить ВСЕ MX-записи кроме Yandex'овой. Иначе почта будет приходить через Timeweb, и Yandex её не получит.
-
-### Шаг B.5 — Обновить SPF
-
-Заменить существующую SPF-запись (если есть, обычно `v=spf1 include:spf.timeweb.ru ~all`):
+**SPF (TXT):** если уже есть SPF на `@` (что-то вроде `v=spf1 include:spf.timeweb.ru ~all`) — заменить:
 
 | Запись | Имя | Значение | TTL |
 |---|---|---|---|
-| `TXT` | `@` | `v=spf1 redirect=_spf.yandex.net` | 3600 |
+| `TXT` | `@` | `v=spf1 include:spf.improvmx.com ~all` | 3600 |
 
-### Шаг B.6 — Добавить DKIM
+Если SPF не было — добавить ту же строку.
 
-В Yandex-админке: **Домены → otklicker.ru → DKIM** → скопировать TXT-запись (длинная строка).
+DKIM в free tier ImprovMX **не требуется** — они подписывают исходящие через свой домен. Это нормально для форварда (входящие проходят оригинальную DKIM-проверку через ImprovMX как relay).
 
-| Запись | Имя | Значение | TTL |
-|---|---|---|---|
-| `TXT` | `mail._domainkey` | `v=DKIM1; k=rsa; p=<длинный_ключ>` | 3600 |
+### Шаг B.3 — Подождать пропагацию (5-15 мин)
 
-### Шаг B.7 — Создать ящик `info@otklicker.ru`
-
-В Yandex 360: "Сотрудники" → "Добавить" → email `info@otklicker.ru`. Логин — на ваш выбор. Пароль установить.
-
-### Шаг B.8 — Проверка почты
-
-Через 1-3 часа после смены MX:
+Проверка:
 ```bash
 dig +short otklicker.ru MX @8.8.8.8
-# должно вернуть mx.yandex.net
 ```
 
-Отправить тестовое письмо с Gmail на `info@otklicker.ru`. Проверить в Yandex-почте что пришло.
+Должно вернуть `mx1.improvmx.com.` и `mx2.improvmx.com.`. В ImprovMX-дашборде статус «Active» / зелёная галочка.
 
-Также можно проверить через https://www.mail-tester.com/ — отправить туда письмо с `info@otklicker.ru`, получить score (должен быть 9-10/10 если SPF + DKIM настроены).
+### Шаг B.4 — Настроить alias в ImprovMX
+
+В ImprovMX dashboard → твой домен → «Aliases» → «Add alias»:
+
+| Field | Value |
+|---|---|
+| Alias | `info` |
+| Forward to | `твой-личный@gmail.com` |
+
+Можно добавить catch-all: алиас `*` → твой Gmail (тогда `support@`, `hr@`, что угодно тоже придёт).
+
+### Шаг B.5 — Тест
+
+С другого ящика отправь письмо на `info@otklicker.ru`. Через 5-30 секунд должно прийти в твой личный Gmail (с пометкой "via improvmx" в заголовках, в Gmail UI просто появится).
+
+Проверка через **https://www.mail-tester.com/**: отправляешь туда письмо, видишь spam-score. Должно быть 8-10/10 если MX и SPF настроены правильно.
+
+### Шаг B.6 (опционально) — Отправлять КАК `info@otklicker.ru` из Gmail
+
+ImprovMX free tier не даёт SMTP-relay для исходящих. Если хочешь писать ИЗ `info@otklicker.ru` (а не просто отвечать с обычного Gmail) — нужен внешний SMTP. Бесплатные варианты:
+
+- **Brevo (бывший Sendinblue)** — 300 писем/день бесплатно. SMTP credentials → в Gmail "Settings → Accounts → Send mail as". Минут 15 настройки.
+- **Mailjet free tier** — 200/день
+- **SendGrid free tier** — 100/день
+
+Эта настройка опциональна и не блокирует приёмку лендинга. Без неё ты просто отвечаешь с обычного Gmail-адреса. Для legal-уведомлений и certbot-renew достаточно входящих.
 
 ---
 
