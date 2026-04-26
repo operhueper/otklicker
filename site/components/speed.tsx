@@ -126,7 +126,52 @@ export function SpeedSection() {
 
       <style>{`
         @media (max-width: 860px) { .speed-stats { grid-template-columns: 1fr !important; } }
-        @media (max-width: 720px) { .race-board { padding: 22px 18px 20px !important; border-radius: 22px !important; } }
+
+        @media (max-width: 720px) {
+          .race-board { padding: 22px 18px 20px !important; border-radius: 22px !important; }
+
+          /* Switch lane grid to single column — label moves above track */
+          .race-lane {
+            grid-template-columns: 1fr !important;
+            gap: 0 !important;
+          }
+
+          /* Hide desktop sidebar label, show mobile header instead */
+          .speed-lane-label { display: none !important; }
+          .speed-lane-header { display: flex !important; }
+
+          /* Taller track on mobile so caption cards have room */
+          .speed-track { height: 160px !important; }
+
+          /* Time axis: drop the 200px ghost column */
+          .speed-axis {
+            grid-template-columns: 1fr !important;
+          }
+          .speed-axis > div:first-child { display: none !important; }
+
+          /* Playhead: align to track left edge (no 200px offset) */
+          .speed-playhead { left: 0 !important; }
+
+          /* Beat caption cards: smaller font and min-width on mobile */
+          .race-lane .speed-track > div[style*="position: absolute"][style*="min-width"] {
+            min-width: 110px !important;
+            font-size: 11px !important;
+          }
+        }
+
+        @media (max-width: 480px) {
+          /* Even tighter: allow caption cards to wrap text */
+          .race-lane .speed-track > div[style*="position: absolute"][style*="min-width"] {
+            min-width: 90px !important;
+            white-space: normal !important;
+            max-width: 130px !important;
+          }
+
+          /* FiltersTile chips: allow wrapping, no overflow */
+          .speed-stats span[style*="white-space: nowrap"] {
+            white-space: normal !important;
+          }
+        }
       `}</style>
     </section>
   );
@@ -149,9 +194,18 @@ function Lane({ kind, title, subtitle, minute, beats }: { kind: string; title: s
   const fillToPct = triggered.length === 0 ? 0 : pct(triggered[triggered.length - 1].t);
   const sleepEnd = pct(720);
 
+  // Compute per-beat extra vertical offset for beats that are close together in the same lane
+  // to prevent caption cards from overlapping each other.
+  const beatExtras: number[] = beats.map((b, i) => {
+    if (i === 0) return 0;
+    const dist = Math.abs(pct(b.t) - pct(beats[i - 1].t));
+    return dist < 8 ? 46 : 0;
+  });
+
   return (
     <div className="race-lane" style={{ position: 'relative', display: 'grid', gridTemplateColumns: '200px 1fr', gap: 20, alignItems: 'stretch' }}>
-      <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', padding: '18px 0', gap: 6 }}>
+      {/* Desktop label column — hidden on mobile, replaced by .speed-lane-header */}
+      <div className="speed-lane-label" style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', padding: '18px 0', gap: 6 }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
           <div style={{
             width: 28, height: 28, borderRadius: 8,
@@ -171,7 +225,28 @@ function Lane({ kind, title, subtitle, minute, beats }: { kind: string; title: s
         <div style={{ fontSize: 12.5, color: 'var(--text-sub)', lineHeight: 1.4, paddingLeft: 38 }}>{subtitle}</div>
       </div>
 
-      <div style={{ position: 'relative', height: 132, padding: '16px 0' }}>
+      {/* Mobile-only label header — shown above the track on small screens */}
+      <div className="speed-lane-header" style={{ display: 'none', alignItems: 'center', gap: 10, padding: '0 0 8px' }}>
+        <div style={{
+          flexShrink: 0, width: 28, height: 28, borderRadius: 8,
+          background: isBot ? 'var(--brand-gradient)' : 'rgba(168,162,158,0.25)',
+          display: 'inline-flex', alignItems: 'center', justifyContent: 'center',
+          color: isBot ? '#fff' : '#78716C',
+          boxShadow: isBot ? '0 6px 14px rgba(219,39,119,0.25)' : 'none',
+        }}>
+          {isBot ? (
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><polyline points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+          ) : (
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+          )}
+        </div>
+        <div>
+          <div style={{ fontSize: 15, fontWeight: 800, letterSpacing: '-0.01em', color: 'var(--text-heading)', lineHeight: 1.2 }}>{title}</div>
+          <div style={{ fontSize: 11.5, color: 'var(--text-sub)', lineHeight: 1.3, marginTop: 2 }}>{subtitle}</div>
+        </div>
+      </div>
+
+      <div className="speed-track" style={{ position: 'relative', height: 148, padding: '16px 0' }}>
         <div style={{
           position: 'absolute', left: 0, right: 0, top: 24, bottom: 24,
           background: isBot ? 'linear-gradient(90deg, rgba(251,191,36,0.06), rgba(219,39,119,0.04))' : 'rgba(168,162,158,0.06)',
@@ -203,18 +278,22 @@ function Lane({ kind, title, subtitle, minute, beats }: { kind: string; title: s
         }}/>
 
         {beats.map((b, i) => (
-          <BeatMarker key={i} beat={b} triggered={minute >= b.t} isBot={isBot}/>
+          <BeatMarker key={i} beat={b} triggered={minute >= b.t} isBot={isBot} extraOffset={beatExtras[i]}/>
         ))}
       </div>
     </div>
   );
 }
 
-function BeatMarker({ beat, triggered, isBot }: { beat: Beat; triggered: boolean; isBot: boolean }) {
+function BeatMarker({ beat, triggered, isBot, extraOffset = 0 }: { beat: Beat; triggered: boolean; isBot: boolean; extraOffset?: number }) {
   const left = pct(beat.t);
   const cardAlign = left > 78 ? 'right' : left < 12 ? 'left' : 'center';
   const transformX = cardAlign === 'right' ? 'translateX(-100%)' : cardAlign === 'left' ? 'translateX(0)' : 'translateX(-50%)';
   const winColor = beat.emphasis === 'win' ? '#15803D' : beat.emphasis === 'lose' ? '#B91C1C' : null;
+
+  // Base card offset from the dot center. Increased to 28px (was 22px) for more axis breathing room.
+  // extraOffset further shifts the card away to prevent adjacent-beat card collision.
+  const baseOffset = 28 + extraOffset;
 
   return (
     <div style={{ position: 'absolute', left: `${left}%`, top: 0, bottom: 0, width: 0, pointerEvents: 'none' }}>
@@ -237,8 +316,8 @@ function BeatMarker({ beat, triggered, isBot }: { beat: Beat; triggered: boolean
       }}/>
       <div style={{
         position: 'absolute', left: 0,
-        top: isBot ? 'auto' : 'calc(50% + 22px)',
-        bottom: isBot ? 'calc(50% + 22px)' : 'auto',
+        top: isBot ? 'auto' : `calc(50% + ${baseOffset}px)`,
+        bottom: isBot ? `calc(50% + ${baseOffset}px)` : 'auto',
         transform: transformX,
         minWidth: 130,
         maxWidth: cardAlign === 'right' ? 170 : 220,
@@ -250,6 +329,7 @@ function BeatMarker({ beat, triggered, isBot }: { beat: Beat; triggered: boolean
         transition: 'all 0.4s',
         textAlign: cardAlign === 'right' ? 'right' : 'left',
         pointerEvents: 'auto',
+        zIndex: 4,
       }}>
         <div style={{
           display: 'flex', alignItems: 'center', gap: 6, fontSize: 11, fontWeight: 800,
@@ -274,31 +354,35 @@ function BeatMarker({ beat, triggered, isBot }: { beat: Beat; triggered: boolean
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 function TimeAxis({ minute, playheadPct: _playheadPct }: { minute: number; playheadPct: number }) {
+  const ticks = (HOUR_TICKS as HourTick[]).map((tick, i) => {
+    const passed = minute >= tick.t;
+    const isMidnight = tick.weight === 'midnight';
+    const isStrong = tick.weight === 'strong';
+    return (
+      <div key={i} style={{
+        position: 'absolute', left: `${pct(tick.t)}%`, top: '50%',
+        transform: 'translate(-50%, -50%)',
+        display: 'flex', alignItems: 'center', gap: 6, padding: '3px 8px',
+        borderRadius: 999, background: '#fff',
+        border: `1px solid ${isStrong ? 'var(--line-strong)' : 'var(--line)'}`,
+        boxShadow: '0 0 0 2px #fff',
+        fontSize: 10.5, fontWeight: 700,
+        color: passed ? 'var(--text-heading)' : 'var(--text-muted)',
+        letterSpacing: '0.04em', fontVariantNumeric: 'tabular-nums', transition: 'color 0.3s',
+        zIndex: 5,
+      }}>
+        {isMidnight && <svg width="9" height="9" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>}
+        {tick.label}
+      </div>
+    );
+  });
+
   return (
-    <div style={{ display: 'grid', gridTemplateColumns: '200px 1fr', gap: 20, margin: '4px 0' }}>
+    <div className="speed-axis" style={{ display: 'grid', gridTemplateColumns: '200px 1fr', gap: 20, margin: '4px 0' }}>
       <div/>
-      <div style={{ position: 'relative', height: 28 }}>
+      <div style={{ position: 'relative', height: 36 }}>
         <div style={{ position: 'absolute', left: 0, right: 0, top: '50%', height: 1, background: 'var(--line-strong)', transform: 'translateY(-50%)' }}/>
-        {(HOUR_TICKS as HourTick[]).map((tick, i) => {
-          const passed = minute >= tick.t;
-          const isMidnight = tick.weight === 'midnight';
-          const isStrong = tick.weight === 'strong';
-          return (
-            <div key={i} style={{
-              position: 'absolute', left: `${pct(tick.t)}%`, top: '50%',
-              transform: 'translate(-50%, -50%)',
-              display: 'flex', alignItems: 'center', gap: 6, padding: '2px 8px',
-              borderRadius: 999, background: '#fff',
-              border: `1px solid ${isStrong ? 'var(--line-strong)' : 'var(--line)'}`,
-              fontSize: 10.5, fontWeight: 700,
-              color: passed ? 'var(--text-heading)' : 'var(--text-muted)',
-              letterSpacing: '0.04em', fontVariantNumeric: 'tabular-nums', transition: 'color 0.3s',
-            }}>
-              {isMidnight && <svg width="9" height="9" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>}
-              {tick.label}
-            </div>
-          );
-        })}
+        {ticks}
       </div>
     </div>
   );
@@ -306,7 +390,7 @@ function TimeAxis({ minute, playheadPct: _playheadPct }: { minute: number; playh
 
 function Playhead({ playheadPct }: { playheadPct: number }) {
   return (
-    <div style={{ position: 'absolute', left: 'calc(200px + 20px)', right: 0, top: 0, bottom: 0, pointerEvents: 'none' }} aria-hidden="true">
+    <div className="speed-playhead" style={{ position: 'absolute', left: 'calc(200px + 20px)', right: 0, top: 0, bottom: 0, pointerEvents: 'none' }} aria-hidden="true">
       <div style={{ position: 'absolute', left: `${playheadPct}%`, top: 0, bottom: 0, width: 0, transform: 'translateX(-50%)' }}>
         <div style={{
           position: 'absolute', left: 0, top: 0, bottom: 0, width: 2,

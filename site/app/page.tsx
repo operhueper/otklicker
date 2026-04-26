@@ -1,7 +1,6 @@
 import type { Metadata } from 'next';
 import { Nav } from '@/components/nav';
 import { Hero } from '@/components/hero';
-import { TeaserStrip } from '@/components/teaser-strip';
 import { HowItWorks } from '@/components/how-it-works';
 import { CoverLetter } from '@/components/cover-letter';
 import { Features } from '@/components/features';
@@ -78,7 +77,6 @@ export default function HomePage() {
       <Nav />
       <main>
         <Hero variant="chat" />
-        <TeaserStrip />
         <HowItWorks />
         <CoverLetter />
         <Features />

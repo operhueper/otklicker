@@ -15,10 +15,10 @@ export function Pricing({ plans = PRICING_PLANS }: PricingProps) {
         <div style={{ textAlign: 'center', maxWidth: 720, margin: '0 auto' }}>
           <div className="eyebrow"><span className="eyebrow-dot" aria-hidden="true"/>Тарифы</div>
           <h2 className="text-h2 text-text-heading" style={{ margin: '16px 0 14px' }}>
-            Платите, пока<br/><span className="grad-text">ищете работу</span>
+            Один пакет<br/>на <span className="grad-text">активный поиск</span>
           </h2>
           <p style={{ fontSize: 17, color: 'var(--text-sub)', lineHeight: 1.55, margin: 0 }}>
-            Разовые пакеты без автопродления. Нашли оффер — закрыли задачу.
+            без автопродления. Нашли оффер — закрыли задачу.
           </p>
         </div>
 

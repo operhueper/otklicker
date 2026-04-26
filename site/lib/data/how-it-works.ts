@@ -5,7 +5,7 @@ export const HOW_IT_WORKS_STEPS: HowItWorksStep[] = [
     number: '01',
     title: 'Резюме за 7–10 минут',
     description: 'Бот задаёт вопросы голосом или текстом. Загружаете старое резюме — он парсит файл и подсказывает, что усилить.',
-    screen: 'onboarding',
+    screen: 'resume-menu',
   },
   {
     number: '02',
@@ -17,7 +17,7 @@ export const HOW_IT_WORKS_STEPS: HowItWorksStep[] = [
     number: '03',
     title: 'Фильтры и режим',
     description: 'Зарплата, опыт, гео, график, стоп-слова. Два режима: «С подтверждением» и «Автопилот» с порогом 75%.',
-    screen: 'hh-panel',
+    screen: 'filters',
   },
   {
     number: '04',

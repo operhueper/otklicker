@@ -3,7 +3,9 @@ export type BotScreenId =
   | 'main-menu'
   | 'hh-auth'
   | 'hh-panel'
-  | 'vacancy';
+  | 'vacancy'
+  | 'resume-menu'
+  | 'filters';
 
 export interface KeyboardButton {
   emoji?: string;
