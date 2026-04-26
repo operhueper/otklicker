@@ -18,7 +18,7 @@ export function Pricing({ plans = PRICING_PLANS }: PricingProps) {
             Один пакет<br/>на <span className="grad-text">активный поиск</span>
           </h2>
           <p style={{ fontSize: 17, color: 'var(--text-sub)', lineHeight: 1.55, margin: 0 }}>
-            без автопродления. Нашли оффер — закрыли задачу.
+            без автопродления. Нашли оффер, закрыли задачу.
           </p>
         </div>
 

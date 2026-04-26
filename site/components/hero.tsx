@@ -1,4 +1,4 @@
-import { Send, ArrowRight } from 'lucide-react';
+import { Send } from 'lucide-react';
 import { HeroChat } from './hero-chat';
 import { HeroSwipe } from './hero-swipe';
 
@@ -23,12 +23,12 @@ export function Hero({ variant = 'chat' }: HeroProps) {
               Telegram-бот для поиска работы на HH.ru
             </div>
             <h1 className="text-h1 text-text-heading" style={{ margin: '22px 0 20px' }}>
-              Читает вакансию.<br/>Пишет письмо. <span className="grad-text">Ловит ловушки HR.</span>
+              Бот ищет работу на HH<br/><span className="grad-text">быстрее ручного поиска</span>
             </h1>
             <p style={{ fontSize: 19, lineHeight: 1.55, color: 'var(--text-sub)', maxWidth: 540, margin: '0 0 36px' }}>
-              Бот проверяет свежие вакансии на HH каждые 15 минут, 24/7. Под каждую пишет личное сопроводительное: с вашим опытом, под тон работодателя, со скрытыми требованиями HR. Хотите поправить? Надиктуйте, бот переформулирует. Всё в Telegram, без захода на HH.
+              Откликается на свежие HH-вакансии личным письмом, замечает ловушки HR, отвечает работодателям прямо в Telegram.
             </p>
-            <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap', marginBottom: 36 }}>
+            <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap', marginBottom: 18 }}>
               <a
                 href="https://t.me/otklicker_bot"
                 target="_blank"
@@ -38,18 +38,12 @@ export function Hero({ variant = 'chat' }: HeroProps) {
               >
                 <Send size={18} /> Открыть @otklicker_bot
               </a>
-              <a
-                href="https://t.me/otklicker"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="btn btn-ghost"
-                style={{ padding: '16px 22px', fontSize: 15 }}
-              >
-                Канал @otklicker <ArrowRight size={16} />
-              </a>
+            </div>
+            <div style={{ fontSize: 14, fontWeight: 600, color: 'var(--text-heading)', marginBottom: 14 }}>
+              Старт бесплатно. Оплата только за активный поиск
             </div>
             <div style={{ fontSize: 13, color: 'var(--text-sub)', lineHeight: 1.5, maxWidth: 460 }}>
-              Авторизация на HH по одноразовому коду. Пароль не запрашиваем и не храним.
+              Авторизация на HH по одноразовому коду, пароль не запрашиваем и не храним
             </div>
           </div>
 

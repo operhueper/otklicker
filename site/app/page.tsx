@@ -4,7 +4,6 @@ import { Hero } from '@/components/hero';
 import { HowItWorks } from '@/components/how-it-works';
 import { CoverLetter } from '@/components/cover-letter';
 import { Features } from '@/components/features';
-import { SpeedSection } from '@/components/speed';
 import { Pricing } from '@/components/pricing';
 import { FAQ } from '@/components/faq';
 import { FinalCTA } from '@/components/final-cta';
@@ -12,10 +11,10 @@ import { Footer } from '@/components/footer';
 import { CookieBanner } from '@/components/cookie-banner';
 
 const homeDescription =
-  'Telegram-бот @otklicker_bot для автооткликов на HH.ru. Резюме за 7-10 минут, отклики в первые минуты после публикации, переписка с HR — в одном Telegram.';
+  'Telegram-бот @otklicker_bot для автооткликов на HH.ru. Резюме за 7-10 минут, отклики в первые минуты после публикации, переписка с HR в одном Telegram.';
 
 export const metadata: Metadata = {
-  title: 'откликер — Telegram-бот автооткликов на HH.ru',
+  title: 'откликер: Telegram-бот автооткликов на HH.ru',
   description: homeDescription,
   alternates: { canonical: '/' },
   openGraph: {
@@ -23,12 +22,12 @@ export const metadata: Metadata = {
     locale: 'ru_RU',
     url: 'https://otklicker.ru/',
     siteName: 'откликер',
-    title: 'откликер — Telegram-бот автооткликов на HH.ru',
+    title: 'откликер: Telegram-бот автооткликов на HH.ru',
     description: homeDescription,
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'откликер — Telegram-бот автооткликов на HH.ru',
+    title: 'откликер: Telegram-бот автооткликов на HH.ru',
     description: homeDescription,
   },
 };
@@ -80,7 +79,6 @@ export default function HomePage() {
         <HowItWorks />
         <CoverLetter />
         <Features />
-        <SpeedSection />
         <Pricing />
         <FAQ />
         <FinalCTA />

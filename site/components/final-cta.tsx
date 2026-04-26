@@ -19,7 +19,7 @@ export function FinalCTA() {
               Свежая вакансия<br/>ждать не будет
             </h2>
             <p style={{ fontSize: 18, opacity: 0.9, margin: '0 0 28px', maxWidth: 520, marginLeft: 'auto', marginRight: 'auto' }}>
-              Запустите @otklicker_bot — пока вы читаете эту страницу, бот уже мог бы отправить отклик.
+              Запустите @otklicker_bot. Пока вы читаете эту страницу, бот уже мог бы отправить отклик.
             </p>
             <div style={{ display: 'flex', gap: 12, justifyContent: 'center', flexWrap: 'wrap' }}>
               <a
