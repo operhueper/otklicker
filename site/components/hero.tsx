@@ -23,7 +23,7 @@ export function Hero({ variant = 'chat' }: HeroProps) {
               Telegram-бот для поиска работы на HH.ru
             </div>
             <h1 className="text-h1 text-text-heading" style={{ margin: '22px 0 20px' }}>
-              Бот ищет работу на HH<br/><span className="grad-text">быстрее ручного поиска</span>
+              Бот ищет работу на HH.ru<br/><span className="grad-text">быстрее ручного поиска</span>
             </h1>
             <p style={{ fontSize: 19, lineHeight: 1.55, color: 'var(--text-sub)', maxWidth: 540, margin: '0 0 36px' }}>
               Откликается на свежие HH-вакансии личным письмом, замечает ловушки HR, отвечает работодателям прямо в Telegram.
