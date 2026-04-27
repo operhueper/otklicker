@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import { Nav } from '@/components/nav';
 import { Hero } from '@/components/hero';
 import { HowItWorks } from '@/components/how-it-works';
+import { HHvsOtklicker } from '@/components/hh-vs-otklicker';
 import { CoverLetter } from '@/components/cover-letter';
 import { Features } from '@/components/features';
 import { Pricing } from '@/components/pricing';
@@ -85,6 +86,7 @@ export default function HomePage() {
       <main>
         <Hero variant="chat" />
         <HowItWorks />
+        <HHvsOtklicker />
         <CoverLetter />
         <Features />
         <Pricing />
