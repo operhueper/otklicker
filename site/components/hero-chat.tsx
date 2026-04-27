@@ -6,8 +6,6 @@ import type { JobCard } from '@/lib/types';
 
 interface HeroChatProps {
   jobs?: JobCard[];
-  initialSent?: number;
-  initialSkipped?: number;
   cycleMs?: number;
 }
 
@@ -42,13 +40,9 @@ function letterPreview(job: JobCard): string {
 
 export function HeroChat({
   jobs = HERO_CHAT_JOBS,
-  initialSent = 127,
-  initialSkipped = 94,
   cycleMs = 3000,
 }: HeroChatProps) {
   const [idx, setIdx] = useState(0);
-  const [sent, setSent] = useState(0);
-  const [skipped, setSkipped] = useState(0);
   const [response, setResponse] = useState<{ kind: string; text: string } | null>(null);
   const [anim, setAnim] = useState<string | null>(null);
   const [paused, setPaused] = useState(false);
@@ -78,7 +72,6 @@ export function HeroChat({
           setResponse({ kind: 'voice-done', text: '✓ Переформулировал в формальный тон' });
           setAnim('out-right');
           const tv2 = setTimeout(() => {
-            setSent(s => s + 1);
             setIdx(i => (i + 1) % jobs.length);
             setAnim(null);
             const tv3 = setTimeout(() => setResponse(null), 900);
@@ -98,8 +91,6 @@ export function HeroChat({
           : `⏭ Пропущено. Ищу следующую…`,
       });
       const t2 = setTimeout(() => {
-        if (auto === 'apply') setSent(s => s + 1);
-        else setSkipped(s => s + 1);
         setIdx(i => (i + 1) % jobs.length);
         setAnim(null);
         const t3 = setTimeout(() => setResponse(null), 900);
@@ -130,8 +121,6 @@ export function HeroChat({
         : `⏭ Пропущено. Ищу следующую…`,
     });
     const t1 = setTimeout(() => {
-      if (kind === 'apply') setSent(s => s + 1);
-      else setSkipped(s => s + 1);
       setIdx(i => (i + 1) % jobs.length);
       setAnim(null);
       const t2 = setTimeout(() => {

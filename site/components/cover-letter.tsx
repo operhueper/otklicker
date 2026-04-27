@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect, useRef } from 'react';
-import { AlertTriangle, KeyRound } from 'lucide-react';
+import { AlertTriangle } from 'lucide-react';
 
 interface CoverLetterSample {
   jobTitle: string;
@@ -87,19 +87,6 @@ export function CoverLetter() {
       />
 
       <div className="mx-auto max-w-container px-6" style={{ position: 'relative', zIndex: 2 }}>
-        <div style={{ maxWidth: 760, marginBottom: 56 }}>
-          <div className="eyebrow">
-            <span className="eyebrow-dot" aria-hidden="true" />
-            Сопроводительное
-          </div>
-          <h2 id="cover-letter-title" className="text-h2 text-text-heading" style={{ margin: '16px 0 18px' }}>
-            Письмо под вакансию, <span className="grad-text">которое HR прочитает</span>
-          </h2>
-          <p style={{ fontSize: 18, color: 'var(--text-sub)', margin: 0, lineHeight: 1.55, maxWidth: 620 }}>
-            Бот собирает сопроводительное из текста вакансии и вашего резюме. Не шаблон. Перед отправкой показывает превью: можно поправить голосом или текстом.
-          </p>
-        </div>
-
         <div
           className="cover-grid"
           style={{
@@ -109,14 +96,35 @@ export function CoverLetter() {
             alignItems: 'center',
           }}
         >
-          {/* Phone mockup */}
-          <div style={{ display: 'flex', justifyContent: 'center' }}>
-            <PhonePreview sample={sample} fade={fade} />
+          {/* Left column: text */}
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 24 }}>
+            <div>
+              <div className="eyebrow">
+                <span className="eyebrow-dot" aria-hidden="true" />
+                Сопроводительное
+              </div>
+              <h2 id="cover-letter-title" className="text-h2 text-text-heading" style={{ margin: '16px 0 18px' }}>
+                Письмо под вакансию, <span className="grad-text">не шаблон</span>
+              </h2>
+              <ul style={{ listStyle: 'none', padding: 0, margin: '0 0 24px', display: 'flex', flexDirection: 'column', gap: 10 }}>
+                {[
+                  'Собирается из текста вакансии и вашего резюме',
+                  'Превью перед отправкой',
+                  'Правки голосом или текстом',
+                ].map((item) => (
+                  <li key={item} style={{ display: 'flex', alignItems: 'flex-start', gap: 10, fontSize: 16, color: 'var(--text-sub)', lineHeight: 1.5 }}>
+                    <span style={{ color: '#DB2777', fontWeight: 700, flexShrink: 0 }}>-</span>
+                    <span>{item}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+            <TrapsBlock />
           </div>
 
-          {/* Right column: traps */}
-          <div style={{ display: 'flex', flexDirection: 'column', gap: 24 }}>
-            <TrapsBlock />
+          {/* Right column: phone mockup */}
+          <div style={{ display: 'flex', justifyContent: 'center' }}>
+            <PhonePreview sample={sample} fade={fade} />
           </div>
         </div>
       </div>
@@ -478,32 +486,48 @@ function PhonePreview({ sample, fade }: { sample: CoverLetterSample; fade: boole
 
 function TrapsBlock() {
   return (
-    <div>
+    <div
+      style={{
+        background: '#FEF3C7',
+        border: '1px solid rgba(249,115,22,0.28)',
+        borderRadius: 16,
+        padding: '14px 16px',
+        display: 'flex',
+        alignItems: 'flex-start',
+        gap: 12,
+      }}
+    >
       <div
         style={{
-          fontSize: 20,
-          fontWeight: 800,
-          color: 'var(--text-heading)',
-          letterSpacing: '-0.01em',
-          marginBottom: 6,
+          width: 36,
+          height: 36,
+          borderRadius: 10,
+          background: 'rgba(249,115,22,0.18)',
+          color: '#C2410C',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          flexShrink: 0,
         }}
+        aria-hidden="true"
       >
-        Замечает ловушки HR
+        <AlertTriangle size={18} />
       </div>
-      <div style={{ fontSize: 14, color: 'var(--text-sub)', lineHeight: 1.5, marginBottom: 14 }}>
-        Иногда HR прячет в тексте вакансии скрытое требование к отклику. Бот вытаскивает его в карточку, чтобы вы не пропустили.
-      </div>
-      <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
-        <TrapCard
-          icon={<AlertTriangle size={18} />}
-          title="Указать ЗП в письме"
-          text="Без указания зарплаты HR закроет резюме как «отклик вслепую»."
-        />
-        <TrapCard
-          icon={<KeyRound size={18} />}
-          title="Кодовая фраза в начале письма"
-          text="«В начале письма укажите: Frontend MVP Phuket». Фильтр на тех, кто прочитал вакансию до конца."
-        />
+      <div style={{ flex: 1, minWidth: 0 }}>
+        <div
+          style={{
+            fontSize: 15,
+            fontWeight: 800,
+            color: '#92400E',
+            letterSpacing: '-0.01em',
+            marginBottom: 4,
+          }}
+        >
+          Замечает ловушки HR
+        </div>
+        <div style={{ fontSize: 13.5, color: '#78350F', lineHeight: 1.45 }}>
+          Скрытое требование в тексте вакансии бот вытаскивает в карточку - вы не пропустите.
+        </div>
       </div>
     </div>
   );
