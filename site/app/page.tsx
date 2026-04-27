@@ -61,8 +61,16 @@ const jsonLd = {
   ],
   publisher: {
     '@type': 'Organization',
-    name: 'откликер',
+    name: 'ИП Энбом К.И.',
+    alternateName: 'откликер',
     url: 'https://otklicker.ru',
+    email: 'info@otklicker.ru',
+    identifier: {
+      '@type': 'PropertyValue',
+      propertyID: 'ОГРНИП',
+      value: '324632700187012',
+    },
+    sameAs: ['https://t.me/otklicker_bot', 'https://t.me/otklicker'],
   },
 };
 

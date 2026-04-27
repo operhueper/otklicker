@@ -4,17 +4,34 @@
 
 Лендинг otklicker.ru для Telegram-бота [@otklicker_bot](https://t.me/otklicker_bot). Бот помогает соискателям получать приглашения с HH.ru: собирает резюме за 7-10 минут, авторизует через одноразовый код HH, скорит вакансии, откликается и отвечает HR в Telegram.
 
+## Запуск 5 мая 2026 (waitlist 300/день)
+
+Запускаемся волнами по 300 человек/день, активация в 10:00 МСК. До 5 мая waitlist выключен. Цель ~3000 юзеров за первую волну.
+
+В текстах НИКОГДА: «попробуй прямо сейчас», «мгновенный доступ». Допустимо: «займи место», «ранний доступ», «открывается волнами».
+
+Канал @otklicker ведёт founder, не Артём. У Артёма легенда HR-соискателя, не разработчика, голоса не путать.
+
+Источник правды по очереди: задача в Notion «Очередь ранней волны (waitlist)». Мастер-документ запуска: `docs/LAUNCH_RUNBOOK.md`. Готовый контент: `marketing-engine/data/prewritten_posts.json`, `promo/content/articles/vc-launch-day.md`, `promo/artem/chats/launch-week-context.md`.
+
 ## Структура каталогов
 
 ```
-site/            Next.js 14 App Router + TypeScript + Tailwind, static export
-promo/           Промо-материалы (персона, посты, SEO)
-legal/           Юридика (SITE_PRIVACY_POLICY.md, COOKIE_POLICY.md, placeholders)
-deploy/          nginx-конфиг, GitHub Actions, security-чеклист
-docs/            PRODUCT_FACTS.md, ARTEM_CHATS.md
-marketing-engine/ Python userbot (Telethon + Claude CLI) — автономный проект
-.planning/       architecture.md, component-map.md, brand-tokens.md, PLAN.md
+site/             Next.js 14 App Router + TypeScript + Tailwind, static export
+promo/            Промо: персона Артёма, контент-план, SEO
+  artem/            persona.md, voice.md, chats/launch-week-context.md
+  content/articles/ vc-launch-day.md и далее
+  seo/              keywords.md, baseline-audit.md
+legal/            Юридика сайта (SITE_PRIVACY_POLICY.md, COOKIE_POLICY.md)
+deploy/           nginx-конфиг, GitHub Actions, security-чеклист
+docs/             PRODUCT_FACTS.md, ARTEM_CHATS.md, LAUNCH_RUNBOOK.md, HANDOFF_NEXT_SESSION.md, USER_TODO.md
+marketing-engine/ Python userbot (Telethon + Claude CLI). Локально активная разработка, прод на сервере
+.planning/        architecture.md, component-map.md, brand-tokens.md, PLAN.md
 ```
+
+## Чистка артефактов (важно)
+
+При любом рефакторинге, миграции или переименовании сразу удалять старые версии. Не плодить параллельные папки и дубли документов в разных местах. Если файл переехал, старый сносим, не оставляем «на всякий случай». Бэкапы хранить вне репо (`~/Documents/otklicker-archive/`), не в коммитах.
 
 ## Источники правды
 
@@ -51,7 +68,7 @@ Next.js 14 App Router, TypeScript strict, Tailwind CSS, `output: 'export'` (ст
 - Обращения "Дорогие друзья", "коллеги"
 - Bold abuse
 - "Найдём работу мечты за 3 дня" и конкретные обещания сроков без фактической основы
-- "100 откликов" и большие числа (лимит HH: 15 в день)
+- "100 откликов" и большие числа. Наш лимит 15 откликов в день, и это НЕ лимит HH. Это наш потолок, чтобы человек физически вытянул ответы работодателей, собеседования и переписки. Больше 15 один соискатель просто не обработает в день. У HH ограничения нет.
 - Эмодзи в текстах персоны Артёма
 
 ## Безопасность

@@ -22,15 +22,21 @@ npm run build
 ## Структура репозитория
 
 ```
-site/            Next.js 14 App Router, TypeScript, Tailwind. Исходник лендинга.
-promo/           Промо-материалы: персона Артёма, посты, SEO-статьи, аналитика.
-legal/           Юридические документы: политика конфиденциальности, cookie, оферта.
-deploy/          nginx-конфиг, deploy-скрипты, security-чеклист.
-docs/            Продуктовая документация: PRODUCT_FACTS.md, ARTEM_CHATS.md.
+site/             Next.js 14 App Router, TypeScript, Tailwind. Исходник лендинга.
+promo/            Промо: персона Артёма, контент-план запуска, SEO.
+legal/            Юридика сайта: SITE_PRIVACY_POLICY.md, COOKIE_POLICY.md.
+deploy/           nginx-конфиг, deploy-скрипты, security-чеклист.
+docs/             Продуктовая документация, runbook запуска, хэндоффы.
 marketing-engine/ Python-движок для промо в HR-чатах (Telethon userbot + Claude CLI).
-.planning/       Архитектурные документы, планы фаз, ревью-артефакты.
-.github/         GitHub Actions workflows: CI (PR) и deploy (push в main).
+.planning/        Архитектурные документы, планы фаз, ревью-артефакты.
+.github/          GitHub Actions workflows: CI (PR) и deploy (push в main).
 ```
+
+## Запуск 5 мая 2026
+
+Запускаемся ранним доступом по 300 человек/день, активация в 10:00 МСК. Цель ~3000 юзеров за первую волну.
+Мастер-чеклист: [`docs/LAUNCH_RUNBOOK.md`](docs/LAUNCH_RUNBOOK.md).
+Готовый контент: 7 постов канала в `marketing-engine/data/prewritten_posts.json`, статья VC.ru в `promo/content/articles/vc-launch-day.md`, контекст Артёма в `promo/artem/chats/launch-week-context.md`.
 
 ## Деплой
 

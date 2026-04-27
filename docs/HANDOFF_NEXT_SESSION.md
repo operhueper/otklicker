@@ -17,7 +17,17 @@ Next.js 14 App Router + TypeScript strict + Tailwind, static export → nginx н
 - Локальный репо: `/Users/evgeniy/projects/otklicker/`
 - GitHub: https://github.com/operhueper/otklicker (private)
 - Production: https://otklicker.ru
-- Старый рабочий проект (только промо/marketing-engine): `/Users/evgeniy/projects/otklicker-promo/`
+- Архив (логотипы, бэкап `.env` от старого `otklicker-promo/`): `~/Documents/otklicker-archive/`
+
+## Запуск 5 мая 2026 (waitlist 300/день)
+
+- Открываемся ранним доступом по 300 человек/день, активация в 10:00 МСК. Цель ~3000 юзеров.
+- До 5 мая waitlist выключен (фича-флаг). После — включается.
+- Канал [@otklicker](https://t.me/otklicker) ведёт founder, не Артём.
+- Мастер-чеклист по дням 28.04→05.05: `docs/LAUNCH_RUNBOOK.md`.
+- Готовый контент: `marketing-engine/data/prewritten_posts.json` (7 постов канала), `promo/content/articles/vc-launch-day.md` (статья VC.ru), `promo/artem/chats/launch-week-context.md` (промпты для Артёма).
+- Источник правды по механике waitlist: задача в Notion «Очередь ранней волны (waitlist)» в базе «💻 IT Задачи».
+- Спецификации для бэкенд-разработчика (waitlist, /report, daily-digest) переехали из `docs/specs/` в Notion-задачи.
 
 ## Сервер
 
@@ -64,7 +74,7 @@ Next.js 14 App Router + TypeScript strict + Tailwind, static export → nginx н
 
 ## Обязательные правила (НЕ нарушать)
 
-1. **Голос бренда** (`CLAUDE.md`): без em-dash как пунктуация, без «уникальный», «инновационный», «не упустите», «leverage», «robust», «seamless», без эмодзи в текстах персоны, без «работа за 3 дня», без «100 откликов» (лимит HH = 15)
+1. **Голос бренда** (`CLAUDE.md`): без em-dash как пунктуация, без «уникальный», «инновационный», «не упустите», «leverage», «robust», «seamless», без эмодзи в текстах персоны, без «работа за 3 дня», без «100 откликов». Потолок 15 откликов в день — это НАШ лимит (человек больше переписок не вытянет), а не лимит HH.
 2. **Бренд «откликер» строго lowercase** в текстах (только в начале предложения с заглавной)
 3. **Конкретные цифры** вместо «много» / «значительно»
 4. **Reverify before claim done**: `npm run build` зелёный, `npx tsc --noEmit` чистый, `npx next lint` без warnings
