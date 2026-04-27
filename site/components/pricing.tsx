@@ -29,9 +29,9 @@ export function Pricing({ plans = PRICING_PLANS }: PricingProps) {
           {plans.map(p => <PriceCard key={p.id} plan={p}/>)}
         </div>
 
-        <div style={{ marginTop: 28, textAlign: 'center', color: 'var(--text-sub)', fontSize: 13, maxWidth: 560, margin: '28px auto 0', lineHeight: 1.6 }}>
-          Оплата через ЮKassa, чеки 54-ФЗ. Возврат 14 дней по закону, если бот не прислал ни одной вакансии за 48 часов после оплаты.
-        </div>
+        <p style={{ marginTop: 28, textAlign: 'center', color: 'var(--text-sub)', fontSize: 13, maxWidth: 560, margin: '28px auto 0', lineHeight: 1.6 }}>
+          15 откликов в день - наш потолок, чтобы вы успевали отвечать HR. У HH такого лимита нет.
+        </p>
       </div>
 
       <style>{`@media (max-width: 960px) { .price-grid { grid-template-columns: 1fr !important; } }`}</style>
@@ -55,19 +55,7 @@ export function PriceCard({ plan }: PriceCardProps) {
       border: isBrand || isDark ? '1px solid transparent' : '1px solid var(--line)',
       color: isDark ? '#FEF3C7' : isBrand ? '#fff' : 'var(--text-heading)',
       boxShadow: isBrand ? '0 24px 60px rgba(219,39,119,0.24), 0 8px 22px rgba(249,115,22,0.2)' : '0 1px 2px rgba(120,53,15,0.04)',
-      transform: isBrand ? 'scale(1.03)' : 'none',
-      zIndex: isBrand ? 2 : 1,
     }}>
-      {plan.badge && (
-        <div style={{
-          position: 'absolute', top: -12, right: 24,
-          padding: '5px 12px', borderRadius: 999, background: '#1C1917', color: '#FEF3C7',
-          fontSize: 11, fontWeight: 700, letterSpacing: '0.04em', textTransform: 'uppercase',
-        }}>
-          {plan.badge}
-        </div>
-      )}
-
       <div style={{ fontSize: 13, fontWeight: 600, opacity: 0.8, letterSpacing: '0.04em', textTransform: 'uppercase' }}>{plan.name}</div>
       <div style={{ fontSize: 14, marginTop: 4, opacity: 0.85 }}>{plan.sub}</div>
 

@@ -6,8 +6,6 @@ import type { JobCard } from '@/lib/types';
 
 interface HeroChatProps {
   jobs?: JobCard[];
-  initialSent?: number;
-  initialSkipped?: number;
   cycleMs?: number;
 }
 
@@ -42,13 +40,9 @@ function letterPreview(job: JobCard): string {
 
 export function HeroChat({
   jobs = HERO_CHAT_JOBS,
-  initialSent = 127,
-  initialSkipped = 94,
   cycleMs = 3000,
 }: HeroChatProps) {
   const [idx, setIdx] = useState(0);
-  const [sent, setSent] = useState(0);
-  const [skipped, setSkipped] = useState(0);
   const [response, setResponse] = useState<{ kind: string; text: string } | null>(null);
   const [anim, setAnim] = useState<string | null>(null);
   const [paused, setPaused] = useState(false);
@@ -78,7 +72,6 @@ export function HeroChat({
           setResponse({ kind: 'voice-done', text: '✓ Переформулировал в формальный тон' });
           setAnim('out-right');
           const tv2 = setTimeout(() => {
-            setSent(s => s + 1);
             setIdx(i => (i + 1) % jobs.length);
             setAnim(null);
             const tv3 = setTimeout(() => setResponse(null), 900);
@@ -98,8 +91,6 @@ export function HeroChat({
           : `⏭ Пропущено. Ищу следующую…`,
       });
       const t2 = setTimeout(() => {
-        if (auto === 'apply') setSent(s => s + 1);
-        else setSkipped(s => s + 1);
         setIdx(i => (i + 1) % jobs.length);
         setAnim(null);
         const t3 = setTimeout(() => setResponse(null), 900);
@@ -130,8 +121,6 @@ export function HeroChat({
         : `⏭ Пропущено. Ищу следующую…`,
     });
     const t1 = setTimeout(() => {
-      if (kind === 'apply') setSent(s => s + 1);
-      else setSkipped(s => s + 1);
       setIdx(i => (i + 1) % jobs.length);
       setAnim(null);
       const t2 = setTimeout(() => {
@@ -145,26 +134,6 @@ export function HeroChat({
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 14 }}>
-      {/* Live counters — aria-live so screen readers announce changes */}
-      <div aria-live="polite" aria-atomic="true" style={{ display: 'flex', gap: 10, position: 'absolute', top: -6, zIndex: 3 }}>
-        <div style={{
-          padding: '7px 13px', borderRadius: 999, background: 'rgba(22,163,74,0.12)',
-          color: '#13633C', fontWeight: 700, fontSize: 12, display: 'flex', alignItems: 'center', gap: 6,
-          border: '1px solid rgba(22,163,74,0.25)',
-        }}>
-          <svg width="12" height="12" viewBox="0 0 24 24" fill="#13633C" aria-hidden="true"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
-          {initialSent + sent} откликов
-        </div>
-        <div style={{
-          padding: '7px 13px', borderRadius: 999, background: 'rgba(239,68,68,0.1)',
-          color: '#B91C1C', fontWeight: 700, fontSize: 12, display: 'flex', alignItems: 'center', gap: 6,
-          border: '1px solid rgba(239,68,68,0.2)',
-        }}>
-          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#B91C1C" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
-          {initialSkipped + skipped} пропущено
-        </div>
-      </div>
-
       <div style={{
         width: 360, height: 620, borderRadius: 42, background: '#111', padding: 10,
         boxShadow: 'var(--shadow-phone)', position: 'relative',

@@ -3,5 +3,4 @@ export * from './job';
 export * from './pricing';
 export * from './faq';
 export * from './feature';
-export * from './how-it-works';
 export * from './hh-vs-otklicker';

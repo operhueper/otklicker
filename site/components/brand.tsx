@@ -49,7 +49,7 @@ export function BrandLockup({ size = 'md' }: BrandLockupProps) {
         </div>
         {size !== 'sm' && (
           <div className="text-text-sub mt-1" style={{ fontSize: 11, fontWeight: 600, letterSpacing: '0.02em' }}>
-            найди работу мечты
+            бот для откликов на HH.ru
           </div>
         )}
       </div>

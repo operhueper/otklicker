@@ -48,7 +48,7 @@ export function Nav() {
             className="btn btn-primary"
             style={{ padding: '10px 18px', fontSize: 14 }}
           >
-            <Send size={16} /> Запустить бота
+            <Send size={16} /> Открыть @otklicker_bot
           </a>
         </div>
       </div>

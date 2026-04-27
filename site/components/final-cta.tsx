@@ -15,13 +15,10 @@ export function FinalCTA() {
           <div style={{ position: 'absolute', bottom: -60, left: -60, width: 220, height: 220, borderRadius: '50%', background: 'rgba(251, 191, 36, 0.3)', filter: 'blur(40px)' }} aria-hidden="true"/>
 
           <div style={{ position: 'relative', zIndex: 2, maxWidth: 720 }}>
-            <h2 style={{ fontSize: 'clamp(36px, 4.4vw, 56px)', fontWeight: 900, letterSpacing: '-0.03em', lineHeight: 1.05, margin: '0 0 16px' }}>
-              Свежая вакансия<br/>ждать не будет
+            <h2 style={{ fontSize: 'clamp(36px, 4.4vw, 56px)', fontWeight: 900, letterSpacing: '-0.03em', lineHeight: 1.05, margin: '0 0 32px' }}>
+              Запустите бота за 7 минут
             </h2>
-            <p style={{ fontSize: 18, opacity: 0.9, margin: '0 0 28px', maxWidth: 520, marginLeft: 'auto', marginRight: 'auto' }}>
-              Запустите @otklicker_bot. Пока вы читаете эту страницу, бот уже мог бы отправить отклик.
-            </p>
-            <div style={{ display: 'flex', gap: 12, justifyContent: 'center', flexWrap: 'wrap' }}>
+            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 16 }}>
               <a
                 href="https://t.me/otklicker_bot"
                 target="_blank"
@@ -31,15 +28,18 @@ export function FinalCTA() {
               >
                 <Send size={20}/> Открыть @otklicker_bot
               </a>
-              <a
-                href="https://t.me/otklicker"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="btn"
-                style={{ padding: '18px 28px', fontSize: 16, background: 'rgba(255,255,255,0.15)', color: '#fff', border: '1px solid rgba(255,255,255,0.3)' }}
-              >
-                Канал @otklicker
-              </a>
+              <p style={{ fontSize: 15, opacity: 0.85, margin: 0 }}>
+                Обновления и кейсы:{' '}
+                <a
+                  href="https://t.me/otklicker"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  style={{ color: '#fff', textDecoration: 'underline', textUnderlineOffset: 3 }}
+                >
+                  канал @otklicker
+                </a>
+                .
+              </p>
             </div>
           </div>
         </div>
