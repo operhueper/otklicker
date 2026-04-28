@@ -2,10 +2,18 @@ export type BotScreenId =
   | 'onboarding'
   | 'main-menu'
   | 'hh-auth'
-  | 'hh-panel'
   | 'vacancy'
   | 'resume-menu'
-  | 'filters';
+  | 'filters'
+  | 'hr-chat';
+
+export interface BotMessage {
+  side: 'in' | 'out';
+  author?: string;
+  content: string;
+  time?: string;
+  kind?: 'normal' | 'forwarded' | 'preview';
+}
 
 export interface KeyboardButton {
   emoji?: string;
@@ -22,7 +30,8 @@ export interface ChatHeader {
 }
 
 export interface BotScreen {
-  content: string;
+  content?: string;
+  messages?: BotMessage[];
   buttons: KeyboardRow[];
   time?: string;
   header?: Partial<ChatHeader>;

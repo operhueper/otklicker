@@ -29,9 +29,6 @@ export function Pricing({ plans = PRICING_PLANS }: PricingProps) {
           {plans.map(p => <PriceCard key={p.id} plan={p}/>)}
         </div>
 
-        <p style={{ marginTop: 28, textAlign: 'center', color: 'var(--text-sub)', fontSize: 13, maxWidth: 560, margin: '28px auto 0', lineHeight: 1.6 }}>
-          15 откликов в день - наш потолок, чтобы вы успевали отвечать HR. У HH такого лимита нет.
-        </p>
       </div>
 
       <style>{`@media (max-width: 960px) { .price-grid { grid-template-columns: 1fr !important; } }`}</style>
@@ -63,7 +60,27 @@ export function PriceCard({ plan }: PriceCardProps) {
         <span style={{ fontSize: 56, fontWeight: 900, lineHeight: 1, letterSpacing: '-0.03em' }}>{plan.price}</span>
         <span style={{ fontSize: 22, fontWeight: 700, opacity: 0.9 }}>{plan.unit}</span>
       </div>
-      <div style={{ fontSize: 14, opacity: 0.8, marginBottom: 24 }}>{plan.period}</div>
+      <div style={{ fontSize: 14, opacity: 0.8, display: 'flex', alignItems: 'baseline', gap: 8, flexWrap: 'wrap', marginBottom: plan.timeNote ? 16 : 24 }}>
+        <span>{plan.period}</span>
+        {plan.pricePerDay && (
+          <>
+            <span style={{ opacity: 0.5 }}>·</span>
+            <span style={{ fontWeight: 700, opacity: 0.95 }}>{plan.pricePerDay}</span>
+          </>
+        )}
+      </div>
+
+      {plan.timeNote && (
+        <div style={{
+          fontSize: 13, lineHeight: 1.5, marginBottom: 24, padding: '12px 14px',
+          borderRadius: 12,
+          background: isBrand ? 'rgba(255,255,255,0.14)' : isDark ? 'rgba(251,191,36,0.08)' : 'rgba(219,39,119,0.06)',
+          color: isBrand ? '#fff' : isDark ? '#FEF3C7' : 'var(--text-heading)',
+          opacity: 0.95,
+        }}>
+          {plan.timeNote}
+        </div>
+      )}
 
       <ul style={{ listStyle: 'none', padding: 0, margin: '0 0 28px', display: 'flex', flexDirection: 'column', gap: 10 }}>
         {plan.features.map((f, i) => (

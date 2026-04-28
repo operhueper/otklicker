@@ -9,12 +9,13 @@ import { FAQ } from '@/components/faq';
 import { FinalCTA } from '@/components/final-cta';
 import { Footer } from '@/components/footer';
 import { CookieBanner } from '@/components/cookie-banner';
+import { FAQ_ITEMS } from '@/lib/data/faq';
 
 const homeDescription =
-  'Telegram-бот @otklicker_bot для автооткликов на HH.ru. Резюме за 7-10 минут, отклики в первые минуты после публикации, переписка с HR в одном Telegram.';
+  'Telegram-бот @otklicker_bot для поиска работы на HH.ru. Резюме за 7-10 минут, свежие вакансии карточками, письмо под каждую и переписка с HR в одном Telegram. Бесплатный тариф навсегда.';
 
 export const metadata: Metadata = {
-  title: 'откликер: Telegram-бот автооткликов на HH.ru',
+  title: 'откликер: Telegram-бот для поиска работы на HH.ru',
   description: homeDescription,
   alternates: { canonical: '/' },
   openGraph: {
@@ -22,12 +23,12 @@ export const metadata: Metadata = {
     locale: 'ru_RU',
     url: 'https://otklicker.ru/',
     siteName: 'откликер',
-    title: 'откликер: Telegram-бот автооткликов на HH.ru',
+    title: 'откликер: Telegram-бот для поиска работы на HH.ru',
     description: homeDescription,
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'откликер: Telegram-бот автооткликов на HH.ru',
+    title: 'откликер: Telegram-бот для поиска работы на HH.ru',
     description: homeDescription,
   },
 };
@@ -37,7 +38,7 @@ const jsonLd = {
   '@type': 'SoftwareApplication',
   name: 'откликер',
   description:
-    'Telegram-бот для автооткликов на HH.ru. Резюме за 7-10 минут, отклики в первые минуты, переписка с HR в Telegram.',
+    'Telegram-бот для поиска работы на HH.ru. Резюме за 7-10 минут, свежие вакансии карточками, письмо под каждую и переписка с HR в Telegram.',
   applicationCategory: 'BusinessApplication',
   operatingSystem: 'Telegram',
   url: 'https://otklicker.ru',
@@ -74,12 +75,29 @@ const jsonLd = {
   },
 };
 
+const faqJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: FAQ_ITEMS.map((item) => ({
+    '@type': 'Question',
+    name: item.q,
+    acceptedAnswer: {
+      '@type': 'Answer',
+      text: item.a,
+    },
+  })),
+};
+
 export default function HomePage() {
   return (
     <>
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
       />
       <Nav />
       <main>

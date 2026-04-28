@@ -8,6 +8,8 @@ export interface PricingPlan {
   period: string;
   sub: string;
   badge?: string;
+  pricePerDay?: string;
+  timeNote?: string;
   features: string[];
   cta: string;
   href: string;

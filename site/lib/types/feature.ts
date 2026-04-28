@@ -1,6 +1,6 @@
 import type { BotScreenId } from './bot-screen';
 
-export type FeatureId = 'cards' | 'menu';
+export type FeatureId = 'tinder' | 'cover' | 'hr';
 
 export interface Feature {
   id: FeatureId;

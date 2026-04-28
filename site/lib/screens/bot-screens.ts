@@ -2,7 +2,7 @@ import type { BotScreenMap } from '@/lib/types';
 
 export const BOT_SCREENS: BotScreenMap = {
   onboarding: {
-    content: `<span>Я первый бот автооткликов на <span style="color:#3390EC">HH.ru</span></span>
+    content: `<span>Telegram-бот для поиска работы на <span style="color:#3390EC">HH.ru</span></span>
 <br/><br/>
 — Отправили 50 откликов — ни одного ответа?<br/>
 — Не знаете, как описать свой опыт в цифрах?<br/>
@@ -39,22 +39,6 @@ export const BOT_SCREENS: BotScreenMap = {
       { emoji: '←', label: 'Назад' },
     ],
   },
-  'hh-panel': {
-    content: `🤖 <b>Панель <span style="color:#3390EC">HH.ru</span></b>
-<br/><br/>
-📊 Сегодня: <b>12 из 15</b> автооткликов<br/>
-▶️ Автоклики активны<br/>
-⚡ Режим: <b>Быстрый отклик</b><br/>
-💬 Ответы HR: <b>Включено</b><br/>
-📄 Резюме: <b>Senior Designer</b>`,
-    buttons: [
-      { emoji: '🔑', label: 'HH.ru: подключён ✅', accent: 'green' },
-      { emoji: '🔍', label: 'Поиск вакансий' },
-      { emoji: '📄', label: 'Выбор резюме (1 выбрано)' },
-      { emoji: '⚙️', label: 'Настройки' },
-      { emoji: '📋', label: 'История откликов' },
-    ],
-  },
   'resume-menu': {
     content: `<b>Ваш прогресс по разделам:</b>
 <br/>
@@ -88,6 +72,28 @@ export const BOT_SCREENS: BotScreenMap = {
       { emoji: '🚩', label: 'Стоп-слова' },
       { emoji: '🔄', label: 'Обновить поиск', primary: true },
       { emoji: '←', label: 'Назад' },
+    ],
+  },
+  'hr-chat': {
+    header: { name: 'Откликер', subtitle: 'бот · онлайн' },
+    messages: [
+      {
+        side: 'in',
+        kind: 'forwarded',
+        author: 'HR · Катерина, Atomic Protocol',
+        content: `Александр, добрый день. Спасибо за отклик. Уточните, пожалуйста: сколько лет вы руководили командой от 5 человек?`,
+        time: '14:32',
+      },
+      {
+        side: 'in',
+        kind: 'preview',
+        content: `<b>Предлагаю ответ:</b><br/><br/>Катерина, добрый день. Командой от 5 человек руковожу 3 года: последние 2 года — отдел продаж из 7 МОП в EdTech, до этого — группу из 5 в e-com. Готов рассказать подробнее на созвоне.`,
+        time: '14:33',
+      },
+    ],
+    buttons: [
+      [{ emoji: '✅', label: 'Отправить как есть', accent: 'green' }, { emoji: '✏️', label: 'Исправить' }],
+      { emoji: '⏩', label: 'Пропустить' },
     ],
   },
   vacancy: {

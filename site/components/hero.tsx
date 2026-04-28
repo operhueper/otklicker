@@ -23,10 +23,10 @@ export function Hero({ variant = 'chat' }: HeroProps) {
               Telegram-бот для откликов на HH.ru
             </div>
             <h1 className="text-h1 text-text-heading" style={{ margin: '22px 0 20px' }}>
-              Telegram-бот откликается на HH за вас,<br/><span className="grad-text">пока вы заняты другим</span>
+              Откликайтесь первым<br/>на <span className="grad-text">свежие вакансии HH</span>
             </h1>
             <p style={{ fontSize: 19, lineHeight: 1.55, color: 'var(--text-sub)', maxWidth: 540, margin: '0 0 36px' }}>
-              Резюме надиктовываете голосом. Бот сам следит за свежими вакансиями, пишет письмо под каждую и ведёт переписку с работодателем в Telegram.
+              Бот следит за лентой HH и присылает новые вакансии в Telegram через минуты после публикации. Вы в начале стопки откликов, а не в конце. Резюме, письма и переписка с работодателем — в одном чате.
             </p>
             <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap', marginBottom: 18 }}>
               <a
@@ -39,11 +39,8 @@ export function Hero({ variant = 'chat' }: HeroProps) {
                 <Send size={18} /> Открыть @otklicker_bot
               </a>
             </div>
-            <div style={{ fontSize: 14, fontWeight: 600, color: 'var(--text-heading)', marginBottom: 14 }}>
-              Бесплатный пакет навсегда. Активный: 790 ₽ за 3 недели.
-            </div>
             <div style={{ fontSize: 13, color: 'var(--text-sub)', lineHeight: 1.5, maxWidth: 460 }}>
-              Авторизация на HH по одноразовому коду, пароль не запрашиваем и не храним
+              Авторизация на HH по одноразовому коду, пароль не запрашиваем и не храним.
             </div>
           </div>
 

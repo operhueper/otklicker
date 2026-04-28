@@ -1,4 +1,4 @@
-import type { BotScreen, KeyboardRow, KeyboardButton } from '@/lib/types';
+import type { BotScreen, BotMessage, KeyboardRow, KeyboardButton } from '@/lib/types';
 
 interface RealBotScreenProps extends BotScreen {
   width?: number;
@@ -37,7 +37,44 @@ function KbdButton({ emoji, label, primary, accent, flex }: KeyboardButton & { f
   );
 }
 
-export function RealBotScreen({ content, buttons = [], time = '06:32', width = 360, height = 620, header }: RealBotScreenProps) {
+function MessageBubble({ msg }: { msg: BotMessage }) {
+  const isOut = msg.side === 'out';
+  const isForwarded = msg.kind === 'forwarded';
+  const isPreview = msg.kind === 'preview';
+
+  const bg = isOut ? '#2B5278' : isPreview ? '#1F3247' : '#182533';
+  const accent = isForwarded ? '#3390EC' : isPreview ? '#FBBF24' : null;
+
+  return (
+    <div style={{
+      background: bg,
+      color: '#fff',
+      padding: '10px 12px 8px',
+      borderRadius: 14,
+      borderBottomLeftRadius: isOut ? 14 : 4,
+      borderBottomRightRadius: isOut ? 4 : 14,
+      borderLeft: accent ? `3px solid ${accent}` : 'none',
+      fontSize: 13.5,
+      lineHeight: 1.45,
+      position: 'relative',
+      alignSelf: isOut ? 'flex-end' : 'flex-start',
+      maxWidth: '88%',
+      paddingRight: 44,
+    }}>
+      {msg.author && (
+        <div style={{ fontSize: 12, fontWeight: 600, color: accent ?? '#3390EC', marginBottom: 4 }}>
+          {msg.author}
+        </div>
+      )}
+      <div dangerouslySetInnerHTML={{ __html: msg.content }} />
+      {msg.time && (
+        <span style={{ position: 'absolute', right: 10, bottom: 5, fontSize: 11, color: '#6C7883', fontWeight: 500 }}>{msg.time}</span>
+      )}
+    </div>
+  );
+}
+
+export function RealBotScreen({ content, messages, buttons = [], time = '06:32', width = 360, height = 620, header }: RealBotScreenProps) {
   const peerName = header?.name ?? 'Откликер';
   const peerSub = header?.subtitle ?? 'бот · онлайн';
 
@@ -100,8 +137,10 @@ export function RealBotScreen({ content, buttons = [], time = '06:32', width = 3
         </div>
 
         {/* Scroll area */}
-        <div style={{ flex: 1, padding: '14px 10px 10px', display: 'flex', flexDirection: 'column', gap: 6, overflow: 'hidden' }}>
-          {content && (
+        <div style={{ flex: 1, padding: '14px 10px 10px', display: 'flex', flexDirection: 'column', gap: 8, overflow: 'hidden' }}>
+          {messages && messages.length > 0 ? (
+            messages.map((m, i) => <MessageBubble key={i} msg={m} />)
+          ) : content ? (
             <div style={{
               background: '#182533',
               color: '#fff',
@@ -117,7 +156,7 @@ export function RealBotScreen({ content, buttons = [], time = '06:32', width = 3
               <div dangerouslySetInnerHTML={{ __html: content }}/>
               <span style={{ position: 'absolute', right: 10, bottom: 6, fontSize: 11, color: '#6C7883', fontWeight: 500 }}>{time}</span>
             </div>
-          )}
+          ) : null}
         </div>
 
         {/* Reply keyboard */}

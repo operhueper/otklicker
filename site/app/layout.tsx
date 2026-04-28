@@ -13,23 +13,23 @@ const inter = Inter({
 
 const siteUrl = 'https://otklicker.ru';
 const siteDescription =
-  'Telegram-бот @otklicker_bot для автооткликов на HH.ru. Резюме за 7-10 минут, отклики в первые минуты после публикации, переписка с HR в одном Telegram. Бесплатный тариф навсегда.';
+  'Telegram-бот @otklicker_bot для поиска работы на HH.ru. Резюме за 7-10 минут, свежие вакансии карточками, письмо под каждую и переписка с HR в одном Telegram. Бесплатный тариф навсегда.';
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: {
-    default: 'откликер: Telegram-бот автооткликов на HH.ru',
+    default: 'откликер: Telegram-бот для поиска работы на HH.ru',
     template: '%s | откликер',
   },
   description: siteDescription,
   applicationName: 'откликер',
   keywords: [
     'HH.ru',
-    'автоотклики',
     'Telegram-бот',
     'поиск работы',
     'AI-резюме',
     'отклики на вакансии',
+    'тиндер вакансий',
     'откликер',
   ],
   authors: [{ name: 'откликер' }],
@@ -45,12 +45,12 @@ export const metadata: Metadata = {
     locale: 'ru_RU',
     url: siteUrl,
     siteName: 'откликер',
-    title: 'откликер: Telegram-бот автооткликов на HH.ru',
+    title: 'откликер: Telegram-бот для поиска работы на HH.ru',
     description: siteDescription,
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'откликер: Telegram-бот автооткликов на HH.ru',
+    title: 'откликер: Telegram-бот для поиска работы на HH.ru',
     description: siteDescription,
   },
   robots: {

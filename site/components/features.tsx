@@ -31,7 +31,7 @@ export function Features({ features = FEATURES }: FeaturesProps) {
             Что делает бот<br/>внутри <span className="grad-text">Telegram</span>
           </h2>
           <p style={{ color: 'var(--text-on-dark-sub)', maxWidth: 560, fontSize: 17, lineHeight: 1.55, marginTop: 14 }}>
-            Резюме, отклики и переписка с HR в одном чате. Без браузерных вкладок и копипастов.
+            Резюме, отклики и переписка с работодателем в одном чате. Без браузерных вкладок и копипастов.
           </p>
         </div>
 

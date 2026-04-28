@@ -1,6 +1,6 @@
 import { ImageResponse } from 'next/og';
 
-export const alt = 'откликер: Telegram-бот автооткликов на HH.ru';
+export const alt = 'откликер: Telegram-бот для поиска работы на HH.ru';
 export const size = { width: 1200, height: 630 };
 export const contentType = 'image/png';
 
@@ -56,7 +56,7 @@ export default async function Image() {
             lineHeight: 1.2,
           }}
         >
-          Автоотклики на HH.ru за вас
+          Поиск работы на HH из Telegram
         </div>
         <div
           style={{

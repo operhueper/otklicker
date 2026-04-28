@@ -15,9 +15,12 @@ export function FinalCTA() {
           <div style={{ position: 'absolute', bottom: -60, left: -60, width: 220, height: 220, borderRadius: '50%', background: 'rgba(251, 191, 36, 0.3)', filter: 'blur(40px)' }} aria-hidden="true"/>
 
           <div style={{ position: 'relative', zIndex: 2, maxWidth: 720 }}>
-            <h2 style={{ fontSize: 'clamp(36px, 4.4vw, 56px)', fontWeight: 900, letterSpacing: '-0.03em', lineHeight: 1.05, margin: '0 0 32px' }}>
-              Запустите бота за 7 минут
+            <h2 style={{ fontSize: 'clamp(36px, 4.4vw, 56px)', fontWeight: 900, letterSpacing: '-0.03em', lineHeight: 1.05, margin: '0 0 16px' }}>
+              Свежая вакансия<br/>ждать не будет
             </h2>
+            <p style={{ fontSize: 18, opacity: 0.92, margin: '0 auto 28px', maxWidth: 520 }}>
+              Пока вы читаете эту страницу, кто-то уже откликнулся первым.
+            </p>
             <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 16 }}>
               <a
                 href="https://t.me/otklicker_bot"
