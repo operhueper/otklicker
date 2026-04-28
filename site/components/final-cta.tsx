@@ -29,7 +29,7 @@ export function FinalCTA() {
                 <Send size={20}/> Открыть @otklicker_bot
               </a>
               <p style={{ fontSize: 15, opacity: 0.85, margin: 0 }}>
-                Обновления и кейсы:{' '}
+                Новости и истории людей, которые нашли работу через бота:{' '}
                 <a
                   href="https://t.me/otklicker"
                   target="_blank"

@@ -123,7 +123,7 @@ export function CoverLetter() {
           </div>
 
           {/* Right column: phone mockup */}
-          <div style={{ display: 'flex', justifyContent: 'center' }}>
+          <div style={{ display: 'flex', justifyContent: 'center', minWidth: 0 }}>
             <PhonePreview sample={sample} fade={fade} />
           </div>
         </div>
@@ -141,9 +141,9 @@ function PhonePreview({ sample, fade }: { sample: CoverLetterSample; fade: boole
   return (
     <div
       style={{
-        width: 360,
-        maxWidth: '100%',
-        height: 620,
+        width: '100%',
+        maxWidth: 360,
+        aspectRatio: '360 / 620',
         borderRadius: 42,
         background: '#111',
         padding: 10,
@@ -266,7 +266,7 @@ function PhonePreview({ sample, fade }: { sample: CoverLetterSample; fade: boole
             </svg>
           </div>
           <div style={{ flex: 1, display: 'flex', flexDirection: 'column', lineHeight: 1.15 }}>
-            <span style={{ fontWeight: 600, fontSize: 15, color: '#fff' }}>Откликер</span>
+            <span style={{ fontWeight: 600, fontSize: 15, color: '#fff' }}>откликер</span>
             <span style={{ fontSize: 12, color: '#3390EC', fontWeight: 500 }}>бот · онлайн</span>
           </div>
           <svg
@@ -526,7 +526,7 @@ function TrapsBlock() {
           Замечает ловушки HR
         </div>
         <div style={{ fontSize: 13.5, color: '#78350F', lineHeight: 1.45 }}>
-          Скрытое требование в тексте вакансии бот вытаскивает в карточку - вы не пропустите.
+          Скрытое требование в тексте вакансии бот вытаскивает в карточку, чтобы вы не пропустили.
         </div>
       </div>
     </div>

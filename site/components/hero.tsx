@@ -23,10 +23,10 @@ export function Hero({ variant = 'chat' }: HeroProps) {
               Telegram-бот для откликов на HH.ru
             </div>
             <h1 className="text-h1 text-text-heading" style={{ margin: '22px 0 20px' }}>
-              Бот откликается на HH за вас —<br/><span className="grad-text">пока вы заняты другим</span>
+              Telegram-бот откликается на HH за вас,<br/><span className="grad-text">пока вы заняты другим</span>
             </h1>
             <p style={{ fontSize: 19, lineHeight: 1.55, color: 'var(--text-sub)', maxWidth: 540, margin: '0 0 36px' }}>
-              Отдаёте резюме голосом, бот сам мониторит вакансии, пишет письмо под каждую и ведёт переписку с HR в Telegram.
+              Резюме надиктовываете голосом. Бот сам следит за свежими вакансиями, пишет письмо под каждую и ведёт переписку с работодателем в Telegram.
             </p>
             <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap', marginBottom: 18 }}>
               <a
@@ -40,7 +40,7 @@ export function Hero({ variant = 'chat' }: HeroProps) {
               </a>
             </div>
             <div style={{ fontSize: 14, fontWeight: 600, color: 'var(--text-heading)', marginBottom: 14 }}>
-              Бесплатный пакет навсегда. Активный — 790 ₽ за 3 недели.
+              Бесплатный пакет навсегда. Активный: 790 ₽ за 3 недели.
             </div>
             <div style={{ fontSize: 13, color: 'var(--text-sub)', lineHeight: 1.5, maxWidth: 460 }}>
               Авторизация на HH по одноразовому коду, пароль не запрашиваем и не храним
@@ -48,7 +48,7 @@ export function Hero({ variant = 'chat' }: HeroProps) {
           </div>
 
           {/* Right: visual */}
-          <div style={{ position: 'relative', minHeight: 540 }}>
+          <div style={{ position: 'relative', minHeight: 540, minWidth: 0 }}>
             {variant === 'chat' && <HeroChat />}
             {variant === 'swipe' && <HeroSwipe />}
           </div>

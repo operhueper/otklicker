@@ -45,14 +45,22 @@ export function Nav() {
             href="https://t.me/otklicker_bot"
             target="_blank"
             rel="noopener noreferrer"
-            className="btn btn-primary"
+            className="btn btn-primary nav-cta"
             style={{ padding: '10px 18px', fontSize: 14 }}
+            aria-label="Открыть бота в Telegram"
           >
-            <Send size={16} /> Открыть @otklicker_bot
+            <Send size={16} /> <span className="nav-cta-text">Открыть @otklicker_bot</span><span className="nav-cta-text-short">Открыть бота</span>
           </a>
         </div>
       </div>
-      <style>{`@media (max-width: 860px) { .nav-links { display: none !important; } }`}</style>
+      <style>{`
+        .nav-cta-text-short { display: none; }
+        @media (max-width: 860px) { .nav-links { display: none !important; } }
+        @media (max-width: 480px) {
+          .nav-cta-text { display: none; }
+          .nav-cta-text-short { display: inline; }
+        }
+      `}</style>
     </nav>
   );
 }

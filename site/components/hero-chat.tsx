@@ -135,7 +135,7 @@ export function HeroChat({
   return (
     <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 14 }}>
       <div style={{
-        width: 360, height: 620, borderRadius: 42, background: '#111', padding: 10,
+        width: '100%', maxWidth: 360, aspectRatio: '360 / 620', borderRadius: 42, background: '#111', padding: 10,
         boxShadow: 'var(--shadow-phone)', position: 'relative',
       }}>
         <div style={{
