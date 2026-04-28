@@ -95,16 +95,12 @@ export function PriceCard({ plan }: PriceCardProps) {
         href={plan.href}
         target="_blank"
         rel="noopener noreferrer"
+        className={`btn justify-center${isBrand ? ' btn-on-brand' : ''}`}
         style={{
-          marginTop: 'auto', padding: '14px 20px', borderRadius: 999, textAlign: 'center',
-          fontSize: 15, fontWeight: 700,
-          background: isBrand ? '#FFFFFF' : isDark ? 'var(--brand-gradient)' : '#1C1917',
-          color: isBrand ? '#DB2777' : '#FFFFFF',
-          display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8,
-          transition: 'transform 0.15s',
+          marginTop: 'auto',
+          background: isBrand ? undefined : isDark ? 'var(--brand-gradient)' : '#1C1917',
+          color: isBrand ? undefined : '#FFFFFF',
         }}
-        onMouseEnter={e => (e.currentTarget.style.transform = 'translateY(-1px)')}
-        onMouseLeave={e => (e.currentTarget.style.transform = '')}
       >
         <Send size={16} /> {plan.cta}
       </a>

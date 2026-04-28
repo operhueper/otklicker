@@ -8,9 +8,9 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 Сам бот живёт на сервере (см. ниже). В этом репо — только лендинг + промо-материалы + локальное зеркало `marketing-engine/` (HR-промо userbot Артём).
 
-## Запуск 5 мая 2026 (waitlist 300/день)
+## Запуск 5 мая 2026 (первая волна 500, дальше 300/день)
 
-Запускаемся волнами по 300 человек/день, активация в 10:00 МСК. До 5 мая waitlist выключен. Цель ~3000 юзеров за первую волну.
+5 мая 2026 в 10:00 МСК открываем первую волну на 500 мест. Дальше ежедневная квота 300 пользователей. Цель ~3000 юзеров за первые 7-10 дней. До 5 мая waitlist выключен.
 
 В текстах НИКОГДА: «попробуй прямо сейчас», «мгновенный доступ». Допустимо: «займи место», «ранний доступ», «открывается волнами».
 
@@ -23,11 +23,11 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 Next.js 14 App Router + TypeScript strict + Tailwind, статическая сборка через `output: 'export'` (см. `site/next.config.mjs`). Главная — единая страница из секций, объявленная в `site/app/page.tsx`.
 
 **Layout страницы (порядок секций):**
-`Nav → Hero → HowItWorks → HHvsOtklicker → CoverLetter → Features → Pricing → FAQ → FinalCTA → Footer + CookieBanner`. Каждая секция — отдельный компонент в `site/components/*.tsx`.
+`Nav → Hero(variant="chat") → CoverLetter → HHvsOtklicker → Features → Pricing → FAQ → FinalCTA → Footer + CookieBanner`. Каждая секция — отдельный компонент в `site/components/*.tsx`.
 
-**Контент-модель:** все тексты вынесены в `site/lib/data/*.ts` (faq, features, hero-jobs, how-it-works, pricing, sample-jobs, hh-vs-otklicker, nav). Типы — в `site/lib/types/*.ts`, реэкспорт через `site/lib/types/index.ts`. Чтобы поправить текст секции, ищи в `lib/data/`, не в компоненте.
+**Контент-модель:** все тексты вынесены в `site/lib/data/*.ts` (faq, features, hero-jobs, pricing, sample-jobs, hh-vs-otklicker, nav). Типы — в `site/lib/types/*.ts`, реэкспорт через `site/lib/types/index.ts`. Чтобы поправить текст секции, ищи в `lib/data/`, не в компоненте.
 
-**Эмуляция бота на лендинге:** «скриншоты» Telegram-бота не картинки, а HTML. Декларативные данные в `site/lib/screens/bot-screens.ts`, рендерит компонент `site/components/real-bot-screen.tsx`. Используется в Hero, HowItWorks, Features, CoverLetter.
+**Эмуляция бота на лендинге:** «скриншоты» Telegram-бота не картинки, а HTML. Декларативные данные в `site/lib/screens/bot-screens.ts`, рендерит компонент `site/components/real-bot-screen.tsx`. Используется в Hero(chat), Features, CoverLetter.
 
 **SEO/мета:** metadata в `site/app/layout.tsx` (общая) и `site/app/page.tsx` (главная + JSON-LD SoftwareApplication с реквизитами ИП). `robots.ts` и `sitemap.ts` рядом. OG-image генерируется через `site/app/opengraph-image.tsx` (`next/og`). Favicon-set через `app/icon.tsx` + `app/apple-icon.tsx`.
 
@@ -105,7 +105,7 @@ Next.js 14 App Router, TypeScript strict, Tailwind CSS, `output: 'export'` (ст
 
 ## Запрещено везде
 
-- Em-dash как знак препинания (допустим только в технических комментариях кода)
+- Em-dash как знак препинания (допустим только в технических комментариях кода). На сайте максимум 1–2 em-dash на весь лендинг, и то только в очень редких технических ситуациях. Это AI-клише, избегай.
 - Маркетинговые штампы: "уникальный", "инновационный", "не упустите", leverage, robust, seamless
 - Обращения "Дорогие друзья", "коллеги"
 - Bold abuse

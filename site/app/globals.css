@@ -150,6 +150,24 @@
     background: var(--brand-gradient);
   }
 
+  .eyebrow-dark {
+    @apply inline-flex items-center gap-2 rounded-full uppercase;
+    padding: 6px 14px;
+    background: rgba(254, 243, 199, 0.08);
+    color: var(--text-on-dark-sub);
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    border: 1px solid var(--line-dark);
+  }
+
+  /* CTA button on brand-gradient card (white bg, brand-colored text) */
+  .btn-on-brand {
+    background: #FFFFFF;
+    color: #DB2777;
+  }
+  .btn-on-brand:hover { background: rgba(255, 255, 255, 0.92); }
+
   /* Decorative halo-blob — used in Hero and Features */
   .halo {
     @apply absolute pointer-events-none rounded-full;

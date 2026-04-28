@@ -11,11 +11,11 @@ export function HHvsOtklicker({ pairs = HH_VS_OTKLICKER_PAIRS }: HHvsOtklickerPr
       id="hh-vs-otklicker"
       aria-labelledby="hh-vs-otklicker-title"
       style={{
-        background: 'var(--bg)',
+        background: 'var(--bg-pastel)',
         padding: '96px 0',
         position: 'relative',
         overflow: 'hidden',
-        borderTop: '1px solid var(--line)',
+        borderTop: '1px solid var(--line-strong)',
       }}
     >
       <div
@@ -33,17 +33,17 @@ export function HHvsOtklicker({ pairs = HH_VS_OTKLICKER_PAIRS }: HHvsOtklickerPr
         <div style={{ maxWidth: 760, marginBottom: 56 }}>
           <div className="eyebrow">
             <span className="eyebrow-dot" aria-hidden="true" />
-            HH в браузере vs откликер в Telegram
+            HH.ru в браузере vs откликер в Telegram
           </div>
           <h2
             id="hh-vs-otklicker-title"
             className="text-h2 text-text-heading"
             style={{ margin: '16px 0 18px' }}
           >
-            Что вы делаете на HH вручную <br />и что бот делает <span className="grad-text">за вас</span>
+            Что вы делаете на HH.ru вручную <br />и что бот делает <span className="grad-text">за вас</span>
           </h2>
           <p style={{ fontSize: 18, color: 'var(--text-sub)', margin: 0, lineHeight: 1.55, maxWidth: 640 }}>
-            Поиск, отклик, переписка с HR и аналитика в одном Telegram. Без захода на HH с любого устройства.
+            Поиск, отклик, переписка с HR и аналитика только в Telegram. Без захода на HH.ru с любого устройства.
           </p>
         </div>
 
@@ -69,7 +69,7 @@ export function HHvsOtklicker({ pairs = HH_VS_OTKLICKER_PAIRS }: HHvsOtklickerPr
               letterSpacing: '0.08em',
             }}
           >
-            HH в браузере
+            HH.ru в браузере
           </div>
           <div
             style={{
@@ -172,7 +172,7 @@ function PainCard({ pair }: { pair: HHvsOtklickerPair }) {
           }}
           className="hh-vs-mobile-label"
         >
-          HH в браузере
+          HH.ru в браузере
         </div>
         <h3
           style={{

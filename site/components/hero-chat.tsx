@@ -362,7 +362,7 @@ export function HeroChat({
             </div>
             <div style={{ display: 'flex', gap: 4 }}>
               <div style={{ flex: 1, padding: '9px 10px', borderRadius: 8, background: '#223445', color: 'rgba(255,255,255,0.55)', fontSize: 12.5, fontWeight: 600, textAlign: 'center' }}>⚫ В чёрный список</div>
-              <div style={{ flex: 1, padding: '9px 10px', borderRadius: 8, background: '#223445', color: 'rgba(255,255,255,0.55)', fontSize: 12.5, fontWeight: 600, textAlign: 'center' }}>🔗 Открыть на HH</div>
+              <div style={{ flex: 1, padding: '9px 10px', borderRadius: 8, background: '#223445', color: 'rgba(255,255,255,0.55)', fontSize: 12.5, fontWeight: 600, textAlign: 'center' }}>🔗 Открыть на HH.ru</div>
             </div>
           </div>
 

@@ -23,7 +23,7 @@ export function Features({ features = FEATURES }: FeaturesProps) {
 
       <div className="mx-auto max-w-container px-6" style={{ position: 'relative', zIndex: 2 }}>
         <div style={{ textAlign: 'left', maxWidth: 720 }}>
-          <div style={{ display: 'inline-flex', alignItems: 'center', gap: 8, padding: '6px 14px', borderRadius: 999, background: 'rgba(254,243,199,0.08)', color: 'var(--text-on-dark-sub)', fontSize: 12, fontWeight: 600, letterSpacing: '0.02em', textTransform: 'uppercase', border: '1px solid var(--line-dark)' }}>
+          <div className="eyebrow-dark">
             <span className="eyebrow-dot" aria-hidden="true"/>
             Что внутри
           </div>
