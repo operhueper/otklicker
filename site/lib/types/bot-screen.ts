@@ -3,6 +3,7 @@ export type BotScreenId =
   | 'main-menu'
   | 'hh-auth'
   | 'vacancy'
+  | 'cover-letter'
   | 'resume-menu'
   | 'filters'
   | 'hr-chat';
