@@ -14,7 +14,7 @@ const inter = Inter({
 
 const siteUrl = 'https://otklicker.ru';
 const siteDescription =
-  'Telegram-бот @otklicker_bot для автооткликов на HH.ru. Резюме за 7-10 минут, отклики в первые минуты после публикации, переписка с HR в одном Telegram.';
+  'Telegram-бот @otklicker_bot для автооткликов на HH.ru. Резюме за 7-10 минут, отклики в первые минуты после публикации, переписка с HR в одном Telegram. Бесплатный тариф навсегда.';
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
@@ -41,9 +41,6 @@ export const metadata: Metadata = {
     address: false,
     telephone: false,
   },
-  alternates: {
-    canonical: '/',
-  },
   openGraph: {
     type: 'website',
     locale: 'ru_RU',
@@ -69,6 +66,9 @@ export const metadata: Metadata = {
     },
   },
   manifest: '/manifest.json',
+  verification: {
+    yandex: 'f0e9c0572fd1a856',
+  },
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
