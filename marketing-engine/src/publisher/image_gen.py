@@ -94,6 +94,12 @@ FONTS_DIR = Path(__file__).resolve().parents[2] / "data" / "fonts"
 BRAND_DIR = Path(__file__).resolve().parents[2] / "data" / "brand"
 
 # ---------------------------------------------------------------------------
+# Sentinel for "caller did not pass this kwarg" (distinct from None = suppress)
+# ---------------------------------------------------------------------------
+
+_SENTINEL = object()
+
+# ---------------------------------------------------------------------------
 # Public API
 # ---------------------------------------------------------------------------
 
@@ -104,12 +110,23 @@ def generate_post_image(
     body_text: Optional[str] = None,
     accent_number: Optional[str] = None,
     output_path: Optional[Path] = None,
+    eyebrow: Optional[str] = _SENTINEL,
+    footer_note: Optional[str] = _SENTINEL,
+    feature_tag: Optional[str] = _SENTINEL,
 ) -> Path:
     """Generate a 1080x1080 branded post image.
 
     The template is chosen from `post_type`. `accent_number` is kept
     as a soft hint for the `number` template: if the chosen template
     is "number" and a number is provided, it is used verbatim.
+
+    Optional overrides:
+      eyebrow     — kicker text above the big number on t1 cards.
+                    Pass None to suppress. Defaults to auto-derived value.
+      footer_note — italic tail below the caption on t1 cards.
+                    Pass None to suppress. Defaults to auto-derived value.
+      feature_tag — tag label on t4 feature cards (e.g. "Новая фича").
+                    Pass None to suppress. Defaults to "Новая фича".
     """
     from PIL import Image
 
@@ -125,7 +142,12 @@ def generate_post_image(
     if layout == "number":
         number = accent_number or _extract_primary_number(headline, body)
         if number:
-            img = _render_number(headline, body, number, post_type=post_type)
+            img = _render_number(
+                headline, body, number,
+                post_type=post_type,
+                eyebrow=eyebrow,
+                footer_note=footer_note,
+            )
         else:
             # Number card without a number is useless; fall back to tip.
             img = _render_tip(headline, body)
@@ -135,7 +157,7 @@ def generate_post_image(
         img = _render_quote(quote, headline, body)
 
     elif layout == "feature":
-        img = _render_feature(headline, body)
+        img = _render_feature(headline, body, feature_tag=feature_tag)
 
     elif layout == "update":
         img = _render_update(headline, body)
@@ -280,8 +302,21 @@ def _split_number_parts(token: str) -> tuple[str, str]:
 # ---------------------------------------------------------------------------
 
 
-def _render_number(headline: str, body: str, number: str, *, post_type: str):
-    """t1 — huge number on sunset gradient. White chip top-left."""
+def _render_number(
+    headline: str,
+    body: str,
+    number: str,
+    *,
+    post_type: str,
+    eyebrow=_SENTINEL,
+    footer_note=_SENTINEL,
+):
+    """t1 — huge number on sunset gradient. White chip top-left.
+
+    eyebrow    — text above the number. Sentinel = auto-derive from post_type.
+                 None = suppress entirely.
+    footer_note — italic tail below caption. Sentinel = auto-derive. None = suppress.
+    """
     from PIL import ImageDraw
 
     img = _gradient_image(CANVAS_W, CANVAS_H, GRAD_SUNSET, rotation=135).convert("RGB")
@@ -291,7 +326,10 @@ def _render_number(headline: str, body: str, number: str, *, post_type: str):
     _paste_logo_chip(img, x=MARGIN, y=MARGIN, style="white", height=76)
 
     # Kicker above the number
-    kicker = _kicker_for_number(post_type, headline, body)
+    if eyebrow is _SENTINEL:
+        kicker = _kicker_for_number(post_type, headline, body)
+    else:
+        kicker = eyebrow  # may be None (suppress) or a custom string
     if kicker:
         k_font = _load_font(30, weight="SemiBold", italic=True)
         draw.text((MARGIN, 260), kicker, font=k_font, fill=TEXT_ON_GRADIENT_MUTED)
@@ -321,7 +359,10 @@ def _render_number(headline: str, body: str, number: str, *, post_type: str):
         caption_y += len(cap_lines) * line_h + 16
 
     # Italic tail (sub-caption)
-    tail = _tail_line(post_type, headline, body)
+    if footer_note is _SENTINEL:
+        tail = _tail_line(post_type, headline, body)
+    else:
+        tail = footer_note  # may be None (suppress) or a custom string
     if tail and caption_y < CANVAS_H - 140:
         tail_font = _load_font(26, weight="SemiBold", italic=True)
         draw.text((MARGIN, caption_y), tail, font=tail_font, fill=TEXT_ON_GRADIENT_MUTED)
@@ -357,10 +398,11 @@ def _render_tip(headline: str, body: str):
     for i, line in enumerate(title_lines):
         draw.text((MARGIN, title_y + i * line_h), line, font=title_font, fill=TEXT_PRIMARY)
 
-    # Subtitle / body preview
+    # Subtitle / body preview — use full body (not just first sentence) so
+    # multi-clause bodies like "A. B. C. D." render in full.
     body_top = title_y + len(title_lines) * line_h + 40
     body_bottom = CANVAS_H - 220
-    preview = _first_sentence(body, max_chars=220)
+    preview = body[:220].rstrip() + ("…" if len(body) > 220 else "") if body else ""
     if preview and body_top < body_bottom:
         max_lines = max(1, (body_bottom - body_top) // 50)
         body_font, body_lines = _fit_wrap(
@@ -430,8 +472,12 @@ def _render_quote(quote: str, headline: str, body: str):
     return img
 
 
-def _render_feature(headline: str, body: str):
-    """t4 — cream card with gradient icon square, tag, feature name, desc."""
+def _render_feature(headline: str, body: str, *, feature_tag=_SENTINEL):
+    """t4 — cream card with gradient icon square, tag, feature name, desc.
+
+    feature_tag — label above the feature name. Sentinel = "Новая фича".
+                  None = suppress the tag entirely.
+    """
     from PIL import Image, ImageDraw
 
     img = Image.new("RGB", (CANVAS_W, CANVAS_H), BG_CREAM)
@@ -446,12 +492,15 @@ def _render_feature(headline: str, body: str):
         icon = icon.resize((icon_size, icon_size), PILImage.LANCZOS)
         img.paste(icon, (MARGIN, MARGIN + 56), icon)
 
-    # "Новая фича" tag
-    tag_font = _load_font(18, weight="Bold")
-    draw.text((MARGIN, MARGIN + 56 + icon_size + 28), "Новая фича", font=tag_font, fill=TEXT_PINK)
+    # Tag line ("Новая фича" by default, or custom, or suppressed)
+    tag_text = "Новая фича" if feature_tag is _SENTINEL else feature_tag
+    tag_baseline_y = MARGIN + 56 + icon_size + 28
+    if tag_text:
+        tag_font = _load_font(18, weight="Bold")
+        draw.text((MARGIN, tag_baseline_y), tag_text, font=tag_font, fill=TEXT_PINK)
 
     # Feature name
-    name_y = MARGIN + 56 + icon_size + 28 + 40
+    name_y = tag_baseline_y + 40
     name_width = CANVAS_W - MARGIN * 2
     name_font, name_lines = _fit_wrap(
         draw, headline, name_width,
