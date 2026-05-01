@@ -32,11 +32,9 @@ marketing-engine/ Python-движок для промо в HR-чатах (Teleth
 .github/          GitHub Actions workflows: CI (PR) и deploy (push в main).
 ```
 
-## Запуск 5 мая 2026
+## Запуск
 
-Запускаемся ранним доступом по 300 человек/день, активация в 10:00 МСК. Цель ~3000 юзеров за первую волну.
-Мастер-чеклист: [`docs/LAUNCH_RUNBOOK.md`](docs/LAUNCH_RUNBOOK.md).
-Готовый контент: 7 постов канала в `marketing-engine/data/prewritten_posts.json`, статья VC.ru в `promo/content/articles/vc-launch-day.md`, контекст Артёма в `promo/artem/chats/launch-week-context.md`.
+Открыты с начала мая 2026. Бот @otklicker_bot, канал @otklicker.
 
 ## Деплой
 

@@ -19,15 +19,12 @@ Next.js 14 App Router + TypeScript strict + Tailwind, static export → nginx н
 - Production: https://otklicker.ru
 - Архив (логотипы, бэкап `.env` от старого `otklicker-promo/`): `~/Documents/otklicker-archive/`
 
-## Запуск 5 мая 2026 (waitlist 300/день)
+## Запуск (начало мая 2026)
 
-- Открываемся ранним доступом по 300 человек/день, активация в 10:00 МСК. Цель ~3000 юзеров.
-- До 5 мая waitlist выключен (фича-флаг). После — включается.
+- Бот @otklicker_bot открыт для всех с начала мая 2026. Никаких waitlist, очередей и волн нет.
 - Канал [@otklicker](https://t.me/otklicker) ведёт founder, не Артём.
-- Мастер-чеклист по дням 28.04→05.05: `docs/LAUNCH_RUNBOOK.md`.
 - Готовый контент: `marketing-engine/data/prewritten_posts.json` (7 постов канала), `promo/content/articles/vc-launch-day.md` (статья VC.ru), `promo/artem/chats/launch-week-context.md` (промпты для Артёма).
-- Источник правды по механике waitlist: задача в Notion «Очередь ранней волны (waitlist)» в базе «💻 IT Задачи».
-- Спецификации для бэкенд-разработчика (waitlist, /report, daily-digest) переехали из `docs/specs/` в Notion-задачи.
+- Метрики смотрим в Yandex.Metrica и Telegram (подписчики канала @otklicker).
 
 ## Сервер
 

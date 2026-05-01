@@ -1,6 +1,6 @@
 # CLAUDE.md
 
-This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
+This file provides guidance to AI assistants when working with code in this repository.
 
 ## О проекте
 
@@ -8,15 +8,35 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 Сам бот живёт на сервере (см. ниже). В этом репо — только лендинг + промо-материалы + локальное зеркало `marketing-engine/` (HR-промо userbot Артём).
 
-## Запуск 5 мая 2026 (первая волна 500, дальше 300/день)
+## AI Orchestrator — Правила выбора моделей
 
-5 мая 2026 в 10:00 МСК открываем первую волну на 500 мест. Дальше ежедневная квота 300 пользователей. Цель ~3000 юзеров за первые 7-10 дней. До 5 мая waitlist выключен.
+Этот проект использует глобальный AI Orchestrator (`~/.ai-orchestrator/`). При работе через CLI-оркестратор модели выбираются автоматически по ключевым словам:
 
-В текстах НИКОГДА: «попробуй прямо сейчас», «мгновенный доступ». Допустимо: «займи место», «ранний доступ», «открывается волнами».
+| Ярус | Модель | Для каких задач |
+|------|--------|-----------------|
+| **Base** | DeepSeek V3 | Форматирование, переименование, комментарии, простой текст |
+| **Worker** | Qwen 2.5 VL 72B | Рефакторинг, отладка, компоненты, тесты, документация |
+| **Advanced** | Kimi K2.5 | Архитектурные изменения, многофайловый рефакторинг, сложные алгоритмы |
+| **Supreme** | Claude 4.7 | Проектирование с нуля, глубокий анализ, критические баги, security audit |
+
+**При работе в Cline:**
+- Для простых правок используй DeepSeek V3 или Qwen 2.5 через OpenRouter
+- Для сложных задач — Kimi K2.5
+- Claude 4.7 только по явному запросу пользователя или для критических задач
+
+**Ключевые слова для маршрутизации (через orchestrator.py):**
+- Base: форматир, переимен, комментар, отформатируй, покажи список, найди файл
+- Worker: рефактор, исправь, добавь фичу, напиши функци, тест, debug, оптимизируй
+- Advanced: архитектур, перепиши модуль, многофайлов, сложный алгоритм, security audit
+- Supreme: спроектируй с нуля, глубокий анализ, критический баг, root cause analysis
+
+## Запуск (начало мая 2026)
+
+Бот @otklicker_bot открыт для всех с начала мая 2026. Никаких очередей, волн и квот нет. Заходишь, пишешь /start, начинаешь.
 
 Канал @otklicker ведёт founder, не Артём. У Артёма легенда HR-соискателя, не разработчика, голоса не путать.
 
-Источник правды по очереди: задача в Notion «Очередь ранней волны (waitlist)». Мастер-документ запуска: `docs/LAUNCH_RUNBOOK.md`. Готовый контент: `marketing-engine/data/prewritten_posts.json`, `promo/content/articles/vc-launch-day.md`, `promo/artem/chats/launch-week-context.md`.
+Готовый контент: `marketing-engine/data/prewritten_posts.json`, `promo/content/articles/vc-launch-day.md`, `promo/artem/chats/launch-week-context.md`.
 
 ## Архитектура лендинга
 
@@ -61,7 +81,7 @@ promo/            Промо: персона Артёма, контент-пла
 legal/            Юридика сайта (SITE_PRIVACY_POLICY.md, COOKIE_POLICY.md)
 deploy/           nginx-конфиг, deploy-скрипты, security-чеклист
 docs/             PRODUCT_FACTS.md, ARTEM_CHATS.md, LAUNCH_RUNBOOK.md, HANDOFF_NEXT_SESSION.md, USER_TODO.md
-marketing-engine/ Python userbot (Telethon + Claude CLI). Локально активная разработка, прод на сервере
+marketing-engine/ Python userbot (Telethon + AI). Локально активная разработка, прод на сервере
 .planning/        architecture.md, component-map.md, brand-tokens.md, PLAN.md, ревью-артефакты
 brandbook.pen     Бренд-токены (читать ТОЛЬКО через mcp__pencil__*, не Read/Grep)
 ```
@@ -73,6 +93,14 @@ cd site && npm run dev       # локальный сервер :3000
 cd site && npm run build     # статическая сборка в site/out/
 cd site && npm run lint      # ESLint (next lint), должен быть clean
 cd site && npx tsc --noEmit  # проверка типов
+
+# AI Orchestrator (глобальный, работает из любой директории)
+ai "отформатируй site/components/hero.tsx"           # DeepSeek V3 (base)
+ai --tier worker "рефакторни chat_monitor/detector.py" # Qwen 2.5 (worker)
+ai --tier advanced "перепиши архитектуру API"          # Kimi K2.5 (advanced)
+ai --tier supreme "спроектируй систему с нуля"         # Claude 4.7 (supreme)
+ai --cost-today                                        # траты за сегодня
+ai --list-models                                       # список моделей
 
 gh pr view                   # посмотреть открытый PR
 ssh root@204.168.178.241     # прод-сервер
