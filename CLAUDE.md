@@ -8,27 +8,9 @@ This file provides guidance to AI assistants when working with code in this repo
 
 Сам бот живёт на сервере (см. ниже). В этом репо — только лендинг + промо-материалы + локальное зеркало `marketing-engine/` (HR-промо userbot Артём).
 
-## AI Orchestrator — Правила выбора моделей
+## AI Orchestrator
 
-Этот проект использует глобальный AI Orchestrator (`~/.ai-orchestrator/`). При работе через CLI-оркестратор модели выбираются автоматически по ключевым словам:
-
-| Ярус | Модель | Для каких задач |
-|------|--------|-----------------|
-| **Base** | DeepSeek V3 | Форматирование, переименование, комментарии, простой текст |
-| **Worker** | Qwen 2.5 VL 72B | Рефакторинг, отладка, компоненты, тесты, документация |
-| **Advanced** | Kimi K2.5 | Архитектурные изменения, многофайловый рефакторинг, сложные алгоритмы |
-| **Supreme** | Claude 4.7 | Проектирование с нуля, глубокий анализ, критические баги, security audit |
-
-**При работе в Cline:**
-- Для простых правок используй DeepSeek V3 или Qwen 2.5 через OpenRouter
-- Для сложных задач — Kimi K2.5
-- Claude 4.7 только по явному запросу пользователя или для критических задач
-
-**Ключевые слова для маршрутизации (через orchestrator.py):**
-- Base: форматир, переимен, комментар, отформатируй, покажи список, найди файл
-- Worker: рефактор, исправь, добавь фичу, напиши функци, тест, debug, оптимизируй
-- Advanced: архитектур, перепиши модуль, многофайлов, сложный алгоритм, security audit
-- Supreme: спроектируй с нуля, глубокий анализ, критический баг, root cause analysis
+Используется только в Cline через OpenRouter. Правила маршрутизации моделей лежат в `.clinerules`. Claude Code этим не пользуется, ходит напрямую в Anthropic API.
 
 ## Запуск (начало мая 2026)
 
@@ -80,11 +62,25 @@ promo/            Промо: персона Артёма, контент-пла
   seo/              keywords.md, baseline-audit.md
 legal/            Юридика сайта (SITE_PRIVACY_POLICY.md, COOKIE_POLICY.md)
 deploy/           nginx-конфиг, deploy-скрипты, security-чеклист
-docs/             PRODUCT_FACTS.md, ARTEM_CHATS.md, LAUNCH_RUNBOOK.md, HANDOFF_NEXT_SESSION.md, USER_TODO.md
-marketing-engine/ Python userbot (Telethon + AI). Локально активная разработка, прод на сервере
+docs/             PRODUCT_FACTS.md, ARTEM_CHATS.md, HANDOFF_NEXT_SESSION.md, USER_TODO.md
+promo/content/    статьи на vc.ru, channel-launch-posts.md (готовые посты канала), партнёрские шаблоны
+promo/images/     брендовые картинки. launch/ — 5 PNG 1080×1080 для первых постов + generate.py
+marketing-engine/ Python userbot (Telethon + AI) и брендовый image_gen на Pillow. Прод на сервере
 .planning/        architecture.md, component-map.md, brand-tokens.md, PLAN.md, ревью-артефакты
 brandbook.pen     Бренд-токены (читать ТОЛЬКО через mcp__pencil__*, не Read/Grep)
 ```
+
+## marketing-engine: брендовая генерация контента
+
+Локальное зеркало userbot'а. Прод живёт на сервере, тут разработка и генерация ассетов.
+
+**Картинки для постов канала.** `marketing-engine/src/publisher/image_gen.py::generate_post_image()` рендерит 1080×1080 PNG в брендовых шаблонах: `number` (sunset-градиент с большой цифрой), `tip` (кремовый с акцент-баром), `quote` (sunset-рамка вокруг цитаты), `feature` (кремовый с лого и тегом), `update`. Шрифты Inter и логотипы в `marketing-engine/data/fonts/` и `marketing-engine/data/brand/` уже подключены.
+
+Опциональные kwargs у функции: `eyebrow`, `footer_note`, `feature_tag` — передаёшь `None` чтобы убрать блок, иначе используется dbsales-дефолт. Для откликера всегда передавай `eyebrow=None, footer_note=None`, иначе вылезут хардкоды «в цифрах» и «медиана по рынку, 2026».
+
+Пример вызова — в `promo/images/launch/generate.py`. Там же 5 готовых постов как шаблон.
+
+**Тексты постов.** `marketing-engine/src/content/generator.py::generate_post()` тянет Claude CLI через subprocess. Промпты в `src/content/prompts.py`, голос в `src/content/brand_voice.py`. ВНИМАНИЕ: эти промпты сейчас настроены под канал @dbseller_funnel (WB-продавцы), для @otklicker нужна перенастройка.
 
 ## Команды
 
@@ -94,16 +90,10 @@ cd site && npm run build     # статическая сборка в site/out/
 cd site && npm run lint      # ESLint (next lint), должен быть clean
 cd site && npx tsc --noEmit  # проверка типов
 
-# AI Orchestrator (глобальный, работает из любой директории)
-ai "отформатируй site/components/hero.tsx"           # DeepSeek V3 (base)
-ai --tier worker "рефакторни chat_monitor/detector.py" # Qwen 2.5 (worker)
-ai --tier advanced "перепиши архитектуру API"          # Kimi K2.5 (advanced)
-ai --tier supreme "спроектируй систему с нуля"         # Claude 4.7 (supreme)
-ai --cost-today                                        # траты за сегодня
-ai --list-models                                       # список моделей
-
-gh pr view                   # посмотреть открытый PR
-ssh root@204.168.178.241     # прод-сервер
+python3 promo/images/launch/generate.py  # перегенерить картинки 5 постов канала
+gh run watch                              # следить за деплоем после push
+gh pr view                                # посмотреть открытый PR
+ssh root@204.168.178.241                  # прод-сервер
 ```
 
 Перед push в main: `tsc --noEmit` зелёный, `npm run build` зелёный, `npm run lint` без warning'ов на твои файлы.
@@ -119,6 +109,8 @@ ssh root@204.168.178.241     # прод-сервер
 - Дизайн-токены: `.planning/brand-tokens.md`
 - Юридика сайта: `legal/SITE_PRIVACY_POLICY.md`, `legal/COOKIE_POLICY.md`
 - Тарифы: `docs/PRODUCT_FACTS.md` §5 (Бесплатный 0 руб., Активный 790 руб. / 3 недели)
+- Готовые посты канала: `promo/content/channel-launch-posts.md` + картинки `promo/images/launch/*.png`
+- Голос Артёма (HR-персона для чатов): `promo/artem/persona.md`, `promo/artem/voice.md`
 
 ## Стек
 
