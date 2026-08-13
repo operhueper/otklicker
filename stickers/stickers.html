@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Стикеры Откликер</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #FAFAF9;
+            padding: 40px 20px;
+            min-height: 100vh;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 48px;
+        }
+
+        .header h1 {
+            font-size: 44px;
+            font-weight: 800;
+            color: #92400E;
+            letter-spacing: -0.02em;
+            margin-bottom: 8px;
+        }
+
+        .header p {
+            font-size: 16px;
+            color: #B45309;
+            font-weight: 500;
+        }
+
+        .stickers-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 32px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .sticker-card {
+            background: #FFFBF0;
+            border-radius: 28px;
+            padding: 32px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            aspect-ratio: 1;
+            position: relative;
+            overflow: hidden;
+            border: 2px solid #FFE8B0;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .sticker-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 40px rgba(120, 53, 15, 0.15);
+        }
+
+        .sticker-icon {
+            width: 120px;
+            height: 120px;
+            border-radius: 28px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 24px;
+            position: relative;
+        }
+
+        .sticker-icon svg {
+            width: 60px;
+            height: 60px;
+            fill: none;
+            stroke: white;
+            stroke-width: 2;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+
+        .gradient-1 {
+            background: linear-gradient(135deg, #FBBF24 0%, #F97316 33%, #EF4444 66%, #DB2777 100%);
+        }
+
+        .gradient-2 {
+            background: linear-gradient(135deg, #FFB800 0%, #FF6A2A 55%, #E6227A 100%);
+        }
+
+        .gradient-3 {
+            background: linear-gradient(135deg, #FCD34D 0%, #FBBF24 33%, #F59E0B 66%, #F97316 100%);
+        }
+
+        .gradient-4 {
+            background: #92400E;
+        }
+
+        .sticker-text {
+            text-align: center;
+        }
+
+        .sticker-main {
+            font-size: 36px;
+            font-weight: 900;
+            color: #6D2B13;
+            line-height: 1.1;
+            letter-spacing: -0.02em;
+            margin-bottom: 4px;
+        }
+
+        .sticker-sub {
+            font-size: 16px;
+            font-weight: 500;
+            color: #8A3A10;
+            font-style: italic;
+        }
+
+        .sticker-label {
+            position: absolute;
+            top: 16px;
+            left: 16px;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            color: #FF6A2A;
+        }
+
+        /* Variant: gradient background sticker */
+        .sticker-card.full-gradient {
+            background: linear-gradient(135deg, #FFB800 0%, #FF6A2A 50%, #E6227A 100%);
+            border: none;
+        }
+
+        .sticker-card.full-gradient .sticker-main {
+            color: #FFE8B0;
+        }
+
+        .sticker-card.full-gradient .sticker-sub {
+            color: #FFFBF0;
+        }
+
+        .sticker-card.full-gradient .sticker-label {
+            color: #FFE8B0;
+        }
+
+        /* Variant: dark sticker */
+        .sticker-card.dark {
+            background: #1C1917;
+            border-color: rgba(254, 243, 199, 0.15);
+        }
+
+        .sticker-card.dark .sticker-main {
+            color: #FEF3C7;
+        }
+
+        .sticker-card.dark .sticker-sub {
+            color: #FBBF24;
+        }
+
+        .sticker-card.dark .sticker-label {
+            color: #FBBF24;
+        }
+
+        /* Export button */
+        .export-section {
+            text-align: center;
+            margin-top: 48px;
+            padding-top: 32px;
+            border-top: 1px solid rgba(146, 64, 14, 0.12);
+        }
+
+        .export-section p {
+            color: #78350F;
+            margin-bottom: 16px;
+            font-size: 14px;
+        }
+
+        .export-btn {
+            background: linear-gradient(135deg, #FBBF24 0%, #F97316 33%, #EF4444 66%, #DB2777 100%);
+            color: white;
+            border: none;
+            padding: 14px 32px;
+            border-radius: 14px;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            font-family: 'Inter', sans-serif;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .export-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(219, 39, 119, 0.3);
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>🎨 Стикеры Откликер</h1>
+        <p>Набор стикеров для Telegram в стиле брендбука</p>
+    </div>
+
+    <div class="stickers-grid">
+        <!-- Sticker 1: Поздравляю! -->
+        <div class="sticker-card" id="sticker-1">
+            <span class="sticker-label">Стикер 1</span>
+            <div class="sticker-icon gradient-1">
+                <svg viewBox="0 0 24 24">
+                    <path d="M14 4.1L12 6"/>
+                    <path d="M5.1 8l-2.9-.8"/>
+                    <path d="M6 12l-1.9 2"/>
+                    <path d="M7.2 2.2L8 5.1"/>
+                    <path d="M9.037 9.69a.498.498 0 0 1 .653-.653l11 4.5a.5.5 0 0 1-.074.949l-4.349 1.041a1 1 0 0 0-.74.739l-1.04 4.35a.5.5 0 0 1-.95.074z"/>
+                </svg>
+            </div>
+            <div class="sticker-text">
+                <div class="sticker-main">Поздравляю!</div>
+                <div class="sticker-sub">ты получил оффер 🎉</div>
+            </div>
+        </div>
+
+        <!-- Sticker 2: Ищу работу -->
+        <div class="sticker-card" id="sticker-2">
+            <span class="sticker-label">Стикер 2</span>
+            <div class="sticker-icon gradient-2">
+                <svg viewBox="0 0 24 24">
+                    <circle cx="11" cy="11" r="8"/>
+                    <path d="M21 21l-4.35-4.35"/>
+                </svg>
+            </div>
+            <div class="sticker-text">
+                <div class="sticker-main">ИЩУ РАБОТУ</div>
+                <div class="sticker-sub">готов к предложениям</div>
+            </div>
+        </div>
+
+        <!-- Sticker 3: Спасибо -->
+        <div class="sticker-card" id="sticker-3">
+            <span class="sticker-label">Стикер 3</span>
+            <div class="sticker-icon gradient-3">
+                <svg viewBox="0 0 24 24">
+                    <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+                </svg>
+            </div>
+            <div class="sticker-text">
+                <div class="sticker-main">Спасибо!</div>
+                <div class="sticker-sub">за отклик ❤️</div>
+            </div>
+        </div>
+
+        <!-- Sticker 4: Где ответ? -->
+        <div class="sticker-card dark" id="sticker-4">
+            <span class="sticker-label">Стикер 4</span>
+            <div class="sticker-icon gradient-1">
+                <svg viewBox="0 0 24 24">
+                    <circle cx="12" cy="12" r="10"/>
+                    <polyline points="12 6 12 12 16 14"/>
+                </svg>
+            </div>
+            <div class="sticker-text">
+                <div class="sticker-main">Где ответ?</div>
+                <div class="sticker-sub">жду уже 3 дня...</div>
+            </div>
+        </div>
+
+        <!-- Sticker 5: Полный градиент -->
+        <div class="sticker-card full-gradient" id="sticker-5">
+            <span class="sticker-label">Стикер 5</span>
+            <div class="sticker-icon" style="background: rgba(255,255,255,0.2);">
+                <svg viewBox="0 0 24 24">
+                    <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
+                    <polyline points="22 4 12 14.01 9 11.01"/>
+                </svg>
+            </div>
+            <div class="sticker-text">
+                <div class="sticker-main">ГОТОВО!</div>
+                <div class="sticker-sub">резюме отправлено</div>
+            </div>
+        </div>
+
+        <!-- Sticker 6: Ого! -->
+        <div class="sticker-card" id="sticker-6">
+            <span class="sticker-label">Стикер 6</span>
+            <div class="sticker-icon gradient-2">
+                <svg viewBox="0 0 24 24">
+                    <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+                </svg>
+            </div>
+            <div class="sticker-text">
+                <div class="sticker-main">ОГО!</div>
+                <div class="sticker-sub">зарплата мечты 💰</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="export-section">
+        <p>Чтобы сохранить стикер как изображение, сделай скриншот или используй инструменты разработчика</p>
+        <button class="export-btn" onclick="alert('Для экспорта стикеров используйте скриншоты или инструменты дизайна (Figma, Pencil). Каждый стикер — 512×512px с прозрачным фоном для Telegram.')">
+            📥 Как экспортировать
+        </button>
+    </div>
+</body>
+</html>

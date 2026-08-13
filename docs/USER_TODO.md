@@ -6,20 +6,9 @@
 
 ## Срочно (в течение суток)
 
-### 1. Проверить почту info@otklicker.ru
+### 1. Почта info@otklicker.ru ✅ ПЕРЕЕХАЛА НА ЯНДЕКС 360 (2026-05-02)
 
-MX-записи ещё пропагируются — Google уже видит новый SPF, но MX от ImprovMX могут идти 3-24 часа.
-
-**Через 6-24 часа:**
-1. Отправь себе тест: с другого ящика напиши на `info@otklicker.ru`
-2. Через 30 секунд проверь свой Gmail
-3. Если пришло — всё работает
-
-**Если через 24 часа письмо не пришло:**
-- Зайди в ImprovMX dashboard (https://improvmx.com/dashboard) — статус домена должен быть зелёный «Active»
-- Зайди в Timeweb DNS-панель — проверь что MX записи именно `mx1.improvmx.com` (10) и `mx2.improvmx.com` (20), без `mx*.timeweb.ru`
-- Проверь SPF: TXT на `@` должен быть `v=spf1 include:spf.improvmx.com ~all`
-- Если всё OK — подожди ещё 12 часов, MX TTL у Timeweb могут быть до 86400
+ImprovMX выпилен. На Яндекс 360 заведён ящик `master@otklicker.ru` + алиас `info@otklicker.ru`. Письма на info@ приходят в master, отправлять можно с info@ (выбор в поле «От кого»). DNS на Timeweb: MX `mx.yandex.net` (10), SPF `v=spf1 redirect=_spf.yandex.net`, yandex-verification TXT на месте.
 
 ---
 
@@ -71,18 +60,9 @@ MX-записи ещё пропагируются — Google уже видит �
 
 После создания этих двух документов — Claude обновит /offer и /bot-privacy на реальный контент, добавит в sitemap, уберёт noindex.
 
-### 6. SMTP relay для отправки КАК info@otklicker.ru (опционально)
+### 6. SMTP relay для отправки КАК info@otklicker.ru ✅ НЕ НУЖЕН
 
-Сейчас ты получаешь письма на info@ в Gmail, но отвечать можешь только с обычного gmail-адреса. Если важно отвечать с info@ (например для деловых контактов):
-
-1. Регистрация на https://www.brevo.com (бывший Sendinblue) — free tier 300 писем/день
-2. Получить SMTP credentials (server: smtp-relay.brevo.com, login, key)
-3. Gmail → Настройки → Аккаунты и импорт → «Отправлять письма как» → добавить `info@otklicker.ru`:
-   - SMTP сервер: `smtp-relay.brevo.com`
-   - Порт: 587
-   - Логин и пароль: из Brevo
-4. Подтвердить адрес через тест-письмо
-5. Теперь в Gmail можно выбирать «From: info@otklicker.ru» при ответе
+Закрыто переездом на Яндекс 360 (см. п.1). Отправка с info@ через нативный алиас, без SMTP-relay/Brevo.
 
 ### 7. HSTS preload submission (после 2-3 недель работы)
 

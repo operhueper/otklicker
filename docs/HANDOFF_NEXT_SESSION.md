@@ -1,214 +1,287 @@
 # Хэндофф для следующей Claude-сессии — otklicker.ru
 
-> **Скопируй этот файл целиком в новый чат с Claude Code.** Это вводный контекст: что сделано, что в работе, что в бэклоге, как продолжать.
+> **Скопируй этот файл в новый чат с Claude Code, или просто открой проект — Claude его сам прочитает.**
+> Контекст обновлён 02.05.2026, до запуска бота 04.05.2026.
 
 ---
 
-## Кто ты
+## Главная цель сейчас
 
-Ты продолжаешь работу над лендингом **otklicker.ru** — сайтом для Telegram-бота `@otklicker_bot` (автоотклики на HH.ru). Запущен в production 25 апреля 2026 предыдущей сессией. Twoя задача — закрыть бэклог (a11y/code MEDIUM, контент про бот, аналитика) и помогать пользователю с эволюцией продукта.
+**Запуск Telegram-бота `@otklicker_bot` 04.05.2026** + подача уведомлений в Роскомнадзор + параллельная подача Р24001 на изменение ОКВЭД у ИП Энбом К.И.
 
-## Стек одной строкой
+Бот уже работает технически (отдельный репо `dream-job-bot` от другого разработчика, владелец организации `DreamGangVVS` на GitHub, `@otklicker_bot` в Telegram). Сейчас задача — закрыть юридический контур и подать всё что нужно.
 
-Next.js 14 App Router + TypeScript strict + Tailwind, static export → nginx на Hetzner CAX21 ARM (Helsinki), Let's Encrypt SSL, GH Actions push→deploy, ImprovMX→Gmail для info@otklicker.ru.
+---
 
-## Где живёт код
+## Что было сделано в сессии 02.05.2026
 
-- Локальный репо: `/Users/evgeniy/projects/otklicker/`
-- GitHub: https://github.com/operhueper/otklicker (private)
-- Production: https://otklicker.ru
-- Архив (логотипы, бэкап `.env` от старого `otklicker-promo/`): `~/Documents/otklicker-archive/`
+### Разведка по коду бота
 
-## Запуск (начало мая 2026)
+Свежий клон бота лежит в `/Users/evgeniy/projects/dream-job-bot/` (HEAD `e303fc6 fixes bd`).
 
-- Бот @otklicker_bot открыт для всех с начала мая 2026. Никаких waitlist, очередей и волн нет.
-- Канал [@otklicker](https://t.me/otklicker) ведёт founder, не Артём.
-- Готовый контент: `marketing-engine/data/prewritten_posts.json` (7 постов канала), `promo/content/articles/vc-launch-day.md` (статья VC.ru), `promo/artem/chats/launch-week-context.md` (промпты для Артёма).
-- Метрики смотрим в Yandex.Metrica и Telegram (подписчики канала @otklicker).
+**Установленные факты по коду:**
+- AI-стек: **только OpenAI** (gpt-4o, gpt-4o-mini, whisper-1). Никаких Yandex GPT / GigaChat / других в коде нет.
+- БД: Supabase Python SDK. Точно нужно подтвердить у разработчика что `SUPABASE_URL` в проде указывает на self-hosted на Timeweb, а не на supabase.com.
+- Голос: Whisper API, аудио in-memory, не сохраняется. Распознанный текст в обычной обработке.
+- HH: OAuth flow через Playwright (одноразовый код), хранится access_token, refresh_token, cookies, email/имя/фамилия с hh.ru. Логин/пароль HH НЕ хранятся.
+- Платежи: ЮKassa. Бок: hardcoded `noreply@example.com` в чеках — нарушение 54-ФЗ.
+- Удаление данных: команда «🗑 Удалить все данные» в /start → Настройки. Soft-delete: оставляет Telegram ID, legal_accepted_at, referral_code, rb_payments, rb_subscriptions, rb_events.
+- Согласие при /start: блокирует функционал до принятия. Текст в `bot/legal.py` устарел («Dream Job Bot», support@dreamjob.bot) — заменить.
+- Логирование: только stdout. Sentry/Loki не подключены.
 
-## Сервер
 
-- IP: `204.168.178.241` (IPv6 `2a01:4f9:c014:38bd::1`)
-- SSH: `ssh root@204.168.178.241` (стандартный ключ пользователя работает)
-- Локация: Helsinki (hel1), Hetzner CAX21, ARM aarch64, Ubuntu 24.04
-- Что стоит: nginx 1.24, certbot 2.9.0, GH Actions deploy user (через ключ `~/.ssh/otklicker_gh_actions`)
-- Лендинг: `/var/www/otklicker.ru/` (наполняется rsync'ом из CI)
-- Конфиг: `/etc/nginx/sites-available/otklicker.ru` (и `.full` бэкап, исходник в репо `deploy/nginx/otklicker.ru.conf`)
-- На сервере есть ещё проекты (`fitcoach-bot`, `exercise-review`, `tg-automations`, `containerd`, `tg-bots`) — **НЕ ТРОГАТЬ**, не наш лендинг
+### Подготовлены документы (проверены на formal style по hh.ru/yandex/mail)
 
-## Что уже готово (не трогать без необходимости)
+В `/Users/evgeniy/projects/otklicker/legal/`:
 
-- ✅ Все 9 секций лендинга мигрированы из JSX-прототипа в `site/components/*.tsx`
-- ✅ 5 экранов бота в `site/lib/screens/bot-screens.ts`
-- ✅ Тарифы (`site/lib/data/pricing.ts`) синхронизированы с `docs/PRODUCT_FACTS.md`
-- ✅ Site Privacy Policy (`legal/SITE_PRIVACY_POLICY.md` → `/privacy`)
-- ✅ Cookie Policy (`legal/COOKIE_POLICY.md` → `/cookies`)
-- ✅ Placeholder /offer и /bot-privacy (ждут содержимого)
-- ✅ SEO: metadata, robots.txt, sitemap.xml (3 URL: /, /privacy, /cookies), JSON-LD SoftwareApplication
-- ✅ OG-image 1200×630 через `next/og`, favicon-set
-- ✅ HTTPS, HSTS 2y preload, security headers, ужесточённый CSP (без Yandex.Metrica)
-- ✅ certbot auto-renew (certbot.timer active)
-- ✅ GH Actions: push в main → ~2 мин live
-- ✅ ImprovMX MX/SPF в Timeweb DNS (info@otklicker.ru → личный Gmail пользователя)
+| Файл | Содержание | Объём |
+|---|---|---|
+| `OFFER.md` | Публичная оферта на услуги бота, 16 разделов, ссылки на ГК РФ ст. 437/438/32, 152-ФЗ, 54-ФЗ, 2300-1 | 2688 слов |
+| `BOT_PRIVACY_POLICY.md` | Политика конфиденциальности бота, 17 разделов, отдельный блок 8.1-8.5 про трансграничную передачу в OpenAI L.L.C. (США) | 3433 слова |
+| `SITE_PRIVACY_POLICY.md` | Политика сайта (Yandex.Metrica), 15 разделов | 1673 слова |
+| `BOT_LEGAL_TEXT.md` | Краткие тексты для подстановки в `bot/legal.py` (TERMS_TEXT 998 знаков, PRIVACY_TEXT 1249 знаков) | для бота |
 
-## Источники правды
+В `/Users/evgeniy/projects/otklicker/`:
 
-| Что | Где |
+| Файл | Содержание |
 |---|---|
-| Продуктовая фактура (тарифы, фичи) | `docs/PRODUCT_FACTS.md` |
-| Голос бренда, запреты | `CLAUDE.md` в корне репо |
-| Архитектура (TS-типы, токены) | `.planning/architecture.md` |
-| Карта компонентов прототипа | `.planning/component-map.md` |
-| Бренд-токены | `.planning/brand-tokens.md` |
-| План по фазам (исторический) | `.planning/PLAN.md` |
-| Code review | `.planning/REVIEW.md` |
-| Visual review | `.planning/visual-review.md` |
-| A11y review | `.planning/a11y-review.md` |
-| Security audit | `deploy/security-checklist.md` |
-| Phase 7 runbook | `.planning/PHASE7_RUNBOOK.md` |
-| Скриншоты на 4 брейкпоинтах | `.planning/screenshots/` |
-| Реквизиты ИП в legal-документах | ИП Энбом К.И., ОГРНИП 324632700187012 |
+| `legal/rkn-notification.md` | Заполненная форма уведомления РКН по 16 разделам + приложение по трансграничной передаче + чек-лист 15 пунктов |
+| `docs/rkn-submission-guide.md` | Пошаговая инструкция подачи через `pd.rkn.gov.ru` и `pd.rkn.gov.ru/cross-border-transmission/form2/` |
 
-## Обязательные правила (НЕ нарушать)
+**Стиль документов:** обезличенный формальный («Оператор», «Пользователь», «Сервис», «Стороны»). Без «мы». На «Вы» с заглавной. Это правило зафиксировано в memory `feedback_legal_docs_formal.md` и распространяется на все юридические документы проекта.
 
-1. **Голос бренда** (`CLAUDE.md`): без em-dash как пунктуация, без «уникальный», «инновационный», «не упустите», «leverage», «robust», «seamless», без эмодзи в текстах персоны, без «работа за 3 дня», без «100 откликов». Потолок 15 откликов в день — это НАШ лимит (человек больше переписок не вытянет), а не лимит HH.
-2. **Бренд «откликер» строго lowercase** в текстах (только в начале предложения с заглавной)
-3. **Конкретные цифры** вместо «много» / «значительно»
-4. **Reverify before claim done**: `npm run build` зелёный, `npx tsc --noEmit` чистый, `npx next lint` без warnings
-5. **НЕ копировать** `.env*` или `.session*` файлы из marketing-engine в коммиты
-6. **Brandbook.pen — только через `mcp__pencil__*`**, никогда Read/Grep
-7. **Атомарные conventional commits** (`feat:`, `fix:`, `chore:`, `docs:`, `ci:`, `style:`)
-8. **Рискованные действия — спросить у пользователя**: DNS, SSH-конфиг сервера, force-push, удаление файлов, чужие проекты на сервере
-9. **Email унифицирован** на `info@otklicker.ru` (НЕ `hi@otklicker.app`)
+### Сайт обновлён и собран
 
-## Окружение и инструменты
+- `/offer` (`site/app/offer/page.tsx`) — рендерит `legal/OFFER.md` через react-markdown
+- `/bot-privacy` (`site/app/bot-privacy/page.tsx`) — рендерит `legal/BOT_PRIVACY_POLICY.md`
+- `/privacy` — рендерит обновлённый `legal/SITE_PRIVACY_POLICY.md`
+- Все 14 страниц собраны статически, `npm run build` зелёный
 
-- Node 22.14, npm 10.9.2 (локально)
-- gh CLI авторизован под `operhueper`
-- GH Secrets уже настроены: `DEPLOY_SSH_KEY`, `DEPLOY_HOST`, `DEPLOY_USER`, `DEPLOY_PATH`
-- MCP: pencil (для brandbook.pen), playwright (для дизайн/a11y проверок), hetzner (для server CRUD при необходимости)
+---
 
-## Bekлог приоритезированный
+## Что нужно сделать 04.05.2026
 
-### Wave A — Высокий приоритет (закрыть в ближайшую неделю)
+### 1. Подача уведомления в РКН (основное)
 
-**A11y MEDIUM:**
-- Skip-to-content link в Nav (для screen-reader)
-- `role="region"` + `aria-label` на CookieBanner
-- Footer link columns обернуть в семантический `<nav>` + `<ul><li>`
-- Keyboard arrow navigation для tablist в Features (стрелки ←→ переключают табы)
+- URL: `https://pd.rkn.gov.ru` (вход через Госуслуги/ЕСИА под Ксенией)
+- Форма: «Уведомление об обработке персональных данных» (приказ РКН № 180 от 28.10.2022)
+- Источник полей: `legal/rkn-notification.md`
+- Гайд: `docs/rkn-submission-guide.md`
 
-**Brand voice:**
-- M-10: tagline «найди работу мечты» в `components/brand.tsx:52` (BrandLockup) нарушает правило «не использовать придуманные слоганы». Заменить на нейтральный «Telegram-бот · HH.ru» или убрать совсем (согласовать с пользователем)
+**Поля, которые надо ввести вручную в личном кабинете (нет в исходных данных):**
+- 1.6 — СНИЛС Ксении
+- 1.7 — Паспорт серия + номер Ксении
+- 1.14 — ОКВЭД: указать **85.41** (текущий основной, новый ещё не подан)
+- 1.15 — ОКПО (есть в выписке Росстата)
 
-**Code MEDIUM:**
-- M-1: заменить `dangerouslySetInnerHTML` в `components/hero-chat.tsx` на JSX (`<><b>{job.company}</b></>`)
-- M-2: `lib/types/pricing.ts:6` — `id: 'free' | 'active' | string` → убрать `| string`
-- M-3: `components/speed.tsx:165` — `kind: string` → `'bot' | 'manual'`
+### 2. Подача отдельного уведомления о трансграничной передаче
 
-### Wave B — Средний приоритет
+- URL: `https://pd.rkn.gov.ru/cross-border-transmission/form2/`
+- Это **отдельная** форма от основного уведомления
+- Получатель: OpenAI L.L.C., США
+- Категории передаваемых ПД: ФИО, контакты, опыт, навыки, текст резюме, голосовые, переписка с HR
+- РКН рассматривает до **10 рабочих дней**, выдаёт положительное или отрицательное решение
+- **Решение пользователя 02.05.2026:** запускаемся 04.05.2026 без ожидания решения РКН (риск принят сознательно). Подача уведомления — формальное прикрытие, реальная обработка идёт с момента запуска.
 
-**Yandex.Metrica интеграция:**
-1. Получить counter ID от пользователя
-2. Подключить через `next/script` в `app/layout.tsx` (стратегия `afterInteractive`)
-3. Учесть согласие через `localStorage.otklicker_cookie_consent === 'all'`
-4. Открыть CSP обратно: добавить `mc.yandex.ru` в `script-src`, `connect-src`, `img-src`, `frame-src` в `deploy/nginx/otklicker.ru.conf`
-5. Обновить Cookie Policy если нужно
-6. Submit sitemap в Yandex.Webmaster + Google Search Console
+### 3. Подача Р24001 на изменение ОКВЭД
 
-**Документы про бот** (когда пользователь готов):
-- `legal/BOT_OFFER_AGREEMENT.md` — договор-оферта на платные услуги бота. Обращайся к юристу или используй legal-compliance-checker (Opus). Реквизиты: ИП Энбом К.И., ОГРНИП 324632700187012
-- `legal/BOT_PRIVACY_POLICY.md` — политика обработки данных пользователей бота (резюме, токены HH, переписка с HR). Это сложный документ, требует понимания того, что бот делает (см. `docs/PRODUCT_FACTS.md`)
-- После создания: заменить placeholder в `app/offer/page.tsx` и `app/bot-privacy/page.tsx` на рендер MD (как сделано в `/privacy` и `/cookies`)
-- Добавить /offer и /bot-privacy в `app/sitemap.ts` (раньше исключены из-за placeholder-статуса)
-- Убрать noindex с этих страниц в их `metadata`
+УКЭП у Ксении нет, поэтому через **МФЦ Самары** (или ИФНС № 18). Лично, с паспортом. Бесплатно. Срок 5 рабочих дней.
 
-### Wave C — Долгосрочный backlog
+**Что внести в форму Р24001 — лист «Е»:**
 
-**Code LOW/MEDIUM:**
-- Inline styles → Tailwind classes (M-9 в REVIEW.md): большинство компонентов используют inline `style={{}}` вместо Tailwind classes. Унаследовано из прототипа. Долгая миграция, низкий приоритет.
-- Convert `BOT_SCREENS` (`lib/screens/bot-screens.ts`) с HTML strings на ReactNode trees, чтобы убрать `dangerouslySetInnerHTML` в `RealBotScreen`
-- Tighten composite key in HeroSwipe (M-6)
-- Add `type="button"` всем кнопкам (L-2)
-- L-4: `.prose-legal` неиспользуемый класс в globals.css — либо подключить, либо убрать
-- L-6: `id="teaser-grid"` global ID в `components/teaser-strip.tsx` — заменить на class-scoped
-- Базовый Playwright smoke-тест (homepage, все CTA, manifest icons 200)
+```
+Раздел 1.1 — Код основного вида деятельности (новый):
+  62.01 — Разработка компьютерного программного обеспечения
 
-**Server hardening (security audit findings — отдельно от сайта):**
-- H-1 (security-checklist.md): SSH `PasswordAuthentication=no`, `MaxAuthTries=3`, `ClientAliveInterval=300` через `/etc/ssh/sshd_config.d/00-hardening.conf`
-- H-2: `apt-get install fail2ban`
-- C-1/C-2: соседние боты на сервере имеют публичный Postgres на 0.0.0.0:5432-5437 (Docker bypass UFW). Не наш проект, но shared-host risk. Согласовать с пользователем.
+Раздел 2.1 — Коды дополнительных видов деятельности (внести):
+  62.02 — Деятельность консультативная и работы в области компьютерных технологий
+  63.11.1 — Деятельность по обработке данных
+  63.99 — Деятельность информационных служб прочая
+  85.41 — Образование дополнительное детей и взрослых (был основным, переезжает в дополнительные)
 
-**SEO дальше:**
-- HSTS preload submission на https://hstspreload.org/?domain=otklicker.ru (после 2-3 недель работы HSTS без проблем)
-- Расширить ключевые слова в `promo/seo/keywords.md`
-- Контент-план для блога: `promo/seo/content-plan.md`
-- Первая статья vc.ru / Habr про откликер
-
-**Маркетинг (HR-персона Артём):**
-- `marketing-engine/` уже на сервере, работает в HR-чатах
-- Если понадобится менять промпты — делать в `marketing-engine/src/content/prompts.py` на сервере, не в локальном репо
-- Список HR-чатов: `data/hr_chats.json`
-
-## Как работать
-
-### Делегирование агентам
-
-Прошлая сессия использовала OMC. Доступны:
-- `executor` (Sonnet) — implementation
-- `executor` с `model=opus` — сложная архитектура
-- `code-reviewer` (Opus) — review
-- `architect` (Opus) — system design
-- `legal-compliance-checker` (Opus) — для bot privacy policy
-- `Technical Writer` (Sonnet) — для bot offer
-- `accessibility-auditor` (Sonnet) — a11y проверки
-- `designer` (Sonnet) — visual review через playwright
-- `security-engineer` (Opus) — server/infra audits
-
-Делегируй когда задача multi-step. Простые правки в 1 файле — делай сам.
-
-### Деплой
-
-```bash
-git push origin main  # → GH Actions → ~2 мин live
+Раздел 2.2 — Коды для исключения (внести):
+  оставить пустым
 ```
 
-Откат:
-```bash
-git revert <sha>
-git push origin main
+**Текущие в ЕГРИП ИП Энбом К.И. (по выписке от 07.11.2024):**
+- Основной: 85.41 — Образование дополнительное
+- Дополнительные: 47.91 (розничная по интернету), 96.09 (прочие персональные услуги)
+
+После Р24001 в ЕГРИП будет:
+- Основной: 62.01
+- Дополнительные: 85.41, 47.91, 96.09, 62.02, 63.11.1, 63.99
+
+После получения новой выписки (~10-12 мая) — подать в РКН **изменения** в уведомление с обновлённым ОКВЭД 62.01.
+
+### 4. Запуск бота
+
+После подачи всех уведомлений 04.05.2026 — запуск бота `@otklicker_bot`. Канал `@otklicker` (ведёт founder, не Артём).
+
+---
+
+## TODO для разработчика бота (передать срочно)
+
+1. **Ротировать OPENAI_API_KEY**
+   - Текущий `sk-proj-fh6nX...` закоммичен в `.env.docker`, виден в git history
+   - Создать новый ключ через platform.openai.com
+   - Прописать в прод-окружение Timeweb (НЕ в репо)
+   - Старый revoke
+
+2. **Подтвердить SUPABASE_URL в проде**
+   - Если указывает на supabase.com (Frankfurt/Singapore) — миграция на self-hosted в Cloud MSK 80 (нарушение ст. 18 152-ФЗ)
+   - Если уже на Timeweb — прислать строку для подтверждения
+
+3. **Удалить `.env.docker` из репо**
+   - Заменить на `.env.docker.example` без секретов
+   - Очистить git-историю через `git filter-repo --path .env.docker --invert-paths`
+
+4. **Подменить `bot/legal.py`**
+   - Текущие TERMS_TEXT и PRIVACY_TEXT — устаревшие (Dream Job Bot, support@dreamjob.bot)
+   - Заменить на тексты из `legal/BOT_LEGAL_TEXT.md`
+   - Кнопка «Принимаю условия — начать» → «Принимаю условия» (новый текст согласия)
+
+5. **YooKassa: ввод email для legal-чека по 54-ФЗ**
+   - Сейчас в `bot/services/yookassa_service.py:50` хардкод `customer.email = "noreply@example.com"`
+   - Добавить FSM-состояние «введите email для чека» перед первой оплатой
+   - Сохранить в `rb_users.receipt_email` (новая колонка миграцией)
+   - Подставлять при создании платежа
+
+---
+
+## Юридические факты (зафиксировать в любом будущем документе)
+
+### Оператор персональных данных
+
+```
+Индивидуальный предприниматель Энбом Ксения Игоревна
+ИНН: 631609033320
+ОГРНИП: 324632700187012
+Адрес регистрации: 443090, Самарская область, г. Самара, ул. Стара Загора, д. 52, кв. 54
+Расчётный счёт: 40802810620000959375
+Банк: ООО «Банк Точка»
+БИК: 044525104
+ИНН банка: 9721194461
+Корреспондентский счёт: 30101810745374525104
+Адрес банка: 109044, г. Москва, пер. 3-й Крутицкий, д. 11, помещ. 7Н
+Телефон: +7 (919) 805-28-76
+Электронная почта: info@otklicker.ru
+Email читают: Ксения и Артём
 ```
 
-### Локальная разработка
+### Контактное лицо (technical contact)
 
-```bash
-cd /Users/evgeniy/projects/otklicker/site
-npm run dev       # http://localhost:3000
-npm run build     # static export в out/
-npx tsc --noEmit  # проверка типов
-npx next lint     # ESLint (должен быть clean)
+Артём (artemyasuoko@gmail.com), founder.
+
+### Инфраструктура (по утверждению пользователя)
+
+| Компонент | Где |
+|---|---|
+| Хостинг бота | Timeweb Cloud, Cloud MSK 80, Москва, РФ |
+| Хостинг сайта | Timeweb (по утверждению пользователя 02.05.2026 — ранее был Hetzner Helsinki, миграция выполнена) |
+| БД бота | Timeweb (через Supabase SDK; нужно подтвердить self-hosted vs supabase.com) |
+| Платежи | ЮKassa (РФ) |
+| AI | OpenAI L.L.C. (США) — gpt-4o, gpt-4o-mini, whisper-1 |
+| Аналитика лендинга | Yandex.Metrica |
+| Аналитика бота | Внутренняя `rb_events`, наружу не уходит |
+
+### Цели обработки ПД (для всех документов)
+
+1. Подбор подходящих вакансий на hh.ru
+2. Ответы HR в чате hh.ru через Telegram-бот
+3. Хранение резюме и истории откликов
+4. Сервисные уведомления (только сервисные, рекламных рассылок нет)
+5. Поддержка пользователя
+6. Биллинг (тариф «Активный», 790 ₽ за 21 календарный день)
+7. Внутренняя аналитика на обезличенных данных (только Telegram ID + события)
+
+### Возрастной ценз
+
+18+. Зафиксировано только в политике, без отдельного чекбокса в боте.
+
+### Согласие при /start
+
+Один блок текста с гиперссылками на оферту и политику + кнопка «Принимаю условия». Блокирует функционал до принятия. В тексте упоминается трансграничная передача в OpenAI (США).
+
+---
+
+## CLAUDE.md в репо устарел
+
+CLAUDE.md в корне репозитория ещё описывает деплой сайта на Hetzner CAX21 ARM (Helsinki). Пользователь подтвердил 02.05.2026 что и сайт, и бот теперь на Timeweb. CLAUDE.md можно переписать в отдельной сессии — пока не критично.
+
+---
+
+## Структура каталогов
+
+```
+otklicker/
+  site/                Next.js 14 App Router, лендинг
+    app/                 маршруты (page, layout, privacy, cookies, offer, bot-privacy, sitemap, robots, opengraph-image)
+    components/          секции лендинга и UI
+    lib/data/            тексты секций
+    lib/types/           TS-типы
+    lib/screens/         bot-screens.ts (HTML-эмуляция Telegram-бота)
+  legal/               Юридические документы
+    OFFER.md             публичная оферта (для /offer)
+    BOT_PRIVACY_POLICY.md политика бота (для /bot-privacy)
+    SITE_PRIVACY_POLICY.md политика сайта (для /privacy)
+    COOKIE_POLICY.md     куки сайта (для /cookies)
+    BOT_LEGAL_TEXT.md    тексты для подстановки в bot/legal.py
+    rkn-notification.md  заполненная форма уведомления РКН
+  docs/
+    rkn-submission-guide.md гайд подачи в РКН
+    HANDOFF_NEXT_SESSION.md этот файл
+    PRODUCT_FACTS.md     факты про продукт
+    USER_TODO.md         задачи на Артёма
+  promo/               маркетинг, статьи, картинки канала
+  marketing-engine/    HR-userbot (отдельный сервис)
+  deploy/              nginx-конфиг
+  .planning/           архитектура, ревью, аудиты
+  brandbook.pen        бренд-токены (ТОЛЬКО через mcp__pencil__*)
 ```
 
-### Server access
+---
 
-```bash
-ssh root@204.168.178.241
-# конфиг nginx: /etc/nginx/sites-available/otklicker.ru
-# логи: /var/log/nginx/otklicker.ru.{access,error}.log
-# certbot: certbot renew --dry-run
-```
+## Правила (критично, не нарушать)
+
+1. **Юридические документы — формальный обезличенный стиль** (см. memory `feedback_legal_docs_formal.md`). «Оператор», «Пользователь», «Сервис», «Стороны». Без «мы». На «Вы» с заглавной.
+2. **Маркетинговые материалы (лендинг, посты канала, статьи)** — другой стиль: «мы», конкретные цифры, человеческий язык, без AI-клише. Правила в `CLAUDE.md`.
+3. **Запрещено везде:** em-dash как пунктуация, эмодзи в текстах персоны Артёма, «уникальный/инновационный/leverage/robust/seamless», «работа за 3 дня», «100 откликов».
+4. **Лимит 15 откликов в день — НАШ лимит, не HH** (по пропускной способности соискателя в обработке ответов).
+5. **Бренд «откликер»** — lowercase в текстах (только в начале предложения с заглавной).
+6. **Brandbook.pen** — только через `mcp__pencil__*`, никогда Read/Grep.
+7. **Никогда не коммитить** `.env`, `*.session`, `*.db` файлы.
+
+---
 
 ## Стартовая инструкция
 
-1. Прочти этот файл целиком
-2. Прочти `CLAUDE.md` (правила голоса бренда)
-3. Спроси пользователя что делаем сегодня. Возможные варианты:
-   - Wave A item (a11y MEDIUM, brand voice tagline, code MEDIUM)
-   - Подключение Yandex.Metrica (если ID получен)
-   - Bot Offer / Bot Privacy Policy (если пользователь готов делать)
-   - Контент для блога (статьи)
-   - Что-то новое, не из бэклога
-4. Если задача big — делегируй executor агенту с подробным промптом
-5. После — `npm run build`, push, проверка production через curl
+1. Прочитать этот файл и `CLAUDE.md` в корне (правила голоса бренда)
+2. Спросить пользователя:
+   - Подали ли документы 04.05.2026? (РКН основное, РКН трансграничка, Р24001 в МФЦ)
+   - Получены ли решения РКН?
+   - Что разработчик сделал из TODO (ротация ключа, исправление .env.docker, обновление bot/legal.py, фикс ЮKassa)?
+   - Нужны ли правки в юр.документах после подачи?
+3. По ситуации работать дальше: отвечать на вопросы, делать правки, мониторить.
 
-Удачи. Сайт уже live, никаких героических усилий — методично закрывай бэклог.
+---
+
+## Полезные команды
+
+```bash
+# Локальная разработка лендинга
+cd /Users/evgeniy/projects/otklicker/site
+npm run dev       # http://localhost:3000
+npm run build     # static export в out/
+npx tsc --noEmit
+npx next lint
+
+# Деплой (если CLAUDE.md ещё актуален про CI на Hetzner)
+git push origin main  # → GitHub Actions → ~2 мин live
+
+# Бот: разведка по коду
+cd /Users/evgeniy/projects/dream-job-bot
+git log -5 --oneline
+git pull origin main
+```
+
+Удачи. Главное на 04.05.2026 — подать всё в трёх местах (РКН основное, РКН трансграничка, МФЦ Самары Р24001), запустить бот, передать TODO разработчику.

@@ -1,22 +1,52 @@
+import fs from 'node:fs';
+import path from 'node:path';
+import ReactMarkdown from 'react-markdown';
+import remarkGfm from 'remark-gfm';
 import type { Metadata } from 'next';
 import { Nav } from '@/components/nav';
 import { Footer } from '@/components/footer';
 
 export const metadata: Metadata = {
-  title: 'Оферта',
-  description: 'Оферта на использование сервиса откликер. Документ готовится.',
+  title: 'Публичная оферта — откликер',
+  description:
+    'Условия использования Telegram-бота @otklicker_bot и тарифные планы',
   alternates: { canonical: '/offer' },
-  robots: { index: false, follow: false },
+  robots: { index: true, follow: true },
 };
 
 export default function OfferPage() {
+  let md: string | null = null;
+  try {
+    md = fs.readFileSync(
+      path.join(process.cwd(), '..', 'legal', 'OFFER.md'),
+      'utf-8',
+    );
+  } catch {
+    md = null;
+  }
+
   return (
     <>
       <Nav />
-      <main style={{ maxWidth: 760, margin: '0 auto', padding: '120px 24px 64px' }}>
-        <h1 style={{ fontSize: 32, fontWeight: 800 }}>Оферта</h1>
-        <p style={{ marginTop: 16 }}>Документ готовится. Будет опубликован в ближайшее время.</p>
-        <a href="/" style={{ display: 'inline-block', marginTop: 24, color: 'var(--text-heading)' }}>← На главную</a>
+      <main className="mx-auto max-w-[720px] px-5 py-16 md:py-24" style={{ paddingTop: 120 }}>
+        <article className="prose prose-stone max-w-none">
+          {md ? (
+            <ReactMarkdown remarkPlugins={[remarkGfm]}>{md}</ReactMarkdown>
+          ) : (
+            <>
+              <h1>Публичная оферта</h1>
+              <p>
+                Документ временно недоступен. Если нужна копия оферты, напишите нам на{' '}
+                <a href="mailto:info@otklicker.ru">info@otklicker.ru</a>.
+              </p>
+            </>
+          )}
+        </article>
+        <p className="mt-12">
+          <a href="/" className="text-text-heading underline-offset-4 hover:underline">
+            ← На главную
+          </a>
+        </p>
       </main>
       <Footer />
     </>

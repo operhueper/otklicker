@@ -7229,9 +7229,6 @@
                       "id": "DG0Di",
                       "name": "outlineText",
                       "fill": "#FFE8B0",
-                      "stroke": {
-                        "thickness": 0
-                      },
                       "content": "×3",
                       "lineHeight": 0.9,
                       "fontFamily": "Inter",
@@ -7495,6 +7492,7 @@
                       "lineHeight": 1.2,
                       "fontFamily": "Inter",
                       "fontSize": 22,
+                      "fontWeight": "normal",
                       "fontStyle": "italic"
                     }
                   ]
@@ -7830,6 +7828,7 @@
                   "content": "hh.ru",
                   "fontFamily": "Inter",
                   "fontSize": 28,
+                  "fontWeight": "normal",
                   "fontStyle": "italic"
                 },
                 {
@@ -8007,6 +8006,1233 @@
                   "fontWeight": "normal"
                 }
               ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "frame",
+      "id": "93hwV",
+      "x": 13220,
+      "y": -1549,
+      "name": "Welcome Banner — bot v1",
+      "width": 1280,
+      "height": 640,
+      "fill": {
+        "type": "gradient",
+        "gradientType": "linear",
+        "enabled": true,
+        "rotation": 135,
+        "size": {
+          "height": 1
+        },
+        "colors": [
+          {
+            "color": "#FBBF24",
+            "position": 0
+          },
+          {
+            "color": "#F97316",
+            "position": 0.35
+          },
+          {
+            "color": "#EF4444",
+            "position": 0.7
+          },
+          {
+            "color": "#DB2777",
+            "position": 1
+          }
+        ]
+      },
+      "cornerRadius": 32,
+      "gap": 48,
+      "padding": 64,
+      "alignItems": "center",
+      "children": [
+        {
+          "type": "frame",
+          "id": "4yuJa",
+          "name": "left",
+          "width": 624,
+          "height": "fill_container",
+          "fill": "#00000000",
+          "layout": "vertical",
+          "gap": 24,
+          "justifyContent": "space_between",
+          "children": [
+            {
+              "type": "frame",
+              "id": "R5iDQ",
+              "name": "logoRow",
+              "fill": "#00000000",
+              "gap": 14,
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "xhD8Y",
+                  "name": "logoBadge",
+                  "width": 64,
+                  "height": 64,
+                  "fill": "#FFFBEB",
+                  "cornerRadius": 18,
+                  "justifyContent": "center",
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "icon_font",
+                      "id": "zPPj6",
+                      "name": "logoIcon",
+                      "width": 34,
+                      "height": 34,
+                      "iconFontName": "mouse-pointer-2",
+                      "iconFontFamily": "lucide",
+                      "fill": "#EF4444"
+                    }
+                  ]
+                },
+                {
+                  "type": "text",
+                  "id": "jtQ60",
+                  "name": "logoText",
+                  "fill": "#FFFBEB",
+                  "content": "откликер",
+                  "fontFamily": "Inter",
+                  "fontSize": 34,
+                  "fontWeight": "800"
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "NJncz",
+              "name": "heroText",
+              "width": "fill_container",
+              "fill": "#00000000",
+              "layout": "vertical",
+              "gap": 14,
+              "children": [
+                {
+                  "type": "text",
+                  "id": "lvJFl",
+                  "name": "heroTitle",
+                  "fill": "#FFFBEB",
+                  "textGrowth": "fixed-width",
+                  "width": "fill_container",
+                  "content": "Хватит писать сопроводительные руками",
+                  "lineHeight": 1.05,
+                  "fontFamily": "Inter",
+                  "fontSize": 46,
+                  "fontWeight": "800"
+                },
+                {
+                  "type": "text",
+                  "id": "ne5K5",
+                  "name": "heroSub",
+                  "opacity": 0.92,
+                  "fill": "#FFFBEB",
+                  "textGrowth": "fixed-width",
+                  "width": "fill_container",
+                  "content": "Резюме за 7 минут. Свежие вакансии HH карточками в Telegram. Сопроводительное под каждую. Ответы HR в одну кнопку.",
+                  "lineHeight": 1.45,
+                  "fontFamily": "Inter",
+                  "fontSize": 18,
+                  "fontWeight": "500"
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "kHWP6",
+              "name": "heroFoot",
+              "fill": "#FFFBEB",
+              "cornerRadius": 999,
+              "gap": 10,
+              "padding": [
+                10,
+                16
+              ],
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "icon_font",
+                  "id": "mE4EI",
+                  "name": "footIcon",
+                  "width": 16,
+                  "height": 16,
+                  "iconFontName": "send",
+                  "iconFontFamily": "lucide",
+                  "fill": "#EF4444"
+                },
+                {
+                  "type": "text",
+                  "id": "xKFqa",
+                  "name": "footText",
+                  "fill": "#92400E",
+                  "content": "@otklicker_bot · t.me/otklicker",
+                  "fontFamily": "Inter",
+                  "fontSize": 14,
+                  "fontWeight": "700"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "t8Nel",
+          "name": "right",
+          "width": 480,
+          "height": "fill_container",
+          "fill": "#00000000",
+          "layout": "vertical",
+          "gap": 14,
+          "justifyContent": "center",
+          "children": [
+            {
+              "type": "frame",
+              "id": "EuZaA",
+              "name": "card1",
+              "width": "fill_container",
+              "fill": "#FFFBEB",
+              "cornerRadius": 18,
+              "gap": 16,
+              "padding": [
+                18,
+                20
+              ],
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "JNAlK",
+                  "name": "c1ico",
+                  "width": 44,
+                  "height": 44,
+                  "fill": "#FEF3C7",
+                  "cornerRadius": 12,
+                  "justifyContent": "center",
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "icon_font",
+                      "id": "eeSzP",
+                      "name": "c1iconF",
+                      "width": 22,
+                      "height": 22,
+                      "iconFontName": "file-text",
+                      "iconFontFamily": "lucide",
+                      "fill": "#B45309"
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "L85l0",
+                  "name": "c1text",
+                  "width": "fill_container",
+                  "fill": "#00000000",
+                  "layout": "vertical",
+                  "gap": 2,
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "nKL62",
+                      "name": "c1title",
+                      "fill": "#92400E",
+                      "textGrowth": "fixed-width",
+                      "width": "fill_container",
+                      "content": "Резюме за 7 минут",
+                      "fontFamily": "Inter",
+                      "fontSize": 17,
+                      "fontWeight": "700"
+                    },
+                    {
+                      "type": "text",
+                      "id": "UsbZW",
+                      "name": "c1sub",
+                      "fill": "#78716C",
+                      "textGrowth": "fixed-width",
+                      "width": "fill_container",
+                      "content": "Бот сам разложит опыт по полочкам. Голосом или текстом",
+                      "lineHeight": 1.35,
+                      "fontFamily": "Inter",
+                      "fontSize": 13,
+                      "fontWeight": "500"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "x0kzw",
+              "name": "card2",
+              "width": "fill_container",
+              "fill": "#FFFBEB",
+              "cornerRadius": 18,
+              "gap": 16,
+              "padding": [
+                18,
+                20
+              ],
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "l9TPV",
+                  "name": "c2ico",
+                  "width": 44,
+                  "height": 44,
+                  "fill": "#FEF3C7",
+                  "cornerRadius": 12,
+                  "justifyContent": "center",
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "icon_font",
+                      "id": "gk4vp",
+                      "name": "c2iconF",
+                      "width": 22,
+                      "height": 22,
+                      "iconFontName": "layout-grid",
+                      "iconFontFamily": "lucide",
+                      "fill": "#F97316"
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "d8A2e",
+                  "name": "c2text",
+                  "width": "fill_container",
+                  "fill": "#00000000",
+                  "layout": "vertical",
+                  "gap": 2,
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "o5mO0",
+                      "name": "c2title",
+                      "fill": "#92400E",
+                      "textGrowth": "fixed-width",
+                      "width": "fill_container",
+                      "content": "Тиндер вакансий с HH",
+                      "fontFamily": "Inter",
+                      "fontSize": 17,
+                      "fontWeight": "700"
+                    },
+                    {
+                      "type": "text",
+                      "id": "7tWuT",
+                      "name": "c2sub",
+                      "fill": "#78716C",
+                      "textGrowth": "fixed-width",
+                      "width": "fill_container",
+                      "content": "Свежие вакансии карточками в чат. Без 30 вкладок и фильтров заново",
+                      "lineHeight": 1.35,
+                      "fontFamily": "Inter",
+                      "fontSize": 13,
+                      "fontWeight": "500"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "2By08",
+              "name": "card3",
+              "width": "fill_container",
+              "fill": "#FFFBEB",
+              "cornerRadius": 18,
+              "gap": 16,
+              "padding": [
+                18,
+                20
+              ],
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "f2hc7",
+                  "name": "c3ico",
+                  "width": 44,
+                  "height": 44,
+                  "fill": "#FEF3C7",
+                  "cornerRadius": 12,
+                  "justifyContent": "center",
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "icon_font",
+                      "id": "pWLmI",
+                      "name": "c3iconF",
+                      "width": 22,
+                      "height": 22,
+                      "iconFontName": "messages-square",
+                      "iconFontFamily": "lucide",
+                      "fill": "#EF4444"
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "ob0dv",
+                  "name": "c3text",
+                  "width": "fill_container",
+                  "fill": "#00000000",
+                  "layout": "vertical",
+                  "gap": 2,
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "2L4en",
+                      "name": "c3title",
+                      "fill": "#92400E",
+                      "textGrowth": "fixed-width",
+                      "width": "fill_container",
+                      "content": "Ответы HR в Telegram",
+                      "fontFamily": "Inter",
+                      "fontSize": 17,
+                      "fontWeight": "700"
+                    },
+                    {
+                      "type": "text",
+                      "id": "vXXJg",
+                      "name": "c3sub",
+                      "fill": "#78716C",
+                      "textGrowth": "fixed-width",
+                      "width": "fill_container",
+                      "content": "HR пишет — бот предлагает ответ. Подтверждаете в одну кнопку",
+                      "lineHeight": 1.35,
+                      "fontFamily": "Inter",
+                      "fontSize": 13,
+                      "fontWeight": "500"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "waWfj",
+              "name": "card4",
+              "width": "fill_container",
+              "fill": "#FFFBEB",
+              "cornerRadius": 18,
+              "gap": 16,
+              "padding": [
+                18,
+                20
+              ],
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "hadJP",
+                  "name": "c4ico",
+                  "width": 44,
+                  "height": 44,
+                  "fill": "#FEF3C7",
+                  "cornerRadius": 12,
+                  "justifyContent": "center",
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "icon_font",
+                      "id": "t5qbR",
+                      "name": "c4iconF",
+                      "width": 22,
+                      "height": 22,
+                      "iconFontName": "pen-line",
+                      "iconFontFamily": "lucide",
+                      "fill": "#DB2777"
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "betxk",
+                  "name": "c4text",
+                  "width": "fill_container",
+                  "fill": "#00000000",
+                  "layout": "vertical",
+                  "gap": 2,
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "x6SiX",
+                      "name": "c4title",
+                      "fill": "#92400E",
+                      "textGrowth": "fixed-width",
+                      "width": "fill_container",
+                      "content": "Сопроводительное под каждую",
+                      "fontFamily": "Inter",
+                      "fontSize": 17,
+                      "fontWeight": "700"
+                    },
+                    {
+                      "type": "text",
+                      "id": "VMThK",
+                      "name": "c4sub",
+                      "fill": "#78716C",
+                      "textGrowth": "fixed-width",
+                      "width": "fill_container",
+                      "content": "Не шаблон. AI собирает письмо из профиля и текста вакансии",
+                      "lineHeight": 1.35,
+                      "fontFamily": "Inter",
+                      "fontSize": 13,
+                      "fontWeight": "500"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "frame",
+      "id": "GXMtL",
+      "x": -3824,
+      "y": 2782,
+      "name": "tg-start-banners",
+      "fill": "#1F1A14",
+      "gap": 80,
+      "padding": 60,
+      "children": [
+        {
+          "type": "frame",
+          "id": "zNIwQ",
+          "name": "slotA-640x360",
+          "fill": "#00000000",
+          "layout": "vertical",
+          "gap": 16,
+          "children": [
+            {
+              "type": "frame",
+              "id": "7UdJw",
+              "name": "banner",
+              "clip": true,
+              "width": 640,
+              "height": 360,
+              "fill": "#FEF3C7",
+              "cornerRadius": 24,
+              "layout": "none",
+              "children": [
+                {
+                  "type": "ellipse",
+                  "id": "F8ZHT",
+                  "x": 420,
+                  "y": -80,
+                  "name": "blob1",
+                  "opacity": 0.75,
+                  "fill": {
+                    "type": "gradient",
+                    "gradientType": "radial",
+                    "enabled": true,
+                    "rotation": 0,
+                    "size": {
+                      "width": 1,
+                      "height": 1
+                    },
+                    "colors": [
+                      {
+                        "color": "#F97316",
+                        "position": 0
+                      },
+                      {
+                        "color": "#FBBF2400",
+                        "position": 1
+                      }
+                    ]
+                  },
+                  "width": 300,
+                  "height": 300,
+                  "effect": {
+                    "type": "blur",
+                    "radius": 30
+                  }
+                },
+                {
+                  "type": "ellipse",
+                  "id": "IUdib",
+                  "x": 470,
+                  "y": 170,
+                  "name": "blob2",
+                  "opacity": 0.55,
+                  "fill": {
+                    "type": "gradient",
+                    "gradientType": "radial",
+                    "enabled": true,
+                    "rotation": 0,
+                    "size": {
+                      "width": 1,
+                      "height": 1
+                    },
+                    "colors": [
+                      {
+                        "color": "#DB2777",
+                        "position": 0
+                      },
+                      {
+                        "color": "#EF444400",
+                        "position": 1
+                      }
+                    ]
+                  },
+                  "width": 260,
+                  "height": 260,
+                  "effect": {
+                    "type": "blur",
+                    "radius": 35
+                  }
+                },
+                {
+                  "type": "rectangle",
+                  "cornerRadius": 20,
+                  "id": "rashc",
+                  "x": 380,
+                  "y": 70,
+                  "name": "bub1",
+                  "fill": "#FFFFFF",
+                  "width": 170,
+                  "height": 44,
+                  "effect": {
+                    "type": "shadow",
+                    "shadowType": "outer",
+                    "color": "#92400E26",
+                    "offset": {
+                      "x": 0,
+                      "y": 4
+                    },
+                    "blur": 14
+                  }
+                },
+                {
+                  "type": "rectangle",
+                  "cornerRadius": 18,
+                  "id": "cJmrB",
+                  "x": 460,
+                  "y": 138,
+                  "name": "bub2",
+                  "fill": "#FFFFFF",
+                  "width": 130,
+                  "height": 40,
+                  "effect": {
+                    "type": "shadow",
+                    "shadowType": "outer",
+                    "color": "#92400E26",
+                    "offset": {
+                      "x": 0,
+                      "y": 4
+                    },
+                    "blur": 14
+                  }
+                },
+                {
+                  "type": "rectangle",
+                  "cornerRadius": 20,
+                  "id": "Pvkow",
+                  "x": 400,
+                  "y": 218,
+                  "name": "bub3",
+                  "fill": "#FFFFFF",
+                  "width": 180,
+                  "height": 46,
+                  "effect": {
+                    "type": "shadow",
+                    "shadowType": "outer",
+                    "color": "#92400E26",
+                    "offset": {
+                      "x": 0,
+                      "y": 4
+                    },
+                    "blur": 14
+                  }
+                },
+                {
+                  "type": "frame",
+                  "id": "DrOGC",
+                  "x": 40,
+                  "y": 108,
+                  "name": "logoBlock",
+                  "width": 340,
+                  "height": 144,
+                  "fill": "#00000000",
+                  "layout": "vertical",
+                  "gap": 16,
+                  "children": [
+                    {
+                      "type": "frame",
+                      "id": "Fns2Z",
+                      "name": "logoRow",
+                      "fill": "#00000000",
+                      "gap": 14,
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "icon_font",
+                          "id": "p0Ixi",
+                          "name": "icon",
+                          "width": 56,
+                          "height": 56,
+                          "iconFontName": "mouse-pointer-click",
+                          "iconFontFamily": "lucide",
+                          "fill": "#EF4444"
+                        },
+                        {
+                          "type": "text",
+                          "id": "8zrZn",
+                          "name": "title",
+                          "fill": "#92400E",
+                          "content": "откликер",
+                          "fontFamily": "Inter",
+                          "fontSize": 52,
+                          "fontWeight": "800"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "text",
+                      "id": "Xml2Y",
+                      "name": "subtitle",
+                      "fill": "#B45309",
+                      "content": "бот для откликов на hh.ru",
+                      "fontFamily": "Inter",
+                      "fontSize": 18,
+                      "fontWeight": "500"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "text",
+              "id": "gm4Fb",
+              "name": "cap1",
+              "fill": "#FDE68A",
+              "content": "Вариант A · Кремовая плашка · 640×360",
+              "fontFamily": "Inter",
+              "fontSize": 16,
+              "fontWeight": "700"
+            },
+            {
+              "type": "text",
+              "id": "lOQje",
+              "name": "cap2",
+              "fill": "#FCD34D",
+              "content": "Telegram bot welcome image",
+              "fontFamily": "Inter",
+              "fontSize": 13,
+              "fontWeight": "500"
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "HbMBT",
+          "name": "slotB-640x360",
+          "fill": "#00000000",
+          "layout": "vertical",
+          "gap": 16,
+          "children": [
+            {
+              "type": "frame",
+              "id": "8VAEd",
+              "name": "banner-640x360",
+              "clip": true,
+              "width": 640,
+              "height": 360,
+              "fill": {
+                "type": "gradient",
+                "gradientType": "linear",
+                "enabled": true,
+                "rotation": 160,
+                "size": {
+                  "height": 1
+                },
+                "colors": [
+                  {
+                    "color": "#FBBF24",
+                    "position": 0
+                  },
+                  {
+                    "color": "#F97316",
+                    "position": 0.4
+                  },
+                  {
+                    "color": "#EF4444",
+                    "position": 0.75
+                  },
+                  {
+                    "color": "#DB2777",
+                    "position": 1
+                  }
+                ]
+              },
+              "cornerRadius": 24,
+              "layout": "vertical",
+              "gap": 20,
+              "padding": 40,
+              "justifyContent": "center",
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "T1C2g",
+                  "layoutPosition": "absolute",
+                  "x": 470,
+                  "y": 48,
+                  "name": "bubble1",
+                  "width": 140,
+                  "height": 36,
+                  "fill": "#FFFFFF66",
+                  "cornerRadius": 18
+                },
+                {
+                  "type": "frame",
+                  "id": "3DB8y",
+                  "layoutPosition": "absolute",
+                  "x": 430,
+                  "y": 96,
+                  "name": "bubble2",
+                  "width": 180,
+                  "height": 32,
+                  "fill": "#FFFFFF40",
+                  "cornerRadius": 16
+                },
+                {
+                  "type": "frame",
+                  "id": "GrFxJ",
+                  "layoutPosition": "absolute",
+                  "x": 500,
+                  "y": 140,
+                  "name": "bubble3",
+                  "width": 110,
+                  "height": 28,
+                  "fill": "#FFFFFF55",
+                  "cornerRadius": 14
+                },
+                {
+                  "type": "ellipse",
+                  "id": "K0i9u",
+                  "layoutPosition": "absolute",
+                  "x": -80,
+                  "y": 280,
+                  "name": "glow",
+                  "fill": "#FFFFFF33",
+                  "width": 480,
+                  "height": 240,
+                  "effect": {
+                    "type": "blur",
+                    "radius": 60
+                  }
+                },
+                {
+                  "type": "frame",
+                  "id": "nW1Ul",
+                  "name": "brand-chip",
+                  "fill": "#FFFFFFEE",
+                  "cornerRadius": 20,
+                  "gap": 10,
+                  "padding": [
+                    14,
+                    20
+                  ],
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "icon_font",
+                      "id": "0bNnu",
+                      "name": "chipIcon",
+                      "width": 28,
+                      "height": 28,
+                      "iconFontName": "mouse-pointer-click",
+                      "iconFontFamily": "lucide",
+                      "fill": "#EF4444"
+                    },
+                    {
+                      "type": "text",
+                      "id": "GY7Jy",
+                      "name": "chipText",
+                      "fill": "#92400E",
+                      "content": "откликер",
+                      "fontFamily": "Inter",
+                      "fontSize": 30,
+                      "fontWeight": "800"
+                    }
+                  ]
+                },
+                {
+                  "type": "text",
+                  "id": "AL0ee",
+                  "name": "heading",
+                  "fill": "#FFFFFF",
+                  "textGrowth": "fixed-width",
+                  "width": 540,
+                  "content": "привет!\nдавай начнем.",
+                  "lineHeight": 1.1,
+                  "fontFamily": "Inter",
+                  "fontSize": 34,
+                  "fontWeight": "800"
+                }
+              ]
+            },
+            {
+              "type": "text",
+              "id": "e04c7",
+              "name": "caption1",
+              "fill": "#FDE68A",
+              "content": "Вариант B · Sunset градиент · 640×360",
+              "fontFamily": "Inter",
+              "fontSize": 16,
+              "fontWeight": "700"
+            },
+            {
+              "type": "text",
+              "id": "zmS5k",
+              "name": "caption2",
+              "fill": "#FCD34D",
+              "content": "Telegram bot welcome image",
+              "fontFamily": "Inter",
+              "fontSize": 13,
+              "fontWeight": "500"
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "LttmH",
+          "name": "slotC-640x360",
+          "fill": "#00000000",
+          "layout": "vertical",
+          "gap": 16,
+          "children": [
+            {
+              "type": "frame",
+              "id": "l6tJ9",
+              "name": "vC-banner",
+              "clip": true,
+              "width": 640,
+              "height": 360,
+              "fill": "#FEF3C7",
+              "cornerRadius": 24,
+              "layout": "none",
+              "children": [
+                {
+                  "type": "ellipse",
+                  "id": "Pi8Mf",
+                  "x": 430,
+                  "y": -60,
+                  "name": "blob1",
+                  "fill": {
+                    "type": "gradient",
+                    "gradientType": "radial",
+                    "enabled": true,
+                    "rotation": 0,
+                    "size": {
+                      "width": 1,
+                      "height": 1
+                    },
+                    "colors": [
+                      {
+                        "color": "#F9731640",
+                        "position": 0
+                      },
+                      {
+                        "color": "#F9731600",
+                        "position": 1
+                      }
+                    ]
+                  },
+                  "width": 280,
+                  "height": 280
+                },
+                {
+                  "type": "ellipse",
+                  "id": "JNqxW",
+                  "x": 480,
+                  "y": 200,
+                  "name": "blob2",
+                  "fill": {
+                    "type": "gradient",
+                    "gradientType": "radial",
+                    "enabled": true,
+                    "rotation": 0,
+                    "size": {
+                      "width": 1,
+                      "height": 1
+                    },
+                    "colors": [
+                      {
+                        "color": "#DB277730",
+                        "position": 0
+                      },
+                      {
+                        "color": "#DB277700",
+                        "position": 1
+                      }
+                    ]
+                  },
+                  "width": 240,
+                  "height": 240
+                },
+                {
+                  "type": "ellipse",
+                  "id": "9QnSf",
+                  "x": -80,
+                  "y": 240,
+                  "name": "blob3",
+                  "fill": {
+                    "type": "gradient",
+                    "gradientType": "radial",
+                    "enabled": true,
+                    "rotation": 0,
+                    "size": {
+                      "width": 1,
+                      "height": 1
+                    },
+                    "colors": [
+                      {
+                        "color": "#FBBF2440",
+                        "position": 0
+                      },
+                      {
+                        "color": "#FBBF2400",
+                        "position": 1
+                      }
+                    ]
+                  },
+                  "width": 220,
+                  "height": 220
+                },
+                {
+                  "type": "frame",
+                  "id": "Q9pc0",
+                  "x": 36,
+                  "y": 36,
+                  "name": "vC-content",
+                  "width": 568,
+                  "height": 288,
+                  "fill": "#00000000",
+                  "layout": "vertical",
+                  "gap": 18,
+                  "children": [
+                    {
+                      "type": "frame",
+                      "id": "C3add",
+                      "name": "vC-header",
+                      "fill": "#00000000",
+                      "gap": 14,
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "frame",
+                          "id": "2L1fG",
+                          "name": "vC-avatar",
+                          "width": 64,
+                          "height": 64,
+                          "cornerRadius": 32,
+                          "justifyContent": "center",
+                          "alignItems": "center",
+                          "children": [
+                            {
+                              "type": "icon_font",
+                              "id": "4ERT7",
+                              "name": "icon2",
+                              "width": 30,
+                              "height": 30,
+                              "iconFontName": "mouse-pointer-click",
+                              "iconFontFamily": "lucide",
+                              "fill": "#FFFFFF"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "id": "9VZCP",
+                          "name": "hcol",
+                          "fill": "#00000000",
+                          "layout": "vertical",
+                          "gap": 4,
+                          "children": [
+                            {
+                              "type": "frame",
+                              "id": "wmiDs",
+                              "name": "nameRow",
+                              "fill": "#00000000",
+                              "gap": 10,
+                              "alignItems": "center",
+                              "children": [
+                                {
+                                  "type": "text",
+                                  "id": "tlNLx",
+                                  "name": "nameTxt",
+                                  "fill": "#92400E",
+                                  "content": "откликер",
+                                  "fontFamily": "Inter",
+                                  "fontSize": 26,
+                                  "fontWeight": "800"
+                                },
+                                {
+                                  "type": "frame",
+                                  "id": "H77v9",
+                                  "name": "badge",
+                                  "fill": "#FBBF24",
+                                  "cornerRadius": 8,
+                                  "padding": [
+                                    4,
+                                    8
+                                  ],
+                                  "children": [
+                                    {
+                                      "type": "text",
+                                      "id": "UD5qM",
+                                      "name": "badgeTxt",
+                                      "fill": "#92400E",
+                                      "content": "бета",
+                                      "fontFamily": "Inter",
+                                      "fontSize": 11,
+                                      "fontWeight": "700"
+                                    }
+                                  ]
+                                }
+                              ]
+                            },
+                            {
+                              "type": "text",
+                              "id": "FjHuz",
+                              "name": "sub",
+                              "fill": "#B45309",
+                              "content": "бот для откликов на hh.ru",
+                              "fontFamily": "Inter",
+                              "fontSize": 13,
+                              "fontWeight": "500"
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "AqGXU",
+                      "name": "vC-bubble",
+                      "fill": "#FFFFFF",
+                      "cornerRadius": [
+                        20,
+                        20,
+                        20,
+                        4
+                      ],
+                      "effect": {
+                        "type": "shadow",
+                        "shadowType": "outer",
+                        "color": "#92400E1A",
+                        "offset": {
+                          "x": 0,
+                          "y": 4
+                        },
+                        "blur": 12
+                      },
+                      "layout": "vertical",
+                      "gap": 6,
+                      "padding": [
+                        18,
+                        22
+                      ],
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "m6uHO",
+                          "name": "bub1",
+                          "fill": "#92400E",
+                          "content": "привет 👋",
+                          "fontFamily": "Inter",
+                          "fontSize": 18,
+                          "fontWeight": "700"
+                        },
+                        {
+                          "type": "text",
+                          "id": "Aut8J",
+                          "name": "bub2",
+                          "fill": "#78350F",
+                          "textGrowth": "fixed-width",
+                          "width": 380,
+                          "content": "соберу резюме за 7 минут и буду слать карточки вакансий прямо сюда",
+                          "lineHeight": 1.4,
+                          "fontFamily": "Inter",
+                          "fontSize": 14,
+                          "fontWeight": "500"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "u2dMw",
+                      "layoutPosition": "absolute",
+                      "x": 340,
+                      "y": 188,
+                      "name": "vC-pill",
+                      "cornerRadius": [
+                        16,
+                        16,
+                        4,
+                        16
+                      ],
+                      "effect": {
+                        "type": "shadow",
+                        "shadowType": "outer",
+                        "color": "#DB277733",
+                        "offset": {
+                          "x": 0,
+                          "y": 6
+                        },
+                        "blur": 14
+                      },
+                      "padding": [
+                        10,
+                        14
+                      ],
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "y9KCT",
+                          "name": "miniTxt",
+                          "fill": "#FFFFFF",
+                          "content": "откликнуться",
+                          "fontFamily": "Inter",
+                          "fontSize": 13,
+                          "fontWeight": "700"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "text",
+              "id": "8mPab",
+              "name": "caption",
+              "fill": "#FDE68A",
+              "content": "Вариант C · Чат-превью · 640×360",
+              "fontFamily": "Inter",
+              "fontSize": 16,
+              "fontWeight": "700"
+            },
+            {
+              "type": "text",
+              "id": "EHkmK",
+              "name": "caption2",
+              "fill": "#FCD34D",
+              "content": "Telegram bot welcome image",
+              "fontFamily": "Inter",
+              "fontSize": 13,
+              "fontWeight": "500"
             }
           ]
         }
